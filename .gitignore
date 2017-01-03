@@ -39,3 +39,8 @@ Procfile
 
 # screenshots
 screenshot*
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
