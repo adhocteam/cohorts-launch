@@ -24,19 +24,21 @@ test:
 
 staging:
   adapter: mysql2
-  database: <%= ENV['MYSQL_DATABASE'] || 'staging' %>
-  host: <%= ENV['MYSQL_HOST'] || 'localhost' %>
-  username: <%= ENV['MYSQL_USER'] || 'logan' %>
-  password: <%= ENV['MYSQL_PWD'] || '' %>
+  database: <%= ENV['RDS_DB_NAME'] %>
+  username: <%= ENV['RDS_USERNAME'] %>
+  password: <%= ENV['RDS_PASSWORD'] %>
+  host: <%= ENV['RDS_HOSTNAME'] %>
+  port: <%= ENV['RDS_PORT'] %>
   pool: 5
   timeout: 5000
 
 
 production:
   adapter: mysql2
-  database: <%= ENV['RAILS_ENV'] || 'production' %>
-  host: <%= ENV['MYSQL_HOST'] || 'localhost' %>
-  username: <%= ENV['MYSQL_USER'] || 'logan' %>
-  password: <%= ENV['MYSQL_PWD'] || '' %>
+  database: <%= ENV['RDS_DB_NAME'] %>
+  username: <%= ENV['RDS_USERNAME'] %>
+  password: <%= ENV['RDS_PASSWORD'] %>
+  host: <%= ENV['RDS_HOSTNAME'] %>
+  port: <%= ENV['RDS_PORT'] %>
   pool: 5
   timeout: 5000
