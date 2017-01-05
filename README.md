@@ -1,46 +1,16 @@
-Kimball
+Cohorts
 =====
-[![Coverage Status](https://coveralls.io/repos/github/BlueRidgeLabs/kimball/badge.svg?branch=development)](https://coveralls.io/github/BlueRidgeLabs/kimball?branch=development)[![Build Status](https://travis-ci.org/BlueRidgeLabs/kimball.svg?branch=development)](https://travis-ci.org/BlueRidgeLabs/kimball)[![Code Climate](https://codeclimate.com/github/BlueRidgeLabs/kimball/badges/gpa.svg)](https://codeclimate.com/github/BlueRidgeLabs/kimball)
 
-Kimball is an application to manage people that are involved with the Smart Chicago CUTGroup.
+Cohorts is an application to manage people that are involved Ad Hoc user research. It is heavily based on [kimball](https://github.com/smartchicago/kimball) originally developed for the Smart Chicago CUTGroup.
 
 Features
 --------
 
-Kimball is a customer relationship management application at its heart. Kimball tracks people that have signed up to participate with the CUTGroup, their involvement in events and CUTGroup programs.
+Cohorts is a customer relationship management application at its heart. Cohorts tracks people that have signed up to participate in Ad Hoc user research.
 
 Setup
 -----
-Kimball is a Ruby on Rails app.
-
-* Server Set up:
-  * It currently uses Capistrano for deployment to staging and production instances.
-  * ElasticSearch needs to be installed and running for Kimball to work.
-  * Environment Variables are used (saved in a local_env.yml file) for API keys and other IDs.
-  * you'll need ssh-agent forwarding:
-  ```ssh-add -L``
-If the command says that no identity is available, you'll need to add your key:
-
-```ssh-add yourkey```
-On Mac OS X, ssh-agent will "forget" this key, once it gets restarted during reboots. But you can import your SSH keys into Keychain using this command:
-
-```/usr/bin/ssh-add -K yourkey```
-
-* Provisioning a new server:
-  * change your local_env.yml to point production to the right url/git/branch/etc/
-    * PRODUCTION_SERVER: "example.com"
-    * PRODUCTION_BRANCH: "master"
-    * STAGING_SERVER: "staging.example.com"
-    * STAGING_BRANCH: "devlopment"
-    * GIT_REPOSITORY: "git@github.com:example/example.git"
-  * use the provision_new_server.sh script.
-    * script defaults to production, however, the first arg is the environment you want.
-    * `provision_new_server.sh staging` will provision staging
-    * don't forget to add your deploy key and person ssh pubkey to the provision.sh script!
-  * run 'cap production deploy:setup' (if you are deploying to production)
-  * run 'cap production deploy:cold' ( starts up all of the daemons.)
-
-  SSL certificates is provided free of charge and automatically updated by [LetsEncrypt!](https://letsencrypt.org)
+Cohorts is a Ruby on Rails app. It is hosted on AWS Elastic Beanstalk.
 
 Services and Environment Variables.
 --------
@@ -53,14 +23,14 @@ If a variable isn't defined in your local_env.yml, we use the default value from
 * Organizational Defaults
 
 * Wufoo
-  * Wufoo hosts all forms used for Kimball.
+  * Wufoo hosts all forms used for Cohorts.
   * On the Server Side there are 3 environment variables used:
     * WUFOO_ACCOUNT
     * WUFOO_API
     * WUFOO_SIGNUP_FORM
     * WUFOO_HANDSHAKE_KEY
-  * For SMS signup and form fills, "SMS Campaigns" are created in the Kimball app to associate a Wufoo form ID.
-  * Webhooks are used on Wufoo to send data back to Kimball. Currently there are 2 webhooks in use:
+  * For SMS signup and form fills, "SMS Campaigns" are created in the Cohorts app to associate a Wufoo form ID.
+  * Webhooks are used on Wufoo to send data back to Cohorts. Currently there are 2 webhooks in use:
     * /people : This endpoint is used for new signups via the main signup/registration wufoo form.
     * /people/create_sms : This endpoint is used for new signups via the signup/registration Wufoo form that has been customized for SMS signup.
     * /submissions : This endpoint is for all other Wufoo forms (call out, availability, tests). It saves the results in the submissions model.
@@ -132,13 +102,13 @@ Usage
 --------
 # Running a Test!
   1. create a survey
-    * email and web link: https://smartchicago2012.wufoo.com/forms/cutgroup-test-political-contribution-website/
-    * SMS survey: https://smartchicago2012.wufoo.com/forms/sms-cutgroup-test-political-contributions-website/
+    * email and web link: ...
+    * SMS survey: ...
   2. Pick people to receive the survey and send it to em.
   3. Choose people and send them an availability survey:
-    * https://smartchicago2012.wufoo.com/forms/cutgroup-test-political-contribution-availability/
+    * ...
     * people can choose multiple slots
-  4. Tell people individually what tests youve chosen for them and manually create a reservation for them.
+  4. Tell people individually what tests you've chosen for them and manually create a reservation for them.
   5. create a survey that is filled out during the test itself, either via SMS or web.
 
 
