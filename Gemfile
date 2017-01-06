@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.2.5'
+ruby '2.3.3'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 4.2.0'
 
@@ -98,7 +98,7 @@ gem 'health_check'
 gem 'holder_rails'
 
 # use devise for auth/identity
-gem 'devise','~>4.1.0'
+gem 'devise','~>4.2.0'
 
 # use gibbon for easy Mailchimp API access
 gem 'gibbon', '~> 2.2.3'
@@ -145,7 +145,7 @@ gem 'aasm'
 gem 'whenever', require: false
 
 # natural language processing API
-gem 'wit'
+gem 'wit', '~> 3.4.0'
 
 # handling emoji!
 gem 'emoji', git: 'https://github.com/cromulus/emoji', branch: 'add_replace_unicode_moji_with_name'
