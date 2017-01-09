@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
   # protect_from_forgery with: :exception
   skip_before_filter :verify_authenticity_token
 
+  before_action :print_session
+
   after_action :flash_to_headers
 
   # this is so that json requests don't redirect without a user
@@ -14,6 +16,10 @@ class ApplicationController < ActionController::Base
 
   before_action :set_paper_trail_whodunnit
   before_action :set_global_search_variable
+
+  def print_session
+    logger.debug session
+  end
 
   def set_global_search_variable
     @q = Person.ransack(params[:q])

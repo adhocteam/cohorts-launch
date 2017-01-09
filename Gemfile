@@ -99,7 +99,7 @@ gem 'health_check'
 gem 'holder_rails'
 
 # use devise for auth/identity
-gem 'devise','~>4.2.0'
+gem 'devise', '~>4.2.0'
 
 # use gibbon for easy Mailchimp API access
 gem 'gibbon', '~> 2.2.3'
@@ -131,7 +131,6 @@ gem 'best_in_place', '~> 3.0.1'
 
 # validation for new persons on the public page.
 gem 'jquery-validation-rails'
-
 
 # for automatically populating tags
 gem 'twitter-typeahead-rails'
