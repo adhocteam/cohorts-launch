@@ -132,23 +132,23 @@ class Person < ActiveRecord::Base
   WUFOO_FIELD_MAPPING = {
     'Field1'   => :first_name,
     'Field2'   => :last_name,
-    'Field10'  => :email_address,
-    'Field276' => :voted,
-    'Field277' => :called_311,
-    'Field39'  => :primary_device_id, # type of primary
-    'Field21'  => :primary_device_description, # desc of primary
-    'Field40'  => :secondary_device_id,
-    'Field24'  => :secondary_device_description, # desc of secondary
-    'Field41'  => :primary_connection_id, # connection type
-    # 'Field41' =>  :primary_connection_description, # description of connection
-    'Field42'  => :secondary_connection_id, # connection type
-    # 'Field42' =>  :secondary_connection_description, # description of connection
-    'Field268' => :address_1, # address_1
-    'Field269' => :city, # city
-    # 'Field47' =>  :state, # state
-    'Field271' => :postal_code, # postal_code
-    'Field9'   => :phone_number, # phone_number
-    'IP'       => :signup_ip, # client IP, ignored for the moment
+    'Field4'  => :email_address,
+    # 'Field276' => :voted,
+    # 'Field277' => :called_311,
+    # 'Field39'  => :primary_device_id, # type of primary
+    # 'Field21'  => :primary_device_description, # desc of primary
+    # 'Field40'  => :secondary_device_id,
+    # 'Field24'  => :secondary_device_description, # desc of secondary
+    # 'Field41'  => :primary_connection_id, # connection type
+    # # 'Field41' =>  :primary_connection_description, # description of connection
+    # 'Field42'  => :secondary_connection_id, # connection type
+    # # 'Field42' =>  :secondary_connection_description, # description of connection
+    # 'Field268' => :address_1, # address_1
+    # 'Field269' => :city, # city
+    # # 'Field47' =>  :state, # state
+    # 'Field271' => :postal_code, # postal_code
+    'Field3'   => :phone_number, # phone_number
+    # 'IP'       => :signup_ip, # client IP, ignored for the moment
 
   }.freeze
 
