@@ -17,6 +17,7 @@ gem 'mail', '2.6.3'
 
 gem 'ransack', github: 'activerecord-hackery/ransack'
 
+gem 'puma'
 
 group :development do
   # gem 'capistrano'
