@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
   before_action :set_global_search_variable
 
   def print_session
-    logger.debug session
+    logger.debug session.values
   end
 
   def set_global_search_variable

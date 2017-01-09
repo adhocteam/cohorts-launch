@@ -49,6 +49,8 @@ group :development do
 
   # enabling us to deploy via travis and encrypted keys!
   gem 'travis'
+
+  gem 'byebug'
 end
 
 group :production do
