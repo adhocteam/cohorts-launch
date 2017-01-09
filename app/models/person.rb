@@ -267,29 +267,29 @@ class Person < ActiveRecord::Base
     end
 
     # Special handling of participation type. New form uses 2 fields where old form used 1. Need to combine into one. Manually set to "Either one" if both field53 & field54 are populated.
-    new_person.participation_type = if params['Field53'] != '' && params['Field54'] != ''
-                                      'Either one'
-                                    elsif params['Field53'] != ''
-                                      params['Field53']
-                                    else
-                                      params['Field54']
-                                    end
-
-    new_person.preferred_contact_method = if params['Field273'] == 'Email'
-                                            'EMAIL'
-                                          else
-                                            'SMS'
-                                          end
-
-    # Copy connection descriptions to description fields
-    new_person.primary_connection_description = new_person.primary_connection_id
-    new_person.secondary_connection_description = new_person.secondary_connection_id
-
-    # rewrite the device and connection identifiers to integers
-    new_person.primary_device_id        = Person.map_device_to_id(params[WUFOO_FIELD_MAPPING.rassoc(:primary_device_id).first])
-    new_person.secondary_device_id      = Person.map_device_to_id(params[WUFOO_FIELD_MAPPING.rassoc(:secondary_device_id).first])
-    new_person.primary_connection_id    = Person.map_connection_to_id(params[WUFOO_FIELD_MAPPING.rassoc(:primary_connection_id).first])
-    new_person.secondary_connection_id  = Person.map_connection_to_id(params[WUFOO_FIELD_MAPPING.rassoc(:secondary_connection_id).first])
+    # new_person.participation_type = if params['Field53'] != '' && params['Field54'] != ''
+    #                                   'Either one'
+    #                                 elsif params['Field53'] != ''
+    #                                   params['Field53']
+    #                                 else
+    #                                   params['Field54']
+    #                                 end
+    #
+    # new_person.preferred_contact_method = if params['Field273'] == 'Email'
+    #                                         'EMAIL'
+    #                                       else
+    #                                         'SMS'
+    #                                       end
+    #
+    # # Copy connection descriptions to description fields
+    # new_person.primary_connection_description = new_person.primary_connection_id
+    # new_person.secondary_connection_description = new_person.secondary_connection_id
+    #
+    # # rewrite the device and connection identifiers to integers
+    # new_person.primary_device_id        = Person.map_device_to_id(params[WUFOO_FIELD_MAPPING.rassoc(:primary_device_id).first])
+    # new_person.secondary_device_id      = Person.map_device_to_id(params[WUFOO_FIELD_MAPPING.rassoc(:secondary_device_id).first])
+    # new_person.primary_connection_id    = Person.map_connection_to_id(params[WUFOO_FIELD_MAPPING.rassoc(:primary_connection_id).first])
+    # new_person.secondary_connection_id  = Person.map_connection_to_id(params[WUFOO_FIELD_MAPPING.rassoc(:secondary_connection_id).first])
 
     # FIXME: this is a hack, since we need to initialize people
     # with a city/state, but don't ask for it in the Wufoo form
