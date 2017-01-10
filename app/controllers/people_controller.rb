@@ -180,7 +180,7 @@ class PeopleController < ApplicationController
         @twilio_message = TwilioMessage.new
         @twilio_message.from = ENV['TWILIO_SIGNUP_VERIFICATION_NUMBER']
         @twilio_message.to = @person.normalized_phone_number
-        @twilio_message.body = "Thank you for signing up for the CUTGroup! Please text us 'Hello' or 12345 to complete your signup. If you did not sign up, text 'Remove Me' to be removed."
+        @twilio_message.body = "Thank you for signing up for the Cohorts! Please text us 'Hello' or 12345 to complete your signup. If you did not sign up, text 'Remove Me' to be removed."
 
         @twilio_message.signup_verify = 'Yes'
         @twilio_message.save

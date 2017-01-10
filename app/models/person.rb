@@ -87,8 +87,8 @@ class Person < ActiveRecord::Base
   #   validates :primary_connection_description, presence: true
   # end
 
-  validates :postal_code, presence: true
-  validates :postal_code, zipcode: { country_code: :us }
+  # validates :postal_code, presence: true
+  # validates :postal_code, zipcode: { country_code: :us }
 
   # phony validations and normalization
   phony_normalize :phone_number, default_country_code: 'US'
