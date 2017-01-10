@@ -50,6 +50,10 @@ RSpec.describe GiftCardsController, type: :controller do
   # GiftCardsController. Be sure to keep this updated too.
   # let(:valid_session) { {} }
 
+  before do
+    request.env['HTTP_REFERER'] = '/gift_cards' unless request&.env.nil?
+  end
+
   describe 'GET #index' do
     it 'assigns all gift_cards as @gift_cards' do
       gift_card = GiftCard.create! valid_attributes

@@ -1,5 +1,5 @@
 AllCops:
-  TargetRubyVersion: 2.2
+  TargetRubyVersion: 2.3
   Include:
     - '**/Rakefile'
   Exclude:
@@ -78,4 +78,3 @@ Metrics/AbcSize:
 
 Metrics/LineLength:
   Enabled: false
-  

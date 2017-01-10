@@ -42,24 +42,20 @@ class MailchimpUpdatesController < ApplicationController
   # POST /mailchimp_updates.json
   # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def create
-    if params['mailchimpkey'].present? && params['mailchimpkey'] == ENV['MAILCHIMP_WEBHOOK_SECRET_KEY']
-      @mailchimp_update = MailchimpUpdate.new(
-        email:        params['data']['email'],
-        update_type:  params['type'],
-        fired_at:     params['fired_at'],
-        raw_content:  params.to_json,
-        reason:       params['data']['reason'] || nil
-      )
-
-      respond_to do |format|
-        if @mailchimp_update.save
-          format.html { redirect_to @mailchimp_update, notice: 'Mailchimp update was successfully created.' }
-          format.json { render action: 'show', status: :created, location: @mailchimp_update }
-
-        else
-          Rails.logger.warn('MailchimpUpdatesController#create: Received new update with bad secret key.')
-          head '400'
-        end
+    @mailchimp_update = MailchimpUpdate.new(
+      email:        params['data']['email'],
+      update_type:  params['type'],
+      fired_at:     params['fired_at'],
+      raw_content:  params.to_json,
+      reason:       params['data']['reason'] || nil
+    )
+    respond_to do |format|
+      if @mailchimp_update.save
+        format.html { redirect_to @mailchimp_update, notice: 'Mailchimp update was successfully created.' }
+        format.json { render action: 'show', status: :created, location: @mailchimp_update }
+      else
+        Rails.logger.warn('MailchimpUpdatesController#create: Received new update with bad secret key.')
+        head '400'
       end
     end
   end

@@ -49,7 +49,7 @@ end
 
 class ActionController::TestCase
 
-  include Devise::TestHelpers
+  include Devise::Test::ControllerHelpers
 
   def setup
     @user = users(:admin)
