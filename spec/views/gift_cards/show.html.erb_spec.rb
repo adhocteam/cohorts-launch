@@ -4,6 +4,7 @@ RSpec.describe 'gift_cards/show', type: :view do
   before(:each) do
     @gift_card = assign(:gift_card, GiftCard.create!(
                                       gift_card_number: 12345,
+                                      batch_id: 1,
                                       person_id: 2,
                                       notes: 'Notes',
                                       created_by: 3,
