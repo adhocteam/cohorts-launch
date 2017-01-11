@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'rails_helper'
 require 'faker'
 require 'support/poltergeist_js_hack_for_login'

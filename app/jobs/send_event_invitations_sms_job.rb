@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # app/jobs/twilio/send_messages.rb
 #
 # module TwilioSender
@@ -55,14 +56,11 @@ class SendEventInvitationsSmsJob < Struct.new(:to, :event)
   end
   # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
-  def before(job)
-  end
+  def before(job); end
 
-  def after(job)
-  end
+  def after(job); end
 
-  def success(job)
-  end
+  def success(job); end
 
   private
 

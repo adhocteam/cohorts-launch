@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: people
@@ -34,7 +35,7 @@
 #
 
 # FIXME: Refactor and re-enable cop
-# rubocop:disable ClassLength
+# rubocop:disable ClassLength, Metrics/AbcSize
 class PeopleController < ApplicationController
 
   before_action :set_person, only: [:show, :edit, :update, :destroy]
@@ -75,12 +76,11 @@ class PeopleController < ApplicationController
   end
 
   # GET /people/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /people/:person_id/deactivate
   def deactivate
-    @person = Person.find_by_id params[:person_id]
+    @person = Person.find_by id: params[:person_id]
     @person.deactivate!('admin_interface')
     flash[:notice] = "#{@person.full_name} deactivated"
     respond_to do |format|
@@ -90,7 +90,7 @@ class PeopleController < ApplicationController
   end
 
   # FIXME: Refactor and re-enable cop
-  # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize,  Metrics/MethodLength, Rails/TimeZone
+  # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength, Rails/TimeZone
   #
   # POST /people/create_sms
   def create_sms

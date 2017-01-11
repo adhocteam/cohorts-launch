@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module SearchHelper
 
   def search_result_field(value, search_facet = nil)

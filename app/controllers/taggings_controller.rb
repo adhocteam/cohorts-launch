@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: taggings
@@ -13,17 +14,16 @@
 
 class TaggingsController < ApplicationController
 
-  # FIXME: Refactor and re-enable cop
-  # rubocop:disable Metrics/MethodLength
-  #
   def create
     @tag = Tag.find_or_initialize_by(name: params[:tagging].delete(:name))
 
     @tag.created_by ||= current_user.id
 
-    @tagging = Tagging.new(taggable_type: params[:tagging][:taggable_type],
-                           taggable_id: params[:tagging][:taggable_id],
-                           tag: @tag) if @tag.name != ''
+    if @tag.name != ''
+      @tagging = Tagging.new(taggable_type: params[:tagging][:taggable_type],
+                             taggable_id: params[:tagging][:taggable_id],
+                             tag: @tag)
+    end
 
     if @tagging.with_user(current_user).save
       respond_to do |format|
@@ -35,7 +35,6 @@ class TaggingsController < ApplicationController
       end
     end
   end
-  # rubocop:enable Metrics/MethodLength
 
   def destroy
     @tagging = Tagging.find(params[:id])

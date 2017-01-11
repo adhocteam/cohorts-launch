@@ -1,3 +1,4 @@
+# rubocop:disable Style/FrozenStringLiteralComment
 require 'rails_helper'
 
 RSpec.describe 'gift_cards/new', type: :view do

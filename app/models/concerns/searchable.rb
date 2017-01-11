@@ -1,5 +1,6 @@
+# frozen_string_literal: true
 require 'active_support/concern'
-
+# rubocop:disable Metrics/BlockLength
 module Searchable
 
   extend ActiveSupport::Concern
@@ -135,9 +136,6 @@ module Searchable
 
   end
 
-  # FIXME: Refactor and re-enable cop
-  # rubocop:disable Metrics/MethodLength
-  #
   def to_indexed_json
     # customize what data is sent to ES for indexing
     to_json(
@@ -152,6 +150,5 @@ module Searchable
       }
     )
   end
-  # rubocop:enable Metrics/MethodLength
 
 end

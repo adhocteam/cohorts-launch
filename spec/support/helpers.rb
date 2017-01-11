@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Helpers
   def login_with_admin_user
     user = FactoryGirl.create(:user)

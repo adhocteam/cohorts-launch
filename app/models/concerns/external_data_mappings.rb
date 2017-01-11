@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'active_support/concern'
 
 module ExternalDataMappings
@@ -5,10 +6,6 @@ module ExternalDataMappings
   extend ActiveSupport::Concern
 
   module ClassMethods
-
-    # FIXME: Refactor and re-enable cop
-    # rubocop:disable Metrics/MethodLength
-    #
     def map_connection_to_id(val)
       sym = case val
             when 'Broadband at home (cable, DSL, etc.)', 'Broadband at home (e.g. cable or DSL)'
@@ -25,11 +22,7 @@ module ExternalDataMappings
 
       Logan::Application.config.connection_mappings[sym]
     end
-    # rubocop:enable Metrics/MethodLength
 
-    # FIXME: Refactor and re-enable cop
-    # rubocop:disable Metrics/MethodLength
-    #
     def map_device_to_id(val)
       sym = case val
             when 'Laptop'
@@ -46,8 +39,6 @@ module ExternalDataMappings
       Rails.logger.debug "[map_device_to_id] given <<#{val}>> returning <<#{ret}>>"
       ret
     end
-    # rubocop:enable Metrics/MethodLength
-
   end
 
 end

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # FIXME: Refactor and re-enable cop
 # rubocop:disable ClassLength
 class CalendarController < ApplicationController
@@ -35,7 +36,6 @@ class CalendarController < ApplicationController
     end
   end
 
-  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
   def event_slots
     # events and their time slots.
     # TODO: refactor into user and person models with the same interface
@@ -58,7 +58,6 @@ class CalendarController < ApplicationController
       redirect_to root_url
     end
   end
-  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
   def events
     redirect_to root_url unless current_user

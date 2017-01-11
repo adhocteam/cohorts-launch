@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module ApplicationHelper
   def simple_time_select_options
     minutes = %w(00 15 30 45)

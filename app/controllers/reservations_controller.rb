@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: reservations
@@ -25,8 +26,7 @@ class ReservationsController < ApplicationController
 
   # GET /reservations/1
   # GET /reservations/1.json
-  def show
-  end
+  def show; end
 
   # GET /reservations/new
   def new
@@ -34,12 +34,8 @@ class ReservationsController < ApplicationController
   end
 
   # GET /reservations/1/edit
-  def edit
-  end
+  def edit; end
 
-  # FIXME: Refactor and re-enable cop
-  # rubocop:disable Metrics/MethodLength
-  #
   # POST /reservations
   # POST /reservations.json
   def create
@@ -56,11 +52,7 @@ class ReservationsController < ApplicationController
       end
     end
   end
-  # rubocop:enable Metrics/MethodLength
 
-  # FIXME: Refactor and re-enable cop
-  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
-  #
   # PATCH/PUT /reservations/1
   # PATCH/PUT /reservations/1.json
   def update
@@ -78,7 +70,6 @@ class ReservationsController < ApplicationController
       end
     end
   end
-  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Rails/TimeZone
 
   # DELETE /reservations/1
   # DELETE /reservations/1.json

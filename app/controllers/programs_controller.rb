@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: programs
@@ -23,8 +24,7 @@ class ProgramsController < ApplicationController
 
   # GET /programs/1
   # GET /programs/1.json
-  def show
-  end
+  def show; end
 
   # GET /programs/new
   def new
@@ -32,8 +32,7 @@ class ProgramsController < ApplicationController
   end
 
   # GET /programs/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /programs
   # POST /programs.json

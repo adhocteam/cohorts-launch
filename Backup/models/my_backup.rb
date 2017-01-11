@@ -1,4 +1,5 @@
 # encoding: utf-8
+# frozen_string_literal: true
 
 ##
 # Backup Generated: my_backup
@@ -14,9 +15,11 @@ Model.new(:my_backup, 'Description for my_backup') do
   env_file = File.dirname(__FILE__) + '/../../config/local_env.yml'
   defaults = File.dirname(__FILE__) + '/../../config/sample.local_env.yml'
 
-  YAML.load(File.open(env_file)).each do |key, value|
-    ENV[key.to_s] = value
-  end if File.exist?(env_file)
+  if File.exist?(env_file)
+    YAML.load(File.open(env_file)).each do |key, value|
+      ENV[key.to_s] = value
+    end
+  end
 
   # load in defaults unless they are already set
   YAML.load(File.open(defaults)).each do |key, value|

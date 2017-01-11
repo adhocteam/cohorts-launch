@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class EventInvitationMailer < ApplicationMailer
   def invite(email_address:, event:, person:)
     admin_email = ENV['MAILER_SENDER']

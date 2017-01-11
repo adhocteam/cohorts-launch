@@ -1,5 +1,6 @@
+# frozen_string_literal: true
 require 'csv'
-
+# rubocop:disable Metrics/AbcSize
 class GiftCardsController < ApplicationController
   before_action :set_gift_card, only: [:show, :edit, :update, :destroy]
 
@@ -29,8 +30,7 @@ class GiftCardsController < ApplicationController
 
   # GET /gift_cards/1
   # GET /gift_cards/1.json
-  def show
-  end
+  def show; end
 
   # GET /gift_cards/new
   def new
@@ -38,8 +38,7 @@ class GiftCardsController < ApplicationController
   end
 
   # GET /gift_cards/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /gift_cards
   # POST /gift_cards.json

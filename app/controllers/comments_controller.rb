@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: comments
@@ -24,8 +25,7 @@ class CommentsController < ApplicationController
 
   # GET /comments/1
   # GET /comments/1.json
-  def show
-  end
+  def show; end
 
   # GET /comments/new
   def new
@@ -33,8 +33,7 @@ class CommentsController < ApplicationController
   end
 
   # GET /comments/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /comments
   # POST /comments.json

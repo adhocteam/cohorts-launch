@@ -1,8 +1,6 @@
+# frozen_string_literal: true
 module GsmHelper
 
-  # FIXME: refactor and re-enable cop
-  # rubocop:disable Metrics/MethodLength
-  #
   # Returns a new string in GSM 03.38 encoding
   def to_gsm0338(message)
     # Replace bad characters with GSM allowed ones
@@ -25,6 +23,5 @@ module GsmHelper
     end
     message_clean
   end
-  # rubocop:enable Metrics/MethodLength
 
 end

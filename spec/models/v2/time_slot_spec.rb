@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: v2_time_slots
@@ -24,8 +25,8 @@ describe V2::TimeSlot do
   end
 
   it 'does allow overlapping for different events' do
-    event_1 = FactoryGirl.create(:time_slot, event_id: 1)
-    time_slot = ::V2::TimeSlot.new(start_time: event_1.start_time, end_time: event_1.end_time, event_id: 2)
+    event1 = FactoryGirl.create(:time_slot, event_id: 1)
+    time_slot = ::V2::TimeSlot.new(start_time: event1.start_time, end_time: event1.end_time, event_id: 2)
     expect(time_slot).to be_valid
   end
 end

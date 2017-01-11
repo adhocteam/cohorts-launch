@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: events
@@ -29,8 +30,7 @@ class EventsController < ApplicationController
 
   # GET /events/1
   # GET /events/1.json
-  def show
-  end
+  def show; end
 
   # GET /events/new
   def new
@@ -38,8 +38,7 @@ class EventsController < ApplicationController
   end
 
   # GET /events/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /events
   # POST /events.json
@@ -81,9 +80,6 @@ class EventsController < ApplicationController
     end
   end
 
-  # FIXME: Refactor and re-enable cop
-  # rubocop:disable Metrics/AbcSize
-  #
   def export
     @mce = MailchimpExport.new(name: "#{@event.name[0, 37]} Participants", recipients: @event.people.collect(&:email_address), created_by: current_user.id)
 
@@ -97,7 +93,6 @@ class EventsController < ApplicationController
       format.all { render text: "failed to send event to mailchimp: #{@mce.errors.inspect}", status: 400 }
     end
   end
-  # rubocop:enable Metrics/AbcSize
 
   private
 

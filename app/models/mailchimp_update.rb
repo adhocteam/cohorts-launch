@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: mailchimp_updates
@@ -17,7 +18,6 @@ class MailchimpUpdate < ActiveRecord::Base
   after_save :update_person
   self.per_page = 15
 
-  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def update_person
     Rails.logger.info("[ MailchimpUpdate#updatePerson ] email = #{email} update_type = #{update_type}")
 
@@ -43,5 +43,4 @@ class MailchimpUpdate < ActiveRecord::Base
                                 commentable_id: person.id)
     end
   end
-  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 end

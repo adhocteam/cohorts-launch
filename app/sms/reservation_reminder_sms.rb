@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # TODO: needs a spec.
 # but a unit test would make coverage more robust
 class ReservationReminderSms < ApplicationSms
@@ -9,7 +10,6 @@ class ReservationReminderSms < ApplicationSms
     @reservations = reservations
   end
 
-  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def generate_res_msgs
     msg = "You have #{res_count} reservation#{res_count > 1 ? 's': ''} soon.\n"
     reservations.each do |r|
@@ -24,7 +24,6 @@ class ReservationReminderSms < ApplicationSms
     msg += "#{calendar_url(token: to.token)}\n"
     msg += 'Thanks!'
   end
-  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
   def res_count
     @reservations.size

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'capybara/poltergeist'
 require 'capybara-screenshot/rspec'
 Capybara.save_path = 'tmp/capybara/'

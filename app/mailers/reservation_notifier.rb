@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ReservationNotifier < ApplicationMailer
   def notify(email_address:, reservation:)
     @email_address = email_address
@@ -63,8 +64,6 @@ class ReservationNotifier < ApplicationMailer
       reservation.user.email == email_address ?  nil : reservation.user.email
     end
 
-    # FIXME: Refactor and re-enable cop
-    # rubocop:disable Metrics/MethodLength
     def generate_ical(reservation)
       cal = Icalendar::Calendar.new
       cal.event do |e|
@@ -80,5 +79,4 @@ class ReservationNotifier < ApplicationMailer
       cal.publish
       cal.to_ical
     end
-  # rubocop:enable Metrics/MethodLength
 end

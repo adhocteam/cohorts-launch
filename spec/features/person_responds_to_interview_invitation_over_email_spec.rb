@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'rails_helper'
 require 'capybara/email/rspec'
 require 'support/poltergeist_js_hack_for_login'

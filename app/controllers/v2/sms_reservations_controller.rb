@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # FIXME: Refactor
 # rubocop:disable ClassLength
 class V2::SmsReservationsController < ApplicationController

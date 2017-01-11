@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class V2::CartController < ApplicationController
   include ApplicationHelper
 
@@ -7,7 +8,6 @@ class V2::CartController < ApplicationController
     render json: session[:cart].to_json
   end
 
-  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
   def add
     init
     to_add = cart_params[:person_id].to_i
@@ -41,7 +41,6 @@ class V2::CartController < ApplicationController
       format.html { render json: session[:cart].to_json }
     end
   end
-  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
   private
 

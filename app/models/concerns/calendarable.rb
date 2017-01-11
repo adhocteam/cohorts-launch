@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'active_support/concern'
 
 module Calendarable
@@ -51,7 +52,7 @@ module Calendarable
       if defined? person
         res  = description + "\n tel: #{person.phone_number}"
         res << " \n email: #{person.email_address}"
-        return res
+        res
       else
         description
       end

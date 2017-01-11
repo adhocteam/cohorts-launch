@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # TODO: needs a spec. The spec for SmsReservationsController covers it,
 # but a unit test would make coverage more robust
 class TimeSlotNotAvailableSms < ApplicationSms
@@ -18,7 +19,6 @@ class TimeSlotNotAvailableSms < ApplicationSms
     body << ENV['TEAM_NAME'] # TODO: signature should be configurable
   end
 
-  # rubocop:disable Metrics/MethodLength,
   def generate_slot_messages(available_slots)
     msg = ''
     if available_slots.length >= 1
@@ -35,5 +35,4 @@ class TimeSlotNotAvailableSms < ApplicationSms
     end
     msg
   end
-  # rubocop:enable Metrics/MethodLength,
 end

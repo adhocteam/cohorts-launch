@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: mailchimp_updates
@@ -26,8 +27,7 @@ class MailchimpUpdatesController < ApplicationController
 
   # GET /mailchimp_updates/1
   # GET /mailchimp_updates/1.json
-  def show
-  end
+  def show; end
 
   # GET /mailchimp_updates/new
   def new
@@ -35,12 +35,10 @@ class MailchimpUpdatesController < ApplicationController
   end
 
   # GET /mailchimp_updates/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /mailchimp_updates
   # POST /mailchimp_updates.json
-  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def create
     @mailchimp_update = MailchimpUpdate.new(
       email:        params['data']['email'],
@@ -60,7 +58,6 @@ class MailchimpUpdatesController < ApplicationController
     end
   end
 
-  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
   # PATCH/PUT /mailchimp_updates/1
   # PATCH/PUT /mailchimp_updates/1.json
   def update

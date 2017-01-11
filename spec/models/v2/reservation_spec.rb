@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: v2_reservations
@@ -30,17 +31,17 @@ describe V2::Reservation do
     let(:event_invitation_2) { FactoryGirl.create(:event_invitation) }
 
     it 'should not alow a person to be double booked' do
-      valid_args_1 = build_valid_args_from_event_invitation(event_invitation)
+      valid_args1 = build_valid_args_from_event_invitation(event_invitation)
       event_invitation_2.invitees << person
 
-      valid_args_2 = build_valid_args_from_event_invitation(event_invitation_2)
-      valid_args_2[:person] = person
+      valid_args2 = build_valid_args_from_event_invitation(event_invitation_2)
+      valid_args2[:person] = person
 
-      reservation_1 = subject.new(valid_args_1)
-      expect(reservation_1).to be_valid
-      reservation_1.save
-      reservation_2 = subject.new(valid_args_2)
-      expect(reservation_2).not_to be_valid
+      reservation1 = subject.new(valid_args1)
+      expect(reservation1).to be_valid
+      reservation1.save
+      reservation2 = subject.new(valid_args2)
+      expect(reservation2).not_to be_valid
     end
   end
 
@@ -49,14 +50,14 @@ describe V2::Reservation do
     let(:event_invitation_2) { FactoryGirl.create(:event_invitation, user: event_invitation.user) }
 
     it 'should not allow a user to be double booked' do
-      valid_args_1 = build_valid_args_from_event_invitation(event_invitation)
-      valid_args_2 = build_valid_args_from_event_invitation(event_invitation_2)
+      valid_args1 = build_valid_args_from_event_invitation(event_invitation)
+      valid_args2 = build_valid_args_from_event_invitation(event_invitation_2)
 
-      reservation_1 = subject.new(valid_args_1)
-      expect(reservation_1).to be_valid
-      reservation_1.save
-      reservation_2 = subject.new(valid_args_2)
-      expect(reservation_2).not_to be_valid
+      reservation1 = subject.new(valid_args1)
+      expect(reservation1).to be_valid
+      reservation1.save
+      reservation2 = subject.new(valid_args2)
+      expect(reservation2).not_to be_valid
     end
   end
 end

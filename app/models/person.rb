@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: people
@@ -112,7 +113,7 @@ class Person < ActiveRecord::Base
         [Arel::Nodes.build_quoted(' '), parent.table[:first_name], parent.table[:last_name]])])
   end
 
-  def self.ransackable_scopes(auth_object = nil)
+  def self.ransackable_scopes(_auth_object = nil)
     %i(no_signup_card)
   end
 
@@ -130,9 +131,9 @@ class Person < ActiveRecord::Base
   end
 
   WUFOO_FIELD_MAPPING = {
-    'Field1'   => :first_name,
-    'Field2'   => :last_name,
-    'Field4'  => :email_address,
+    'Field1' => :first_name,
+    'Field2' => :last_name,
+    'Field4' => :email_address,
     # 'Field276' => :voted,
     # 'Field277' => :called_311,
     # 'Field39'  => :primary_device_id, # type of primary
@@ -147,7 +148,7 @@ class Person < ActiveRecord::Base
     # 'Field269' => :city, # city
     # # 'Field47' =>  :state, # state
     # 'Field271' => :postal_code, # postal_code
-    'Field3'   => :phone_number, # phone_number
+    'Field3' => :phone_number, # phone_number
     # 'IP'       => :signup_ip, # client IP, ignored for the moment
 
   }.freeze
@@ -165,7 +166,7 @@ class Person < ActiveRecord::Base
   end
 
   # FIXME: Refactor and re-enable cop
-  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity, Rails/TimeZone
+  # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Rails/TimeZone
   #
   def self.initialize_from_wufoo_sms(params)
     new_person = Person.new
@@ -216,7 +217,7 @@ class Person < ActiveRecord::Base
 
     new_person
   end
-  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity, Rails/TimeZone
+  # rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity, Rails/TimeZone
 
   # FIXME: Refactor and re-enable cop
   # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Style/MethodName, Metrics/BlockNesting, Style/VariableName, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
@@ -255,10 +256,9 @@ class Person < ActiveRecord::Base
       end
     end
   end
-  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Style/MethodName, Metrics/BlockNesting, Style/VariableName, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  # rubocop:enable Metrics/MethodLength, Style/MethodName, Metrics/BlockNesting, Style/VariableName, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
   # FIXME: Refactor and re-enable cop
-  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Rails/TimeZone, Metrics/PerceivedComplexity
   #
   def self.initialize_from_wufoo(params)
     new_person = Person.new
@@ -300,7 +300,7 @@ class Person < ActiveRecord::Base
 
     new_person
   end
-  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Rails/TimeZone, Metrics/PerceivedComplexity
+  # rubocop:enable Metrics/MethodLength, Rails/TimeZone, Metrics/PerceivedComplexity
 
   def primary_device_type_name
     if primary_device_id.present?
@@ -371,63 +371,59 @@ class Person < ActiveRecord::Base
   # Compare to other records in the database to find possible duplicates.
   def possible_duplicates
     @duplicates = {}
-    if last_name.present?
-      last_name_duplicates = Person.where(last_name: last_name).where.not(id: id)
-      last_name_duplicates.each do |duplicate|
-        duplicate_hash = {}
-        duplicate_hash['person'] = duplicate
-        duplicate_hash['match_count'] = 1
-        duplicate_hash['last_name_match'] = true
-        duplicate_hash['matches_on'] = ['Last Name']
-        @duplicates[duplicate.id] = duplicate_hash
-      end
-    end
-    if email_address.present?
-      email_address_duplicates = Person.where(email_address: email_address).where.not(id: id)
-      email_address_duplicates.each do |duplicate|
-        if @duplicates.key? duplicate.id
-          @duplicates[duplicate.id]['match_count'] += 1
-          @duplicates[duplicate.id]['matches_on'].push('Email Address')
-        else
-          @duplicates[duplicate.id] = {}
-          @duplicates[duplicate.id]['person'] = duplicate
-          @duplicates[duplicate.id]['match_count'] = 1
-          @duplicates[duplicate.id]['matches_on'] = ['Email Address']
-        end
-        @duplicates[duplicate.id]['email_address_match'] = true
-      end
-    end
-    if phone_number.present?
-      phone_number_duplicates = Person.where(phone_number: phone_number).where.not(id: id)
-      phone_number_duplicates.each do |duplicate|
-        if @duplicates.key? duplicate.id
-          @duplicates[duplicate.id]['match_count'] += 1
-          @duplicates[duplicate.id]['matches_on'].push('Phone Number')
-        else
-          @duplicates[duplicate.id] = {}
-          @duplicates[duplicate.id]['person'] = duplicate
-          @duplicates[duplicate.id]['match_count'] = 1
-          @duplicates[duplicate.id]['matches_on'] = ['Phone Number']
-        end
-        @duplicates[duplicate.id]['phone_number_match'] = true
-      end
-    end
-    if address_1.present?
-      address_1_duplicates = Person.where(address_1: address_1).where.not(id: id)
-      address_1_duplicates.each do |duplicate|
-        if @duplicates.key? duplicate.id
-          @duplicates[duplicate.id]['match_count'] += 1
-          @duplicates[duplicate.id]['matches_on'].push('Address_1')
-        else
-          @duplicates[duplicate.id] = {}
-          @duplicates[duplicate.id]['person'] = duplicate
-          @duplicates[duplicate.id]['match_count'] = 1
-          @duplicates[duplicate.id]['matches_on'] = ['Address_1']
-        end
-        @duplicates[duplicate.id]['address_1_match'] = true
-      end
-    end
+    check_last_name_duplicates if last_name.present?
+    check_email_duplicates if email_address.present?
+    check_phone_number_duplicates if phone_number.present?
+    check_address_duplicates if address_1.present?
     @duplicates
+  end
+
+  def check_last_name_duplicates
+    last_name_duplicates = Person.where(last_name: last_name).where.not(id: id)
+    last_name_duplicates.each do |duplicate|
+      duplicate_hash = {}
+      duplicate_hash['person'] = duplicate
+      duplicate_hash['match_count'] = 1
+      duplicate_hash['last_name_match'] = true
+      duplicate_hash['matches_on'] = ['Last Name']
+      @duplicates[duplicate.id] = duplicate_hash
+    end
+  end
+
+  def check_email_duplicates
+    email_address_duplicates = Person.where(email_address: email_address).where.not(id: id)
+    email_address_duplicates.each do |duplicate|
+      add_duplicate(duplicate, 'Email Address')
+      @duplicates[duplicate.id]['email_address_match'] = true
+    end
+  end
+
+  def check_phone_number_duplicates
+    phone_number_duplicates = Person.where(phone_number: phone_number).where.not(id: id)
+    phone_number_duplicates.each do |duplicate|
+      add_duplicate(duplicate, 'Phone Number')
+      @duplicates[duplicate.id]['phone_number_match'] = true
+    end
+  end
+
+  def check_address_duplicates
+    address_1_duplicates = Person.where(address_1: address_1).where.not(id: id)
+    address_1_duplicates.each do |duplicate|
+      add_duplicate(duplicate, 'Address_1')
+      @duplicates[duplicate.id]['address_1_match'] = true
+    end
+  end
+
+  def add_duplicate(duplicate, type)
+    if @duplicates.key? duplicate.id
+      @duplicates[duplicate.id]['match_count'] += 1
+      @duplicates[duplicate.id]['matches_on'].push(type)
+    else
+      @duplicates[duplicate.id] = {}
+      @duplicates[duplicate.id]['person'] = duplicate
+      @duplicates[duplicate.id]['match_count'] = 1
+      @duplicates[duplicate.id]['matches_on'] = [type]
+    end
   end
 
 end

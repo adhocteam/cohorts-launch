@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require_relative '../../config/environment'
 
 require 'csv'
@@ -50,14 +51,11 @@ class MailChimpImporter
   end
   # rubocop:enable Metrics/MethodLength
 
-  # FIXME: Refactor and re-enable cop
-  # rubocop:disable Metrics/MethodLength
-  #
   def load_wufoo_csv
     $stdout.puts 'starting wufoo import'
     count = 0
     CSV.foreach(@options.wufoo_infile, headers: :first_row) do |line|
-      person = Person.find_by_email_address(line['Email'])
+      person = Person.find_by(email_address: line['Email'])
 
       if person.blank?
         $stderr.puts("\n[load_wufoo_csv] skipping import of #{line['Email']}")
@@ -80,7 +78,6 @@ class MailChimpImporter
 
     $stdout.puts "\ncompleted wufoo import, #{count} records"
   end
-  # rubocop:enable Metrics/MethodLength
 
   # FIXME: Refactor and re-enable cop
   # rubocop:disable Rails/Output

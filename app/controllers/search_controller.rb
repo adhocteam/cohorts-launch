@@ -1,12 +1,13 @@
+# frozen_string_literal: true
 require 'csv'
-# rubocop:disable ClassLength
+# rubocop:disable ClassLength, Metrics/BlockLength, Metrics/AbcSize
 class SearchController < ApplicationController
 
   include PeopleHelper
   include GsmHelper
 
   # FIXME: Refactor and re-enable cop
-  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   #
   def index
     # no pagination for CSV export
@@ -130,11 +131,8 @@ class SearchController < ApplicationController
     end
   end
 
-  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  # rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
-  # FIXME: Refactor and re-enable cop
-  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
-  #
   def export_ransack
     list_name = params.delete(:segment_name)
     @q = Person.ransack(params[:q])
@@ -168,10 +166,9 @@ class SearchController < ApplicationController
       format.all { render text: "failed to send event to mailchimp: #{@mce.errors.inspect}", status: 400 }
     end
   end
-  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
   # FIXME: Refactor and re-enable cop
-  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Style/MethodName, Style/VariableName
+  # rubocop:disable Metrics/MethodLength, Style/MethodName, Style/VariableName
   #
   def exportTwilio
     # send messages to all people

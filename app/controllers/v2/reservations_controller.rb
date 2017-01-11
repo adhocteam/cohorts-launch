@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: v2_reservations
@@ -39,8 +40,6 @@ class V2::ReservationsController < ApplicationController
     @reservation = V2::Reservation.new(time_slot: V2::TimeSlot.new)
   end
 
-  # rubocop:disable Metrics/MethodLength
-  # TODO: refactor
   def create
     @reservation = V2::Reservation.new(reservation_params)
     if @reservation.save
@@ -56,7 +55,6 @@ class V2::ReservationsController < ApplicationController
       format.html { render :new }
     end
   end
-  # rubocop:enable Metrics/MethodLength
 
   # no authorization here. yet.
 
@@ -69,8 +67,7 @@ class V2::ReservationsController < ApplicationController
     @comment = Comment.new commentable: @reservation
   end
 
-  def edit
-  end
+  def edit; end
 
   # these are our methods to
   def confirm
@@ -158,7 +155,6 @@ class V2::ReservationsController < ApplicationController
       @visitor
     end
 
-    # rubocop:disable Metrics/MethodLength
     def send_notifications(reservation)
       if reservation.person.preferred_contact_method == 'EMAIL'
         ReservationNotifier.notify(
@@ -174,7 +170,6 @@ class V2::ReservationsController < ApplicationController
         reservation: reservation
       ).deliver_later
     end
-    # rubocop:enable Metrics/MethodLength
 
     def event_params
       params.permit(:event_id)

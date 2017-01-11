@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # TODO: needs a spec. The acceptance
 # spec 'SMS invitation to phone call' covers it,
 # but a unit test would make coverage more robust

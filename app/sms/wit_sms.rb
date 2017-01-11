@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # TODO: needs a spec. The spec for SmsReservationsController covers it,
 # but a unit test would make coverage more robust
 class WitSms < ApplicationSms

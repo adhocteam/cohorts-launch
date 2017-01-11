@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class V2::TimeWindow
 
   # rubocop:disable Metrics/ParameterLists

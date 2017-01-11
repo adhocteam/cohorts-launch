@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Public::PeopleController < ApplicationController
   layout false
   after_action :allow_iframe
@@ -19,7 +20,6 @@ class Public::PeopleController < ApplicationController
   end
 
   # POST /people
-  # rubocop:disable Metrics/MethodLength
   def create
     @person = ::Person.new(person_params)
     @person.signup_at = Time.current
@@ -39,7 +39,6 @@ class Public::PeopleController < ApplicationController
       format.html { render action: 'create' }
     end
   end
-  # rubocop:enable Metrics/MethodLength
 
   def deactivate
     @person =Person.find_by(token: d_params[:token])
@@ -57,7 +56,6 @@ class Public::PeopleController < ApplicationController
       params.permit(:person_id, :token)
     end
 
-    # rubocop:disable Metrics/MethodLength
     def person_params
       params.require(:person).permit(:first_name,
         :last_name,
@@ -80,7 +78,6 @@ class Public::PeopleController < ApplicationController
         :secondary_connection_description,
         :participation_type)
     end
-    # rubocop:enable Metrics/MethodLength
 
     def allow_iframe
       response.headers.except! 'X-Frame-Options'

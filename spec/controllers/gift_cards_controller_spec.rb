@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'rails_helper'
 require 'faker'
 require 'support/poltergeist_js_hack_for_login'
@@ -20,7 +21,6 @@ require 'capybara/poltergeist'
 # is no simpler way to get a handle on the object needed for the example.
 # Message expectations are only used when there is no simpler way to specify
 # that an instance is receiving a specific message.
-
 RSpec.describe GiftCardsController, type: :controller do
   login_user
 
