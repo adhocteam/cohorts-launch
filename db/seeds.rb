@@ -43,7 +43,7 @@ Person.create(
 )
 
 User.create(
-  email: 'cutgroup@example.com',
+  email: 'cohorts@example.com',
   password: 'foobar123',
   password_confirmation: 'foobar123',
   approved: true,

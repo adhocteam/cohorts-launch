@@ -74,10 +74,10 @@
 
 <div class="span12">
 Search Parameters:
-  <% if params[:q] %> 
+  <% if params[:q] %>
     <%- params[:q].each do |param_key, param_value| %>
       <% if param_value.present? and param_value != [""] %>
-        <%= param_key %>: "<%= param_value %>"  
+        <%= param_key %>: "<%= param_value %>"
       <% end %>
     <% end -%>
   <% else %>
@@ -116,7 +116,7 @@ Search Parameters:
           Primary Connection: <%= search_result_field human_connection_type_name(result.primary_connection_id), :connection_id %> <%= search_result_field result.primary_connection_description, :connection_description %><br>
           <% if result.secondary_connection_description.present? %>Secondary Connection: <%= search_result_field result.secondary_connection_description, :connection_description %><% end %><br>
           Preferred Contact Method: <%= search_result_field result.preferred_contact_method, :preferred_contact_method %>
-          
+
         </td>
       </tr>
       <% end %>
@@ -144,7 +144,7 @@ Search Parameters:
     <div id="export-to-mailchimp-form" style="display:none">
       <%= form_tag search_export_path, remote: true, class: "form-inline" %>
         <%= text_field_tag :segment_name, '', class: "input-xlarge", placeholder: "enter a name for this list (segment)" %>
-        <% if params[:q] %> 
+        <% if params[:q] %>
           <%- params[:q].each do |param_key, param_value| %>
             <%= hidden_field_tag "q[#{param_key}]", param_value %>
           <% end -%>
@@ -156,7 +156,7 @@ Search Parameters:
   <div class="span12">
     <div id="export-to-twilio-form" style="display:none">
       <%= form_tag search_exportTwilio_path, remote: true, class: "form-inline" %>
-        <% if params[:q] %> 
+        <% if params[:q] %>
           <%- params[:q].each do |param_key, param_value| %>
             <%= hidden_field_tag "q[#{param_key}]", param_value %>
           <% end -%>
@@ -176,8 +176,7 @@ Search Parameters:
 
 <div class="row">
   <div class="span12" style="margin-top: 30px;">
-    <p>There are no CUTGroup members that match your search.</p>
+    <p>There are no Cohorts members that match your search.</p>
   </div>
 </div>
 <% end %>
-

@@ -29,7 +29,7 @@ feature 'search using ransack'  do
     visit '/search/index_ransack'
     fill_in 'q_postal_code_start', with: '901'
     click_button 'Search'
-    expect(page).to have_text('There are no CUTGroup members that match your search')
+    expect(page).to have_text('There are no Cohorts members that match your search')
   end
 
   # scenario 'export search results to csv' do
