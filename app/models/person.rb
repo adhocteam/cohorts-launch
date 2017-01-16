@@ -229,7 +229,7 @@ class Person < ActiveRecord::Base
           begin
 
             gibbon = Gibbon::Request.new
-            mailchimpSend = gibbon.lists(Logan::Application.config.cohorts_mailchimp_list_id).members(Digest::MD5.hexdigest(email_address.downcase)).upsert(
+            mailchimpSend = gibbon.lists(Cohorts::Application.config.cohorts_mailchimp_list_id).members(Digest::MD5.hexdigest(email_address.downcase)).upsert(
               body: { email_address: email_address.downcase,
                       status: 'subscribed',
                       merge_fields: { FNAME: first_name || '',
@@ -304,25 +304,25 @@ class Person < ActiveRecord::Base
 
   def primary_device_type_name
     if primary_device_id.present?
-      Logan::Application.config.device_mappings.rassoc(primary_device_id)[0].to_s
+      Cohorts::Application.config.device_mappings.rassoc(primary_device_id)[0].to_s
     end
   end
 
   def secondary_device_type_name
     if secondary_device_id.present?
-      Logan::Application.config.device_mappings.rassoc(secondary_device_id)[0].to_s
+      Cohorts::Application.config.device_mappings.rassoc(secondary_device_id)[0].to_s
     end
   end
 
   def primary_connection_type_name
     if primary_connection_id.present?
-      Logan::Application.config.connection_mappings.rassoc(primary_connection_id)[0].to_s
+      Cohorts::Application.config.connection_mappings.rassoc(primary_connection_id)[0].to_s
     end
   end
 
   def secondary_connection_type_name
     if secondary_connection_id.present?
-      Logan::Application.config.connection_mappings.rassoc(secondary_connection_id)[0].to_s
+      Cohorts::Application.config.connection_mappings.rassoc(secondary_connection_id)[0].to_s
     end
   end
 

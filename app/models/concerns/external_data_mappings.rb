@@ -20,7 +20,7 @@ module ExternalDataMappings
               :other
             end
 
-      Logan::Application.config.connection_mappings[sym]
+      Cohorts::Application.config.connection_mappings[sym]
     end
 
     def map_device_to_id(val)
@@ -35,7 +35,7 @@ module ExternalDataMappings
               :tablet
             end
 
-      ret = Logan::Application.config.device_mappings[sym]
+      ret = Cohorts::Application.config.device_mappings[sym]
       Rails.logger.debug "[map_device_to_id] given <<#{val}>> returning <<#{ret}>>"
       ret
     end

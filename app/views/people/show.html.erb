@@ -26,23 +26,23 @@
 
           <dt>Primary device</dt>
           <dd><%= best_in_place @person,:primary_device_description %> <span class='muted'>
-          (<%= best_in_place @person, :primary_device_id, as: :select, collection:  Logan::Application.config.device_mappings.collect{|i| [i.last, i.first]}  %>)</span> </dd>
+          (<%= best_in_place @person, :primary_device_id, as: :select, collection:  Cohorts::Application.config.device_mappings.collect{|i| [i.last, i.first]}  %>)</span> </dd>
 
           <dt>Secondary device</dt>
           <dd><%= best_in_place @person,:secondary_device_description %> <span class='muted'>
-          (<%= best_in_place @person, :secondary_device_id, as: :select, collection:  Logan::Application.config.device_mappings.collect{|i| [i.last, i.first]}  %>)</span> </dd>
+          (<%= best_in_place @person, :secondary_device_id, as: :select, collection:  Cohorts::Application.config.device_mappings.collect{|i| [i.last, i.first]}  %>)</span> </dd>
 
           <dt>Primary connection method</dt>
           <dd>
             <%= best_in_place @person,:primary_connection_description %>
-            <span class='muted'>(<%= best_in_place @person, :primary_connection_id , as: :select, collection: Logan::Application.config.connection_mappings.collect{|i| [i.last,i.first.to_s.humanize]} %>)
+            <span class='muted'>(<%= best_in_place @person, :primary_connection_id , as: :select, collection: Cohorts::Application.config.connection_mappings.collect{|i| [i.last,i.first.to_s.humanize]} %>)
             </span>
           </dd>
 
           <dt>Secondary connection method</dt>
           <dd>
             <%= best_in_place @person,:secondary_connection_description %>
-            <span class='muted'>(<%= best_in_place @person, :secondary_connection_id , as: :select, collection: Logan::Application.config.connection_mappings.collect{|i| [i.last,i.first.to_s.humanize]} %>)
+            <span class='muted'>(<%= best_in_place @person, :secondary_connection_id , as: :select, collection: Cohorts::Application.config.connection_mappings.collect{|i| [i.last,i.first.to_s.humanize]} %>)
             </span>
           </dd>
 

@@ -95,7 +95,7 @@ class PeopleController < ApplicationController
   # POST /people/create_sms
   def create_sms
     if params['HandshakeKey'].present?
-      if Logan::Application.config.wufoo_handshake_key != params['HandshakeKey']
+      if Cohorts::Application.config.wufoo_handshake_key != params['HandshakeKey']
         Rails.logger.warn("[wufoo] received request with invalid handshake. Full request: #{request.inspect}")
         head(403) && return
       end
@@ -166,7 +166,7 @@ class PeopleController < ApplicationController
     from_wufoo = false
     # if uatest == "Wufoo.com"
     if params['HandshakeKey'].present?
-      if Logan::Application.config.wufoo_handshake_key != params['HandshakeKey']
+      if Cohorts::Application.config.wufoo_handshake_key != params['HandshakeKey']
         Rails.logger.warn("[wufoo] received request with invalid handshake. Full request: #{request.inspect}")
         head(403) && return
       end

@@ -1,4 +1,4 @@
-Logan::Application.routes.draw do
+Cohorts::Application.routes.draw do
   resources :gift_cards
   resources :mailchimp_updates
   namespace :public do

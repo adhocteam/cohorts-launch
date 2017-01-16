@@ -174,7 +174,7 @@ class TwilioMessagesController < ApplicationController
     # @twilio_message = TwilioMessage.new
     # @client.messages.create(
     #   from: ENV['TWILIO_NUMBER'],
-    #   to: Logan::Application.config.twilio_number,
+    #   to: Cohorts::Application.config.twilio_number,
     #   body: 'Hey there!'
 
     # )
@@ -222,7 +222,7 @@ class TwilioMessagesController < ApplicationController
     # @twilio_message = TwilioMessage.new
     # @client.messages.create(
     #   from: ENV['TWILIO_NUMBER'],
-    #   to: Logan::Application.config.twilio_number,
+    #   to: Cohorts::Application.config.twilio_number,
     #   body: 'Hey there!'
 
     # )

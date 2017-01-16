@@ -51,7 +51,7 @@ class SubmissionsController < ApplicationController
   #
   def create
     if params['HandshakeKey'].present?
-      if Logan::Application.config.wufoo_handshake_key != params['HandshakeKey']
+      if Cohorts::Application.config.wufoo_handshake_key != params['HandshakeKey']
         Rails.logger.warn("[wufoo] received request with invalid handshake. Full request: #{request.inspect}")
         head(403) && return
       end
@@ -105,7 +105,7 @@ class SubmissionsController < ApplicationController
       this_form_id = params['submission']['form_id']
       # Rails.logger.info "[submissions_controller create] this_form_id = #{this_form_id}"
       if this_form_id.present?
-        this_form = Logan::Application.config.wufoo.form(this_form_id)
+        this_form = Cohorts::Application.config.wufoo.form(this_form_id)
         @submission.field_structure = { 'Fields' => this_form.fields }.to_json
         @submission.form_structure = this_form.details.to_json
         raw_content = { 'FieldStructure' => @submission.field_structure }
