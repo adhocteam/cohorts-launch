@@ -25,7 +25,7 @@ class Public::PeopleController < ApplicationController
     @person.signup_at = Time.current
 
     success_msg = 'Thanks! We will be in touch soon!'
-    error_msg   = "Oops! Looks like something went wrong. Please get in touch with us at <a href='mailto:#{ENV['MAILER_SENDER']}?subject=Patterns sign up problem'>#{ENV['MAILER_SENDER']}</a> to figure it out!"
+    error_msg   = "Oops! Looks like something went wrong. Please get in touch with us at <a href='mailto:#{ENV['MAILER_SENDER']}?subject=Cohorts sign up problem'>#{ENV['MAILER_SENDER']}</a> to figure it out!"
     if @person.save
       msg =  success_msg
       add_tag(params[:age_range]) unless params[:age_range].blank?

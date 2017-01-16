@@ -41,11 +41,11 @@ Vagrant.configure(2) do |config|
     # https://github.com/smdahlen/vagrant-hostmanager#passwordless-sudo
     if !Gem.win_platform?
       me = `whoami`.chomp
-      config.vm.hostname = "#{me}.patterns.dev"
+      config.vm.hostname = "#{me}.cohorts.dev"
     else
       # this should work:
       # http://stackoverflow.com/questions/3251757/ruby-get-currently-logged-in-user-on-windows
-      config.vm.hostname = "#{ENV['USERNAME']}.patterns.dev"
+      config.vm.hostname = "#{ENV['USERNAME']}.cohorts.dev"
     end
     config.hostmanager.enabled = true
     config.hostmanager.include_offline = true

@@ -122,7 +122,7 @@ Install Vagrant: https://vagrantup.com/
 ```
 vagrant plugin install vagrant-cachier vagrant-hostmanager
 vagrant up
-open http://`whoami`.patterns.dev
+open http://`whoami`.cohorts.dev
 ```
 
 To access the virtual machine, run:
