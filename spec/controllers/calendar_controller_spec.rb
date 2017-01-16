@@ -17,7 +17,7 @@ RSpec.describe CalendarController, type: :controller do
 
   describe 'admin user logged in' do
     before(:each) do
-      sign_in :user, user # sign_in(scope, resource)
+      sign_in user, scope: :user
     end
 
     describe 'GET #show' do

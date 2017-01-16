@@ -126,16 +126,16 @@ Search Parameters:
 </div>
 
 <div class="row">
-  <div class="offset4 span8"><%= will_paginate @results, :renderer => BootstrapPagination::Rails %></div>
+  <div class="offset4 span8"><%= will_paginate @results, renderer: BootstrapPagination::Rails %></div>
 </div>
 
 <div class="row">
   <div class="span12">
-    <%= link_to "Save this list as CSV", search_index_ransack_path(params.merge(format: 'csv')), :class => "btn"  %>
+    <%= link_to "Save this list as CSV", search_index_ransack_path(params.merge(format: 'csv').symbolize_keys), class: "btn"  %>
     <span>
-    <%= link_to "Export this list to MailChimp", "#", :class => "btn", :id => "export-to-mailchimp-form-toggle" %>
+    <%= link_to "Export this list to MailChimp", "#", class: "btn", id: "export-to-mailchimp-form-toggle" %>
     </span>
-    <span><%= link_to "Send text messages to this list", "#", :class => "btn", :id => "export-to-twilio-form-toggle" %></span>
+    <span><%= link_to "Send text messages to this list", "#", class: "btn", id: "export-to-twilio-form-toggle" %></span>
   </div>
 </div>
 

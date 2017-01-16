@@ -50,7 +50,7 @@ class ActionController::TestCase
 
   def setup
     @user = users(:admin)
-    sign_in @user
+    sign_in @user, scope: :user
   end
 
 end

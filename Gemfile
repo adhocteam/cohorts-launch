@@ -11,8 +11,6 @@ gem 'redis' # ephemeral storage. used for expiring wit.ai contexts
 
 gem 'validates_overlap' # to ensure we don't double book people
 
-gem 'rails_12factor'
-
 gem 'mail', '2.6.3'
 
 gem 'ransack'
@@ -50,6 +48,7 @@ end
 
 group :production do
   gem 'newrelic_rpm'
+  gem 'rails_12factor'
 end
 
 # Gems used only for assets and not required
