@@ -1,6 +1,5 @@
 # frozen_string_literal: true
-require 'coveralls'
-Coveralls.wear_merged!('rails')
+require 'simplecov'
 
 require 'devise'
 require 'factory_girl_rails'

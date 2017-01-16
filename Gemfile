@@ -167,7 +167,7 @@ group :test do
   # generate fake data w/faker: http://rubydoc.info/github/stympy/faker/master/frames
   gem 'faker'
   gem 'rubocop', require: false
-  gem 'coveralls', require: false
+  gem 'simplecov', require: false
   # screenshots when capybara fails
   gem 'capybara-screenshot'
 
