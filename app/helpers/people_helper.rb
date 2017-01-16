@@ -64,7 +64,7 @@ module PeopleHelper
     if person.email_address.present? && person.verified.start_with?('Verified')
       begin
         gibbon = Gibbon::Request.new
-        gibbon.lists(Logan::Application.config.cut_group_mailchimp_list_id).members(Digest::MD5.hexdigest(new_person.email_address.downcase)).upsert(
+        gibbon.lists(Logan::Application.config.cohorts_mailchimp_list_id).members(Digest::MD5.hexdigest(new_person.email_address.downcase)).upsert(
           body: { email_address: new_person.email_address.downcase,
                   status: 'subscribed',
                   merge_fields: { FNAME: person.first_name,
