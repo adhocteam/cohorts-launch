@@ -15,6 +15,7 @@ gem 'mail', '2.6.3'
 
 gem 'ransack'
 
+# Use puma as the app server
 gem 'puma'
 
 group :development do
@@ -39,9 +40,6 @@ group :development do
 
   # silences logging of requests for assets
   gem 'quiet_assets'
-
-  # enabling us to deploy via travis and encrypted keys!
-  gem 'travis'
 
   gem 'byebug'
 end
@@ -72,9 +70,6 @@ gem 'jbuilder', '~> 1.0.1'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
-
-# Use unicorn as the app server
-gem 'unicorn'
 
 # To use debugger
 # gem 'debugger'

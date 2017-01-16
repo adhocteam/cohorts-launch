@@ -46,3 +46,4 @@ screenshot*
 !.elasticbeanstalk/*.global.yml
 
 .byebug_history
+dump.rdb
