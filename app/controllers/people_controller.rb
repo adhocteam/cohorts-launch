@@ -163,7 +163,6 @@ class PeopleController < ApplicationController
   # POST /people.json
   def create
     from_wufoo = false
-    # if uatest == "Wufoo.com"
     if params['HandshakeKey'].present?
       unless params['HandshakeKey'].start_with? Cohorts::Application.config.wufoo_handshake_key_prefix
         Rails.logger.warn("[wufoo] received request with invalid handshake. Full request: #{request.inspect}")
@@ -172,7 +171,7 @@ class PeopleController < ApplicationController
 
       Rails.logger.info('[wufoo] received a submission from wufoo')
       from_wufoo = true
-      @person = Person.initialize_from_wufoo(params)
+      @person = Person.initialize_from_wufoo(JSON.parse(params.to_json, object_class: OpenStruct))
       unless @person.save
         Rails.logger.warn("Person error: #{@person.errors.inspect}")
       end
