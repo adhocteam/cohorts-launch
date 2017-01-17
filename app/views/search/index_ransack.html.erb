@@ -104,7 +104,6 @@ Search Parameters:
         <td class="span4">
           Address: <%= search_result_field result.address_1, :address  %><br/>
           City: <%= search_result_field result.city, :city %>  ZIP: <%= search_result_field result.postal_code, :postal_code %><br/>
-          Neighborhood: <%= search_result_field result.neighborhood, :neighborhood %><br/>
           Phone: <% if (result.phone_number.present?) %><%= search_result_field result.phone_number.phony_formatted(format: :national, spaces: '-') , :phone_number %><% else %> <%= search_result_field result.phone_number, :phone_number %><% end %><br/>
           Email: <%= search_result_field result.email_address, :email_address %><br/>
           Verified?: <%= search_result_field result.verified, :verified %>

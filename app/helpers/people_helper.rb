@@ -26,7 +26,6 @@
 #  signup_ip                        :string(255)
 #  signup_at                        :datetime
 #  voted                            :string(255)
-#  called_311                       :string(255)
 #  secondary_connection_id          :integer
 #  secondary_connection_description :string(255)
 #  verified                         :string(255)
@@ -73,7 +72,6 @@ module PeopleHelper
                                   MMERGE4: person.postal_code,
                                   MMERGE5: person.participation_type,
                                   MMERGE6: person.voted,
-                                  MMERGE7: person.called_311,
                                   MMERGE8: person.primary_device_description,
                                   MMERGE9: person.secondary_device_id,
                                   MMERGE10: person.secondary_device_description,

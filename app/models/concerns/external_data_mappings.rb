@@ -8,11 +8,11 @@ module ExternalDataMappings
   module ClassMethods
     def map_connection_to_id(val)
       sym = case val
-            when 'Broadband at home (cable, DSL, etc.)', 'Broadband at home (e.g. cable or DSL)'
+            when 'Broadband at home (cable, DSL, etc.)', 'Home broadband (cable, DSL)'
               :home_broadband
-            when 'Public computer center'
+            when 'Public computer'
               :public_computer
-            when 'Phone plan with data'
+            when 'Phone with data plan'
               :phone
             when 'Public wi-fi', 'Public Wi-Fi'
               :public_wifi
@@ -25,11 +25,11 @@ module ExternalDataMappings
 
     def map_device_to_id(val)
       sym = case val
-            when 'Laptop'
+            when 'Laptop', 'Laptop Computer'
               :laptop
-            when 'Smart phone', 'Smart phone (e.g. iPhone or Android phone)'
+            when 'Smartphone', 'Smartphone (e.g. iPhone or Android phone)'
               :smartphone
-            when 'Desktop computer'
+            when 'Desktop', 'Desktop Computer'
               :desktop
             when 'Tablet', 'Tablet (e.g. iPad)'
               :tablet

@@ -26,7 +26,6 @@
 #  signup_ip                        :string(255)
 #  signup_at                        :datetime
 #  voted                            :string(255)
-#  called_311                       :string(255)
 #  secondary_connection_id          :integer
 #  secondary_connection_description :string(255)
 #  verified                         :string(255)
@@ -35,7 +34,6 @@
 #  active                           :boolean          default(TRUE)
 #  deactivated_at                   :datetime
 #  deactivated_method               :string(255)
-#  neighborhood                     :string(255)
 #  tag_count_cache                  :integer          default(0)
 #
 
@@ -46,7 +44,6 @@ class Person < ActiveRecord::Base
 
   include Searchable
   include ExternalDataMappings
-  include Neighborhoods
 
   phony_normalize :phone_number, default_country_code: 'US'
   phony_normalized_method :phone_number, default_country_code: 'US'
@@ -76,7 +73,6 @@ class Person < ActiveRecord::Base
 
   after_update  :sendToMailChimp
   after_create  :sendToMailChimp
-  after_create  :update_neighborhood
 
   validates :first_name, presence: true
   validates :last_name, presence: true
@@ -130,27 +126,28 @@ class Person < ActiveRecord::Base
     Money.new(total, 'USD')
   end
 
-  WUFOO_FIELD_MAPPING = {
-    'Field1' => :first_name,
-    'Field2' => :last_name,
-    'Field4' => :email_address,
-    # 'Field276' => :voted,
-    # 'Field277' => :called_311,
-    # 'Field39'  => :primary_device_id, # type of primary
-    # 'Field21'  => :primary_device_description, # desc of primary
-    # 'Field40'  => :secondary_device_id,
-    # 'Field24'  => :secondary_device_description, # desc of secondary
-    # 'Field41'  => :primary_connection_id, # connection type
-    # # 'Field41' =>  :primary_connection_description, # description of connection
-    # 'Field42'  => :secondary_connection_id, # connection type
-    # # 'Field42' =>  :secondary_connection_description, # description of connection
-    # 'Field268' => :address_1, # address_1
-    # 'Field269' => :city, # city
-    # # 'Field47' =>  :state, # state
-    # 'Field271' => :postal_code, # postal_code
-    'Field3' => :phone_number, # phone_number
-    # 'IP'       => :signup_ip, # client IP, ignored for the moment
-
+  STANDARD_SIGNUP_FIELD_MAPPING =   {
+    'Field1': :first_name,
+    'Field2': :last_name,
+    'Field4': :address_1,
+    'Field5': :address_2,
+    'Field6': :city,
+    'Field7': :state,
+    'Field8': :postal_code,
+    'Field10': :email_address,
+    'Field11': :phone_number,
+    'Field12': :participation_type,
+    'Field16': :voted,
+    'Field18': :contact_representative,
+    'Field22': :primary_device_id,
+    'Field24': :primary_device_description,
+    'Field26': :primary_connection_id
+  }.freeze
+  VETS_SIGNUP_FIELD_MAPPING = {
+    'Field1': :first_name,
+    'Field2': :last_name,
+    'Field3': :phone_number,
+    'Field4': :email_address
   }.freeze
 
   def tag_values
@@ -238,7 +235,6 @@ class Person < ActiveRecord::Base
                                       MMERGE4: postal_code || '',
                                       MMERGE5: participation_type || '',
                                       MMERGE6: voted || '',
-                                      MMERGE7: called_311 || '',
                                       MMERGE8: primary_device_description || '',
                                       MMERGE9: secondary_device_id || '',
                                       MMERGE10: secondary_device_description || '',
@@ -262,39 +258,25 @@ class Person < ActiveRecord::Base
   #
   def self.initialize_from_wufoo(params)
     new_person = Person.new
+    case params['HandshakeKey']
+    when "#{Cohorts::Application.config.wufoo_handshake_key_prefix}-standard-signup"
+      standard = true
+      mapping = STANDARD_SIGNUP_FIELD_MAPPING
+    when "#{Cohorts::Application.config.wufoo_handshake_key_prefix}-vets-signup"
+      mapping = VETS_SIGNUP_FIELD_MAPPING
+    end
     params.each_pair do |k, v|
-      new_person[WUFOO_FIELD_MAPPING[k]] = v if WUFOO_FIELD_MAPPING[k].present?
+      new_person[mapping[k]] = v if mapping[k].present?
     end
 
-    # Special handling of participation type. New form uses 2 fields where old form used 1. Need to combine into one. Manually set to "Either one" if both field53 & field54 are populated.
-    # new_person.participation_type = if params['Field53'] != '' && params['Field54'] != ''
-    #                                   'Either one'
-    #                                 elsif params['Field53'] != ''
-    #                                   params['Field53']
-    #                                 else
-    #                                   params['Field54']
-    #                                 end
-    #
-    # new_person.preferred_contact_method = if params['Field273'] == 'Email'
-    #                                         'EMAIL'
-    #                                       else
-    #                                         'SMS'
-    #                                       end
-    #
-    # # Copy connection descriptions to description fields
-    # new_person.primary_connection_description = new_person.primary_connection_id
-    # new_person.secondary_connection_description = new_person.secondary_connection_id
-    #
-    # # rewrite the device and connection identifiers to integers
-    # new_person.primary_device_id        = Person.map_device_to_id(params[WUFOO_FIELD_MAPPING.rassoc(:primary_device_id).first])
-    # new_person.secondary_device_id      = Person.map_device_to_id(params[WUFOO_FIELD_MAPPING.rassoc(:secondary_device_id).first])
-    # new_person.primary_connection_id    = Person.map_connection_to_id(params[WUFOO_FIELD_MAPPING.rassoc(:primary_connection_id).first])
-    # new_person.secondary_connection_id  = Person.map_connection_to_id(params[WUFOO_FIELD_MAPPING.rassoc(:secondary_connection_id).first])
+    if standard
+      # # Copy connection descriptions to description fields
+      new_person.primary_connection_description = new_person.primary_connection_id
 
-    # FIXME: this is a hack, since we need to initialize people
-    # with a city/state, but don't ask for it in the Wufoo form
-    # new_person.city  = "Chicago" With update we ask for city
-    new_person.state = 'Illinois'
+      # # rewrite the device and connection identifiers to integers
+      new_person.primary_device_id        = Person.map_device_to_id(params[mapping.rassoc(:primary_device_id).first])
+      new_person.primary_connection_id    = Person.map_connection_to_id(params[mapping.rassoc(:primary_connection_id).first])
+    end
 
     new_person.signup_at = params['DateCreated']
 
@@ -358,14 +340,6 @@ class Person < ActiveRecord::Base
     self.deactivated_at = Time.current
     self.deactivated_method = method if method
     save!
-  end
-
-  def update_neighborhood
-    n = zip_to_neighborhood(postal_code)
-    unless n.blank?
-      self.neighborhood = n
-      save
-    end
   end
 
   # Compare to other records in the database to find possible duplicates.

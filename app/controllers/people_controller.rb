@@ -26,7 +26,6 @@
 #  signup_ip                        :string(255)
 #  signup_at                        :datetime
 #  voted                            :string(255)
-#  called_311                       :string(255)
 #  secondary_connection_id          :integer
 #  secondary_connection_description :string(255)
 #  verified                         :string(255)
@@ -95,7 +94,7 @@ class PeopleController < ApplicationController
   # POST /people/create_sms
   def create_sms
     if params['HandshakeKey'].present?
-      if Cohorts::Application.config.wufoo_handshake_key != params['HandshakeKey']
+      unless params['HandshakeKey'].start_with? Cohorts::Application.config.wufoo_handshake_key_prefix
         Rails.logger.warn("[wufoo] received request with invalid handshake. Full request: #{request.inspect}")
         head(403) && return
       end
@@ -166,7 +165,7 @@ class PeopleController < ApplicationController
     from_wufoo = false
     # if uatest == "Wufoo.com"
     if params['HandshakeKey'].present?
-      if Cohorts::Application.config.wufoo_handshake_key != params['HandshakeKey']
+      unless params['HandshakeKey'].start_with? Cohorts::Application.config.wufoo_handshake_key_prefix
         Rails.logger.warn("[wufoo] received request with invalid handshake. Full request: #{request.inspect}")
         head(403) && return
       end
@@ -175,6 +174,10 @@ class PeopleController < ApplicationController
       from_wufoo = true
       @person = Person.initialize_from_wufoo(params)
       @person.save
+      if params['HandshakeKey'].end_with? 'vets-signup'
+        va_tag = Tag.where(name: 'VA USE ONLY').first_or_create
+        Tagging.create(tag: va_tag, taggable: @person)
+      end
       begin
         @client = Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN'])
         @twilio_message = TwilioMessage.new

@@ -36,7 +36,7 @@ namespace :cut do
         post_body[f] = alt_value.present? ? alt_value : default_value
       end
 
-      curl_str = "curl -X POST #{hosts[args.env.to_sym]}/people #{post_body.collect{|k,v| "-d #{k}=\"#{v}\"" }.join(' ') } -d HandshakeKey=#{Cohorts::Application.config.wufoo_handshake_key}"
+      curl_str = "curl -X POST #{hosts[args.env.to_sym]}/people #{post_body.collect{|k,v| "-d #{k}=\"#{v}\"" }.join(' ') } -d HandshakeKey=#{Cohorts::Application.config.wufoo_handshake_key_prefix}"
 
       puts "running: #{curl_str}"
       `#{curl_str}`

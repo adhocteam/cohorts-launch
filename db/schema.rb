@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160816094658) do
+ActiveRecord::Schema.define(version: 20170116202839) do
 
   create_table "applications", force: :cascade do |t|
     t.string   "name",         limit: 255
@@ -139,7 +139,6 @@ ActiveRecord::Schema.define(version: 20160816094658) do
     t.string   "signup_ip",                        limit: 255
     t.datetime "signup_at"
     t.string   "voted",                            limit: 255
-    t.string   "called_311",                       limit: 255
     t.integer  "secondary_connection_id",          limit: 4
     t.string   "secondary_connection_description", limit: 255
     t.string   "verified",                         limit: 255
@@ -148,8 +147,8 @@ ActiveRecord::Schema.define(version: 20160816094658) do
     t.boolean  "active",                                       default: true
     t.datetime "deactivated_at"
     t.string   "deactivated_method",               limit: 255
-    t.string   "neighborhood",                     limit: 255
     t.integer  "tag_count_cache",                  limit: 4,   default: 0
+    t.string   "contact_representative",           limit: 255
   end
 
   create_table "programs", force: :cascade do |t|

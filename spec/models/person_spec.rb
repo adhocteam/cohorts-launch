@@ -26,7 +26,6 @@
 #  signup_ip                        :string(255)
 #  signup_at                        :datetime
 #  voted                            :string(255)
-#  called_311                       :string(255)
 #  secondary_connection_id          :integer
 #  secondary_connection_description :string(255)
 #  verified                         :string(255)
@@ -35,7 +34,6 @@
 #  active                           :boolean          default(TRUE)
 #  deactivated_at                   :datetime
 #  deactivated_method               :string(255)
-#  neighborhood                     :string(255)
 #  tag_count_cache                  :integer          default(0)
 #
 

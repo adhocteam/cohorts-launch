@@ -34,7 +34,6 @@
 #  active                           :boolean          default(TRUE)
 #  deactivated_at                   :datetime
 #  deactivated_method               :string(255)
-#  neighborhood                     :string(255)
 #  tag_count_cache                  :integer          default(0)
 #
 

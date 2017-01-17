@@ -51,7 +51,7 @@ class SubmissionsController < ApplicationController
   #
   def create
     if params['HandshakeKey'].present?
-      if Cohorts::Application.config.wufoo_handshake_key != params['HandshakeKey']
+      unless params['HandshakeKey'].start_with? Cohorts::Application.config.wufoo_handshake_key_prefix
         Rails.logger.warn("[wufoo] received request with invalid handshake. Full request: #{request.inspect}")
         head(403) && return
       end

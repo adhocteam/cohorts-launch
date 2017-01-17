@@ -25,7 +25,6 @@
 #  signup_ip                        :string(255)
 #  signup_at                        :datetime
 #  voted                            :string(255)
-#  called_311                       :string(255)
 #  secondary_connection_id          :integer
 #  secondary_connection_description :string(255)
 #  verified                         :string(255)
@@ -34,7 +33,6 @@
 #  active                           :boolean          default(TRUE)
 #  deactivated_at                   :datetime
 #  deactivated_method               :string(255)
-#  neighborhood                     :string(255)
 #  tag_count_cache                  :integer          default(0)
 #
 
@@ -43,7 +41,7 @@ one:
   last_name: Tester
   email_address: joe@example.com
   address_1: 1060 W Addison
-  address_2: 
+  address_2:
   city: Chicago
   state: IL
   postal_code: 60613
@@ -53,9 +51,9 @@ one:
   secondary_device_id: 2
   secondary_device_description: samsung
   primary_connection_id: 1
-  primary_connection_description: 
+  primary_connection_description:
   secondary_connection_id: 1
-  secondary_connection_description: 
+  secondary_connection_description:
   phone_number: 500-555-0009
   participation_type: in-person
 
@@ -75,7 +73,7 @@ two:
   secondary_device_description: computer
   primary_connection_id: 3
   primary_connection_description: wifi
-  secondary_connection_id: 
-  secondary_connection_description:   
+  secondary_connection_id:
+  secondary_connection_description:
   phone_number: 888-999-5555
-  participation_type: remote  
+  participation_type: remote
