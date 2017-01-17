@@ -174,7 +174,7 @@ class PeopleController < ApplicationController
       from_wufoo = true
       @person = Person.initialize_from_wufoo(params)
       unless @person.save
-        Rails.logger.warn("Person error: #{@person.errors.inspect}"
+        Rails.logger.warn("Person error: #{@person.errors.inspect}")
       end
       if params['HandshakeKey'].end_with? 'vets-signup'
         va_tag = Tag.where(name: 'VA USE ONLY').first_or_create
