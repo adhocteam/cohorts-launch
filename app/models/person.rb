@@ -147,7 +147,8 @@ class Person < ActiveRecord::Base
     'Field1': :first_name,
     'Field2': :last_name,
     'Field3': :phone_number,
-    'Field4': :email_address
+    'Field4': :email_address,
+    'Field212': :preferred_contact_method
   }.freeze
 
   def tag_values
