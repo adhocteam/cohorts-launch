@@ -264,6 +264,8 @@ class Person < ActiveRecord::Base
       mapping = STANDARD_SIGNUP_FIELD_MAPPING
     when "#{Cohorts::Application.config.wufoo_handshake_key_prefix}-vets-signup"
       mapping = VETS_SIGNUP_FIELD_MAPPING
+    else
+      return
     end
     params.each_pair do |k, v|
       new_person[mapping[k]] = v if mapping[k].present?
