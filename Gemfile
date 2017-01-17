@@ -76,8 +76,14 @@ gem 'jbuilder', '~> 1.0.1'
 
 gem 'twitter-bootstrap-rails', '~> 2.2.0'
 
-# use tire for ElasticSearch integration
-gem 'tire'
+#  ElasticSearch integration
+gem 'elasticsearch-model'
+gem 'elasticsearch-rails'
+gem 'faraday_middleware'
+gem 'faraday_middleware-aws-signers-v4'
+
+# AWS
+gem 'aws-sdk'
 
 # pagniate with will_paginate: https://github.com/mislav/will_paginate
 gem 'will_paginate'

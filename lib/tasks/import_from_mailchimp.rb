@@ -86,8 +86,8 @@ class MailChimpImporter
     if @options[:reset]
       puts 'Destroying all existing records'
       Person.delete_all
-      Person.tire.index.delete
-      Person.tire.index.create
+      Person.index.delete
+      Person.index.create
     end
 
     load_mailchimp_csv

@@ -21,7 +21,4 @@ class Reservation < ActiveRecord::Base
   belongs_to :person
   belongs_to :event
 
-  after_create  { person.update_index }
-  after_destroy { person.update_index }
-
 end

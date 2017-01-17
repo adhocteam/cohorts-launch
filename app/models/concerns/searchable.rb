@@ -6,11 +6,8 @@ module Searchable
   extend ActiveSupport::Concern
 
   included do
-    include Tire::Model::Search
-    include Tire::Model::Callbacks
-
-    # update index if a comment is added
-    # after_touch { tire.update_index }
+    include Elasticsearch::Model
+    include Elasticsearch::Model::Callbacks
 
     # namespace indices
     index_name "person-#{Rails.env}"
@@ -99,7 +96,7 @@ module Searchable
         connection_id_string = params[:connection_id_type].join(' ')
       end
 
-      Person.tire.search options do
+      Person.search options do
         query do
           boolean do
             params.each do |k, v|
