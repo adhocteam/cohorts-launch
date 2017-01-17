@@ -173,7 +173,9 @@ class PeopleController < ApplicationController
       Rails.logger.info('[wufoo] received a submission from wufoo')
       from_wufoo = true
       @person = Person.initialize_from_wufoo(params)
-      @person.save
+      unless @person.save
+        Rails.logger.warn("Person error: #{@person.errors.inspect}"
+      end
       if params['HandshakeKey'].end_with? 'vets-signup'
         va_tag = Tag.where(name: 'VA USE ONLY').first_or_create
         Tagging.create(tag: va_tag, taggable: @person)
