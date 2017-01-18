@@ -134,6 +134,7 @@ Cohorts::Application.routes.draw do
   end
   # post "people/create_sms"
 
+  get 'va/signup', to: 'static#vets_signup'
 
   root to: 'dashboard#index'
 
