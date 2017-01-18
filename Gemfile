@@ -18,6 +18,9 @@ gem 'ransack'
 # Use puma as the app server
 gem 'puma'
 
+# Use HAML for views
+gem 'haml-rails'
+
 group :development do
   # this whole group makes finding performance issues much friendlier
   gem 'rack-mini-profiler'

@@ -1,0 +1,26 @@
+.page-header
+  %h1 Editing submission
+= render 'formMatch'
+%table.table
+  %tr
+    %th Form
+    %th Content
+  %a{:id => "submission-#{@submission.id}"}
+  %tr
+    %td
+      %strong= @submission.form_name
+      %br/
+      %span{:title => @submission.created_at}
+        = time_ago_in_words @submission.created_at
+        ago
+      %br/
+      %span{:style => "font-size:small; color:#ccc; font-style:italic"}= @submission.ip_addr
+    %td
+      %table.table.table-striped
+        - for field_id,field_desc in @submission.fields do
+          %tr
+            %td= field_desc[:title]
+            %td= @submission.field_value(field_id)
+= link_to 'Show', @submission
+|
+\#{link_to 'Back', submissions_path}

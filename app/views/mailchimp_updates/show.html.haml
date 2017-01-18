@@ -1,0 +1,19 @@
+%p#notice= notice
+%p
+  %strong Raw content:
+  = @mailchimp_update.raw_content
+%p
+  %strong Email:
+  = @mailchimp_update.email
+%p
+  %strong Update type:
+  = @mailchimp_update.update_type
+%p
+  %strong Reason:
+  = @mailchimp_update.reason
+%p
+  %strong Fired at:
+  = @mailchimp_update.fired_at
+= link_to 'Edit', edit_mailchimp_update_path(@mailchimp_update)
+|
+\#{link_to 'Back', mailchimp_updates_path}

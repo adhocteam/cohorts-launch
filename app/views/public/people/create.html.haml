@@ -1,0 +1,11 @@
+!!!
+%html
+  %head
+    %title
+      Cohorts | #{title = yield(:page_title); title.present? ? title : controller_name.humanize.titlecase}
+    = javascript_include_tag "application", "data-turbolinks-track" => true
+    = csrf_meta_tags
+    :css
+
+  %body
+    = @msg

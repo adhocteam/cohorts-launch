@@ -1,0 +1,28 @@
+.row
+  .span12
+    %table.table.table-striped
+      %thead
+        %tr
+          %th Name
+          %th Description
+          %th Starts at
+          %th Ends at
+          %th Location
+          %th Address
+          %th Capacity
+          %th Application
+      %tbody
+        - @events.each do |event|
+          %tr
+            %td= link_to event.name, event
+            %td= event.description
+            %td= event.starts_at.to_s :long
+            %td= event.ends_at.to_s :long
+            %td= event.location
+            %td= event.address
+            %td= event.capacity
+            %td= link_to event.application.name, event.application
+= will_paginate @events, :renderer => BootstrapPagination::Rails
+.row
+  .span12
+    %p= link_to 'New Event', new_event_path

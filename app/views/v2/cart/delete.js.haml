@@ -1,0 +1,4 @@
+- Array(@deleted).each do |delete|
+  $('##{delete}-cart-delete').hide();
+  $('##{delete}-cart-add').show();
+$('#cart-size').html('#{(session[:cart] ||= []).size}');

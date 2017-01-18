@@ -1,0 +1,51 @@
+.row
+  .span12
+    %h2 Unmatched Form Submissions
+    %table.table.table-striped
+      %thead
+        %tr
+          %th Edit
+          %th Form Type
+          %th Form Name
+          %th Submitted by
+          %th Submitted at
+      - for submission in @submissions_unmatched do
+        %tr
+          %td
+            = link_to t('.edit', :default => t("helpers.links.edit")),   |
+              edit_submission_path(submission), :class => 'btn btn-mini' |
+          %td= submission.form_type
+          %td= submission.form_name
+          %td
+            - if submission.person.present?
+              = link_to submission.person.full_name, person_path(submission.person, anchor: "submission-#{submission.id}")
+            - else
+              UnMatched
+          %td= submission.created_at.to_s(:long)
+.row
+  .span12
+    %h3 All Form Submissions
+    %table.table.table-striped
+      %thead
+        %tr
+          %th Edit
+          %th Form Type
+          %th Form Name
+          %th Submitted by
+          %th Submitted at
+      - for submission in @submissions do
+        %tr
+          %td
+            = link_to t('.edit', :default => t("helpers.links.edit")),   |
+              edit_submission_path(submission), :class => 'btn btn-mini' |
+          %td= submission.form_type
+          %td= submission.form_name
+          %td
+            - if submission.person.present?
+              = link_to submission.person.full_name, person_path(submission.person, anchor: "submission-#{submission.id}")
+            - else
+              UnMatched
+          %td= submission.created_at.to_s(:long)
+.row
+  .span12{:style => "text-align:center"}
+    = will_paginate @submissions, :renderer => BootstrapPagination::Rails

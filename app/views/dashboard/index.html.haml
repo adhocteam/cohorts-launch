@@ -1,0 +1,37 @@
+.row
+  .span4
+    %h3 Recent signups
+    = render partial: 'person', collection: @people
+  .span4
+    %h3 Recent unmatched submissions
+    = render partial: 'submission', collection: @submissions
+  .span4
+    .well
+      %h3
+        = pluralize @recent_signups, 'signup'
+        - if @recent_submissions > 0
+          and #{pluralize @recent_submissions, 'form submission'}
+        in the last week.
+      %h4 Top five wards
+      %table.table.table-striped
+        %tr
+          %th Ward
+          %th Signups
+        - for ward,cnt in @top_five_wards do
+          %tr
+            %td= ward
+            %td= link_to cnt, search_index_path(:adv => 1, :geography_id => ward)
+      %h4 Bottom five wards
+      %table.table.table-striped
+        %tr
+          %th Ward
+          %th Signups
+        - for ward,cnt in @bottom_five_wards do
+          %tr
+            %td= ward
+            %td= link_to cnt, search_index_path(:adv => 1, :geography_id => ward)
+      %h4 Last Week's Deactivation Count:
+      %h3= @deactivated
+      %h4 Most popular tags
+      %ul#tag-list
+        = render partial: 'taggings/tag', collection: Tag.most_popular(10)

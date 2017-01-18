@@ -1,0 +1,40 @@
+= render :partial => 'layouts/v2_event_menu'
+- content_for :page_title, @event.title
+.page-header
+  %h1= @event.title
+.row
+  .span3
+    = simple_format @event.description
+  .span6
+    %h3 Invitees
+    - if @event.event.reservations.any?
+      %table.table.table-hover
+        %tbody
+          %tr
+            %th Name
+            %th Status
+            %th Attended
+          - for reservation in @event.event.reservations.includes(:person) do
+            %tr
+              %td= link_to reservation.person.full_name, reservation.person
+              = form_for(reservation, remote: true) do |form|
+                %td= form.select :aasm_state, options_for_select(reservation.aasm.states(permitted: true).map(&:name), reservation.aasm_state)
+    - else
+      %p No attendees yet
+  .span3
+    .well
+      %dl
+        %dt Starts at
+        %dd= @event.start_datetime
+        %dt Ends at
+        %dd= @event.end_datetime
+        %dt Creator
+        %dd= @event.user.name
+        %dt Invited
+        %dd= @event.invitees.size
+        %dt Reserved
+        %dd
+          = @event.event.reservations.size
+.row
+  .span12
+    / should link back to all events or somesuch here.

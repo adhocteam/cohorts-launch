@@ -1,0 +1,96 @@
+%h1 SMS Campaigns
+%br/
+%h3 Tests - Active
+%table.table.table-striped.table-responsive
+  %thead
+    %tr
+      %th Active?
+      %th Campaign #
+      %th Form Type
+      %th Name
+      %th Wufoo formid
+      %th Twilio keyword
+      %th End Message
+      %th
+      %th
+      %th
+  %tbody
+    - @twilio_wufoos_others.each do |twilio_wufoo|
+      %tr
+        %td
+          - if twilio_wufoo.status
+            On
+          - else
+            Off
+        %td= twilio_wufoo.id
+        %td= twilio_wufoo.form_type
+        %td= twilio_wufoo.name
+        %td= twilio_wufoo.wufoo_formid
+        %td= twilio_wufoo.twilio_keyword
+        %td= twilio_wufoo.end_message
+        %td= link_to 'Show', twilio_wufoo
+        %td= link_to 'Edit', edit_twilio_wufoo_path(twilio_wufoo)
+        %td= link_to 'Destroy', twilio_wufoo, method: :delete, data: { confirm: 'Are you sure?' }
+%h3 Signups - Active
+%table.table.table-striped.table-responsive
+  %thead
+    %tr
+      %th Active?
+      %th Campaign #
+      %th Form Type
+      %th Name
+      %th Wufoo formid
+      %th Twilio keyword
+      %th End Message
+      %th
+      %th
+      %th
+  %tbody
+    - @twilio_wufoos_signups.each do |twilio_wufoo|
+      %tr
+        %td
+          - if twilio_wufoo.status
+            On
+          - else
+            Off
+        %td= twilio_wufoo.id
+        %td= twilio_wufoo.form_type
+        %td= twilio_wufoo.name
+        %td= twilio_wufoo.wufoo_formid
+        %td= twilio_wufoo.twilio_keyword
+        %td= twilio_wufoo.end_message
+        %td= link_to 'Show', twilio_wufoo
+        %td= link_to 'Edit', edit_twilio_wufoo_path(twilio_wufoo)
+        %td= link_to 'Destroy', twilio_wufoo, method: :delete, data: { confirm: 'Are you sure?' }
+%h3 Inactive
+%table.table.table-striped.table-responsive
+  %thead
+    %tr
+      %th Active?
+      %th Form Type
+      %th Name
+      %th Wufoo formid
+      %th Twilio keyword
+      %th End Message
+      %th
+      %th
+      %th
+  %tbody
+    - @twilio_wufoos_inactive.each do |twilio_wufoo|
+      %tr
+        %td
+          - if twilio_wufoo.status
+            On
+          - else
+            Off
+        %td= twilio_wufoo.form_type
+        %td= twilio_wufoo.name
+        %td= twilio_wufoo.wufoo_formid
+        %td= twilio_wufoo.twilio_keyword
+        %td= twilio_wufoo.end_message
+        %td= link_to 'Show', twilio_wufoo
+        %td= link_to 'Edit', edit_twilio_wufoo_path(twilio_wufoo)
+        %td= link_to 'Destroy', twilio_wufoo, method: :delete, data: { confirm: 'Are you sure?' }
+%br/
+= link_to 'New Twilio-Wufoo Connection', new_twilio_wufoo_path, :class => 'btn btn-mini'
+= link_to "Import Phone Numbers", '/twilio_messages/sendmessages', :class => 'btn btn-mini'

@@ -1,0 +1,26 @@
+%p
+  Hi
+  - @reservations.first.person.first_name
+  ,
+%p
+  = @reservations.size
+  interview#{@reservations.size > 1 ? 's have' : ' has'} been booked for you today.
+- @reservations.each do |r|
+  \%{
+  .reservation
+    %p
+      = r.description
+      on #{r.to_weekday_and_time} for #{r.duration / 60} minutes \n with #{r.user.name} tel: #{r.user.phone_number}"
+    %p click to confirm, cancel or ask to reschedule below.
+    %ul
+      %li
+        = link_to "Confirm", confirm_v2_reservations_url(id:r.id,token:r.person.token)
+      %li
+        = link_to "Cancel", cancel_v2_reservations_url(id:r.id,token:r.person.token)
+      %li
+        = link_to "Change", change_v2_reservations_url(id:r.id,token:r.person.token)
+  \%>
+%p
+  You can always check your schedule here: #{link_to "Calendar",calendar_url(token: @reservations.first.person.token)}
+%p Thanks!,
+%p= ENV['TEAM_NAME']

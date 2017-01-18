@@ -1,0 +1,25 @@
+%p#notice= notice
+%p
+  %strong Name:
+  = @twilio_wufoo.name
+%p
+  %strong Form Type:
+  = @twilio_wufoo.form_type
+%p
+  %strong Wufoo formid:
+  = @twilio_wufoo.wufoo_formid
+%p
+  %strong Twilio keyword:
+  = @twilio_wufoo.twilio_keyword
+%p
+  %strong End Message (This is ignored if Form Type is "signup"):
+  = @twilio_wufoo.end_message
+%p
+  %strong Active?:
+  - if @twilio_wufoo.status
+    On
+  - else
+    Off
+= link_to 'Edit', edit_twilio_wufoo_path(@twilio_wufoo)
+|
+\#{link_to 'Back', twilio_wufoos_path}

@@ -1,0 +1,17 @@
+.row
+  .offset4.span4
+    = form_for(resource, as: resource_name, url: session_path(resource_name), class: 'form-horizontal') do |f|
+      .control-group
+        = f.label :email, class: 'control-label'
+        .controls= f.email_field :email, :autofocus => true
+      .control-group
+        = f.label :password, class: 'control-label'
+        .controls
+          = f.password_field :password
+      .control-group
+        .controls
+          %label.checkbox
+            = f.check_box :remember_me
+            Remember me
+          = f.submit "Sign in", class: "btn btn-primary btn-large", style: "margin-top: 30px;"
+        = render "devise/shared/links"
