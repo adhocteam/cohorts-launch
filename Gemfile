@@ -44,9 +44,13 @@ group :development do
   gem 'byebug'
 end
 
+# Use rails 12factor for staging and production
+group :staging, :production do
+  gem 'rails_12factor'
+end
+
 group :production do
   gem 'newrelic_rpm'
-  gem 'rails_12factor'
 end
 
 # Gems used only for assets and not required
