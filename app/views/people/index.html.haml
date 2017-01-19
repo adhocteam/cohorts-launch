@@ -4,18 +4,24 @@
     %h1= t '.title', :default => "People"
   .span2
     %label{:for => "tags"} Tags
-    = form_tag '/people', method: :get
-    = text_field_tag :tags,                            |
-      params[:tags],                                   |
-      class: 'tokenfield input-small span4',           |
-      id:'tag-field',                                  |
-      data: { search_url: '/taggings/search?q=%QUERY', |
-        submit_id: 'tag-field',                        |
-        submit_on_tag: true,                           |
-        pre_populate: @tags                            |
-      }                                                |
+    = form_tag '/people', method: :get do
+      = text_field_tag :tags,                            |
+        params[:tags],                                   |
+        class: 'tokenfield input-small span4',           |
+        id:'tag-field',                                  |
+        data: { search_url: '/taggings/search?q=%QUERY', |
+          submit_id: 'tag-field',                        |
+          submit_on_tag: true,                           |
+          pre_populate: @tags                            |
+        }                                                |
   .span3
     = submit_tag "Search", :name => nil, :class => "btn btn-primary pull-right"
+  .span2
+  .span3
+    = form_tag({action: :import_csv}, multipart: true) do
+      Import CSV list: #{file_field_tag "file", accept: 'text/csv'}
+      %br/
+      = submit_tag "Upload People", id: "submitData" , class: "btn btn-primary", data: { confirm: 'These people will be uploaded to Cohorts. Are you sure you want to continue?' }
 .row
   .span12
     %p.pull-right

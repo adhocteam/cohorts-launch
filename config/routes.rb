@@ -128,6 +128,7 @@ Cohorts::Application.routes.draw do
     collection do
       post 'create_sms'
       post ':person_id/deactivate', action: :deactivate, as: :deactivate
+      post 'import_csv'
     end
     resources :comments
     resources :gift_cards

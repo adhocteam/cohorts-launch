@@ -250,6 +250,42 @@ class PeopleController < ApplicationController
     end
   end
 
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  def import_csv
+    csv = CSV.new(params[:file].read, headers: true).read
+    headers = csv.headers
+    main_attributes = Person.new.attributes.keys - %w(id created_at updated_at)
+    person_attributes = headers.select { |h| main_attributes.include? h.parameterize('_') }
+    extra_attributes = headers - person_attributes
+    csv.each do |row|
+      person_hash = {}
+      person_attributes.each do |a|
+        person_hash[a.parameterize('_')] = row[a]
+      end
+      person = Person.create(person_hash)
+      Rails.logger.warn person.errors if person.errors.any?
+      submission_hash = {}
+      field_structure = { 'Fields' => [] }
+      extra_attributes.each_with_index do |a, i|
+        submission_hash["Field#{i+1}"] = row[a]
+        field_structure['Fields'].push(
+          'ID': "Field#{i+1}",
+          'Title': a,
+          'Type': 'shortname'
+        )
+      end
+      submission = Submission.create(
+        person: person,
+        raw_content: submission_hash.to_json,
+        form_structure: { 'Name': 'CSV Import' }.to_json,
+        field_structure: field_structure.to_json
+      )
+      Rails.logger.warn submission.errors if submission.errors.any?
+    end
+    redirect_to action: :index
+  end
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+
   private
 
     # Use callbacks to share common setup or constraints between actions.
