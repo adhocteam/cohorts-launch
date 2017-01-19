@@ -1,11 +1,11 @@
 .page-header
-  %h1= t '.title', :default => "Send messages to a list of phone numbers"
+  %h1= t '.title', default: "Send messages to a list of phone numbers"
 = form_tag( '/twilio_messages/uploadnumbers' , multipart: true) do
   = text_area_tag :message1, '', class: "input-xlarge", placeholder: "Enter a message to send (required)", required: true
   %br/
   = text_area_tag :message2, '', class: "input-xlarge", placeholder: "Enter a 2nd message to send. (Optional)"
   %br/
-  Twilio-Wufoo Connection? #{select_tag :twiliowufoo_campaign,  options_for_select([[nil, nil]] + TwilioWufoo.all.order(:name).collect{|twiliowufoo| [twiliowufoo.name, twiliowufoo.id]}, selected: params[:twiliowufoo_campaign]),  :class => "input"}
+  Twilio-Wufoo Connection? #{select_tag :twiliowufoo_campaign,  options_for_select([[nil, nil]] + TwilioWufoo.all.order(:name).collect{|twiliowufoo| [twiliowufoo.name, twiliowufoo.id]}, selected: params[:twiliowufoo_campaign]),  class: "input"}
   %h3 If you are using a Wufoo form, please make sure it is set up correctly:
   %ul
     %li The second to last field should be the phone number field

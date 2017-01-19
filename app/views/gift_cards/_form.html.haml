@@ -39,6 +39,6 @@
   .field
     = f.label :reason
     %br/
-    = f.select :reason, GiftCard.reasons.keys.to_a, { :prompt => "Reason" }
+    = f.select :reason, GiftCard.reasons.keys.to_a, { prompt: "Reason" }
   .actions
     = f.submit

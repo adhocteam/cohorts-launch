@@ -1,4 +1,4 @@
-= render :partial => 'layouts/v2_event_menu'
+= render partial: 'layouts/v2_event_menu'
 %p
   %strong Person:
   = @reservation.person.full_name
@@ -21,10 +21,10 @@
   .span6
     %h3 Notes
     = form_for([@reservation, @comment], remote: true) do |form|
-      = form.hidden_field :commentable_type, :value => 'V2::Reservation'
-      = form.hidden_field :commentable_id, :value => @reservation.id
+      = form.hidden_field :commentable_type, value: 'V2::Reservation'
+      = form.hidden_field :commentable_id, value: @reservation.id
       = form.text_area :content, rows: 3, class: "span6 input-block-level"
-      = form.submit 'Add note', :class => "btn"
+      = form.submit 'Add note', class: "btn"
     #comments
       = render partial: 'comment', collection: @reservation.comments.order("created_at DESC")
 = button_to 'Back', v2_reservations_path

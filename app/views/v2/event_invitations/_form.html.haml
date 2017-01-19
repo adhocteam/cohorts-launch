@@ -4,7 +4,7 @@
   remote: true,                             |
   html: { class: 'form-horizontal' } do |f| |
   .control-group
-    = f.label :people_ids, "People", :class => 'control-label'
+    = f.label :people_ids, "People", class: 'control-label'
     .controls
       = f.text_area :people, class: 'tokenfield text_area',         |
         style: 'border: 1px solid #cccccc; border-radius:5px;',     |
@@ -13,35 +13,35 @@
         pre_populate: @event_invitation.people_name_and_id.to_json} |
       = f.hidden_field :people_ids, id: 'people_ids', value: @people_ids.to_s
   .control-group
-    = f.label :title, 'Event title', :class => 'control-label'
+    = f.label :title, 'Event title', class: 'control-label'
     .controls
-      = f.text_field :title, :class => 'text_field'
+      = f.text_field :title, class: 'text_field'
   .control-group
-    = f.label :description, 'Event description', :class => 'control-label'
+    = f.label :description, 'Event description', class: 'control-label'
     .controls
-      = f.text_area :description, :class => 'text_area'
+      = f.text_area :description, class: 'text_area'
   .control-group
-    = f.label :slot_length, 'Call length', :class => 'control-label'
+    = f.label :slot_length, 'Call length', class: 'control-label'
     .controls
-      = f.select :slot_length, options_for_select([15,30,45,60].map {|o| "#{o.to_s} mins"}), :class => 'text_field'
+      = f.select :slot_length, options_for_select([15,30,45,60].map {|o| "#{o.to_s} mins"}), class: 'text_field'
   .control-group
-    = f.label :buffer, 'Buffer', :class => 'control-label'
+    = f.label :buffer, 'Buffer', class: 'control-label'
     .controls
-      = f.select :buffer, options_for_select([0,5,10,15,20,30,45,60].map {|o| ["#{o.to_s} mins",o]},selected: 5), :class => 'text_field'
+      = f.select :buffer, options_for_select([0,5,10,15,20,30,45,60].map {|o| ["#{o.to_s} mins",o]},selected: 5), class: 'text_field'
   %h2 Time window
   .control-group
-    = f.label :date, :class => 'control-label'
+    = f.label :date, class: 'control-label'
     .controls
-      = f.text_field :date, :class => 'text_field datepicker'
+      = f.text_field :date, class: 'text_field datepicker'
   .control-group
-    = f.label :start_time, :class => 'control-label'
+    = f.label :start_time, class: 'control-label'
     .controls
-      = f.select :start_time, simple_time_select_options, :class => 'text_field'
+      = f.select :start_time, simple_time_select_options, class: 'text_field'
   .control-group
-    = f.label :end_time, :class => 'control-label'
+    = f.label :end_time, class: 'control-label'
     .controls
-      = f.select :end_time, simple_time_select_options, :class => 'text_field'
+      = f.select :end_time, simple_time_select_options, class: 'text_field'
   .form-actions
-    = f.submit 'Send invitation', :class => 'btn btn-primary', :id => 'submit'
-    = link_to t('.cancel', :default => t("helpers.links.cancel")), |
-      people_path, :class => 'btn'                                 |
+    = f.submit 'Send invitation', class: 'btn btn-primary', id: 'submit'
+    = link_to t('.cancel', default: t("helpers.links.cancel")), |
+      people_path, class: 'btn'                                 |

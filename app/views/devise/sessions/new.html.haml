@@ -3,7 +3,7 @@
     = form_for(resource, as: resource_name, url: session_path(resource_name), class: 'form-horizontal') do |f|
       .control-group
         = f.label :email, class: 'control-label'
-        .controls= f.email_field :email, :autofocus => true
+        .controls= f.email_field :email, autofocus: true
       .control-group
         = f.label :password, class: 'control-label'
         .controls

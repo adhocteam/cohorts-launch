@@ -5,16 +5,16 @@
   %tr
     %th Form
     %th Content
-  %a{:id => "submission-#{@submission.id}"}
+  %a{id: "submission-#{@submission.id}"}
   %tr
     %td
       %strong= @submission.form_name
       %br/
-      %span{:title => @submission.created_at}
+      %span{title: @submission.created_at}
         = time_ago_in_words @submission.created_at
         ago
       %br/
-      %span{:style => "font-size:small; color:#ccc; font-style:italic"}= @submission.ip_addr
+      %span{style: "font-size:small; color:#ccc; font-style:italic"}= @submission.ip_addr
     %td
       %table.table.table-striped
         - for field_id,field_desc in @submission.fields do

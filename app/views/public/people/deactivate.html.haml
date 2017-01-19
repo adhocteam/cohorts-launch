@@ -39,8 +39,8 @@
   %body
     #notifications
       - if flash[:notice] || flash[:alert] || flash[:error]
-        %div{:class => "alert #{flash[:notice].present? ? "alert-success" : "alert-error"}"}
-          %button.close{"data-dismiss" => "alert", :type => "button"} &times;
+        %div{class: "alert #{flash[:notice].present? ? "alert-success" : "alert-error"}"}
+          %button.close{"data-dismiss" => "alert", type: "button"} &times;
           = flash[:alert]
           = flash[:notice]
           = flash[:error]

@@ -1,6 +1,6 @@
-%section.comment{:id => "comment-#{comment.id}"}
-  %a{:id => "comment-#{comment.id}"}
-  = best_in_place comment, :content,:ok_button => 'Save', :cancel_button => 'Cancel',as: :textarea
+%section.comment{id: "comment-#{comment.id}"}
+  %a{id: "comment-#{comment.id}"}
+  = best_in_place comment, :content,ok_button: 'Save', cancel_button: 'Cancel',as: :textarea
   %br/
   %span.comment-byline
     - if comment.created_by

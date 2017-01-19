@@ -9,7 +9,7 @@
           %th Update type
           %th Reason
           %th Fired at
-          %th{:colspan => "3"}
+          %th{colspan: "3"}
       %tbody
         - @mailchimp_updates.each do |mailchimp_update|
           %tr
@@ -22,5 +22,5 @@
               <td><haml:loud> link_to &amp;#39;Edit&amp;#39;, edit_mailchimp_update_path(mailchimp_update) </haml:loud></td>
               <td><haml:loud> link_to &amp;#39;Destroy&amp;#39;, mailchimp_update, method: :delete, data: { confirm: &amp;#39;Are you sure?&amp;#39; } </haml:loud></td>
 .row
-  .span12{:style => "text-align:center"}
-    = will_paginate @mailchimp_updates, :renderer => BootstrapPagination::Rails
+  .span12{style: "text-align:center"}
+    = will_paginate @mailchimp_updates, renderer: BootstrapPagination::Rails

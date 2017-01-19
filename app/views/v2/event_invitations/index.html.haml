@@ -1,4 +1,4 @@
-= render :partial => 'layouts/v2_event_menu'
+= render partial: 'layouts/v2_event_menu'
 %h1 List of Events
 .row
   .span12
@@ -24,8 +24,8 @@
             %td= event.event.reservations.size
             / probably link to the reservations for this event
 .row
-  .span12{:style => "text-align:center"}
-    = will_paginate @events, :renderer => BootstrapPagination::Rails
+  .span12{style: "text-align:center"}
+    = will_paginate @events, renderer: BootstrapPagination::Rails
 .row
   .span12
     %p= link_to 'New Event', new_v2_event_invitation_path

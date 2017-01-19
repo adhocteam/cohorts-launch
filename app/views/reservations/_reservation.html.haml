@@ -1,4 +1,4 @@
-%section.reservation{:id => "reservation-#{reservation.id}"}
+%section.reservation{id: "reservation-#{reservation.id}"}
   %p
     = link_to reservation.event.name, reservation.event
     at #{reservation.event.starts_at.to_s :long} at #{reservation.event.location}

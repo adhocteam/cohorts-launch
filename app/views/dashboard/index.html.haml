@@ -20,7 +20,7 @@
         - for ward,cnt in @top_five_wards do
           %tr
             %td= ward
-            %td= link_to cnt, search_index_path(:adv => 1, :geography_id => ward)
+            %td= link_to cnt, search_index_path(adv: 1, geography_id: ward)
       %h4 Bottom five wards
       %table.table.table-striped
         %tr
@@ -29,7 +29,7 @@
         - for ward,cnt in @bottom_five_wards do
           %tr
             %td= ward
-            %td= link_to cnt, search_index_path(:adv => 1, :geography_id => ward)
+            %td= link_to cnt, search_index_path(adv: 1, geography_id: ward)
       %h4 Last Week's Deactivation Count:
       %h3= @deactivated
       %h4 Most popular tags

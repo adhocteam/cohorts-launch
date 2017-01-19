@@ -2,7 +2,7 @@
   defaultDate = '#{@default_date}';
   token = '#{@person.nil? ? false : @person.token}';
 - if current_user
-  = render :partial => 'layouts/v2_event_menu'
+  = render partial: 'layouts/v2_event_menu'
 .well.well-sm
   Calendar for #{@visitor.full_name}
 #calendar

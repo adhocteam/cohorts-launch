@@ -60,7 +60,7 @@
           %dt Preferred Contact Method
           %dd= best_in_place @person, :preferred_contact_method, as: :select, collection: [['SMS','SMS'], ['EMAIL','EMAIL']]
           %dt Voted in last election?
-          %dd= best_in_place @person, :voted, as: :select, :collection => %w(YES NO)
+          %dd= best_in_place @person, :voted, as: :select, collection: %w(YES NO)
           %dt Facebook
           %dd link to facebook
           %dt Twitter
@@ -79,17 +79,17 @@
           = form.submit "Add", class: "btn span1"
   .span6
     %h3 Location
-    %a{:href => "https://maps.google.com?q=#{CGI.escape(address_fields_to_sentence(@person)).html_safe}", :target => "_blank", :title => "View in Google Maps"}
-      %img{:src => "https://maps.googleapis.com/maps/api/staticmap?markers=|#{CGI.escape(address_fields_to_sentence(@person)).html_safe}&amp;zoom=14&amp;size=570x200&amp;sensor=false"}/
+    %a{href: "https://maps.google.com?q=#{CGI.escape(address_fields_to_sentence(@person)).html_safe}", target: "_blank", title: "View in Google Maps"}
+      %img{src: "https://maps.googleapis.com/maps/api/staticmap?markers=|#{CGI.escape(address_fields_to_sentence(@person)).html_safe}&amp;zoom=14&amp;size=570x200&amp;sensor=false"}/
     / <img src="https://maps.googleapis.com/maps/api/streetview?size=570x200&amp;amp;location=<haml:loud> CGI.escape(address_fields_to_sentence(@person)).html_safe </haml:loud>&amp;amp;sensor=false">
 .row
   .span6
     %h3 Notes
     = form_for([@person, @comment], remote: true) do |form|
-      = form.hidden_field :commentable_type, :value => 'Person'
-      = form.hidden_field :commentable_id, :value => @person.id
+      = form.hidden_field :commentable_type, value: 'Person'
+      = form.hidden_field :commentable_id, value: @person.id
       = form.text_area :content, rows: 3, class: "span6 input-block-level"
-      = form.submit 'Add note', :class => "btn"
+      = form.submit 'Add note', class: "btn"
     #comments
       = render partial: 'comment', collection: @person.comments.order("created_at DESC")
   #person-events.span6
@@ -114,8 +114,8 @@
           %ul
             - @gift_card.errors.full_messages.each do |message|
               %li= message
-      = form.hidden_field :person_id, :value => @person.id
-      = form.select :reason, [['Signup', 'signup'], ['Test', 'test'], ['Referral', 'referral'], ['Other', 'other']], { :prompt => "Reason" }, class: 'input-small', id: "new-reason"
+      = form.hidden_field :person_id, value: @person.id
+      = form.select :reason, [['Signup', 'signup'], ['Test', 'test'], ['Referral', 'referral'], ['Other', 'other']], { prompt: "Reason" }, class: 'input-small', id: "new-reason"
       = form.text_field :notes, placeholder: 'Notes', class: 'input-medium', id: 'new-notes'
       = form.text_field :proxy_id, placeholder: "ProxyID",class: 'input-mini', id: "new-proxyid"
       = form.text_field :batch_id, placeholder: "BatchID",class: 'input-mini', id: "new-batchid"
@@ -124,7 +124,7 @@
         = form.text_field :gift_card_number, placeholder: "#####", class: 'input-small', id: "new-cardnumber"
       = form.text_field :expiration_date, placeholder: "MM/YY", class: 'input-mini', id: "new-expirationdate"
       = form.text_field :amount, placeholder: "Amount",class: 'input-mini', id: "new-amount"
-      = form.submit 'Add Gift Card', :class => "btn"
+      = form.submit 'Add Gift Card', class: "btn"
   .span12
     %h3
       Gift Cards - Total:
@@ -138,7 +138,7 @@
         %th Expiration Date
         %th Amount
         %th Created On
-        %th{:colspan => "2"}
+        %th{colspan: "2"}
       %tbody#people_gift_cards
         = render partial: 'people/gift_card', collection: @person.gift_cards.order("created_at DESC")
 .row
@@ -150,7 +150,7 @@
           %th Form
           %th Content
         - for submission in @person.submissions
-          %a{:id => "submission-#{submission.id}"}
+          %a{id: "submission-#{submission.id}"}
           %tr
             %td
               %strong= submission.form_name
@@ -158,11 +158,11 @@
                 %br/
               Type: #{submission.form_type}
               %br/
-              %span{:title => submission.created_at}
+              %span{title: submission.created_at}
                 = time_ago_in_words submission.created_at
                 ago
               %br/
-              %span{:style => "font-size:small; color:#ccc; font-style:italic"}= submission.ip_addr
+              %span{style: "font-size:small; color:#ccc; font-style:italic"}= submission.ip_addr
             %td
               %table.table.table-striped
                 - for field_id,field_desc in submission.fields do
@@ -173,20 +173,20 @@
       / no form submissions. FIXME: null state?
 .row
   .form-actions.span12
-    = link_to t('.back', :default => t("helpers.links.back")), |
-      people_path, :class => 'btn'                             |
+    = link_to t('.back', default: t("helpers.links.back")), |
+      people_path, class: 'btn'                             |
     -#
-    = link_to t('.edit', :default => t("helpers.links.edit")), |
-      edit_person_path(@person), :class => 'btn'               |
+    = link_to t('.edit', default: t("helpers.links.edit")), |
+      edit_person_path(@person), class: 'btn'               |
     -#
-    = link_to t('.destroy', :default => t("helpers.links.destroy")),                                               |
+    = link_to t('.destroy', default: t("helpers.links.destroy")),                                               |
       person_path(@person),                                                                                        |
-      :method => 'delete',                                                                                         |
-      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, |
-      :class => 'btn btn-danger'                                                                                   |
+      method: 'delete',                                                                                         |
+      data: { confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure?')) }, |
+      class: 'btn btn-danger'                                                                                   |
     -#
     = link_to 'deactivate',                                                                                        |
       deactivate_people_path(@person),                                                                             |
       method: :post,                                                                                               |
-      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, |
-      :class => 'btn btn-danger'                                                                                   |
+      data: { confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure?')) }, |
+      class: 'btn btn-danger'                                                                                   |

@@ -1,5 +1,5 @@
 - if @visitor.class.to_s == 'User'
-  .btn-group{"aria-label" => "Reservation Actions", :role => "group"}
+  .btn-group{"aria-label" => "Reservation Actions", role: "group"}
     - @reservation.state_action_array.each do |e|
       = button_to e[1], v2_reservation_path, params: {aasm_state: e[0]}, method: :patch,  class: "btn btn-secondary"
 - else
