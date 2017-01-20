@@ -23,14 +23,18 @@ class Submission < ActiveRecord::Base
   belongs_to :person
   validates :person_id, numericality: { only_integer: true, allow_nil: true }
 
+  has_many :answers
+  has_many :questions, through: :answers
+
   enum form_type: {
     unknown: 0,
     signup: 1,
     screening: 2,
     availability: 3,
     test: 4
-
   }
+
+  after_create :create_questions_and_answers
 
   self.per_page = 15
 
@@ -41,6 +45,14 @@ class Submission < ActiveRecord::Base
     @fields ||= JSON.parse(field_structure)['Fields'].inject({}) do |acc, i|
       extract_field_data(acc, i)
     end
+  end
+
+  def field_labels
+    fields.map { |field| field[1][:title] }
+  end
+
+  def field_values
+    fields.map { |field| { text: field_label(field[0]), value: field_value(field[0]) } }
   end
 
   def field_label(field_id)
@@ -57,7 +69,13 @@ class Submission < ActiveRecord::Base
     else
       value << JSON.parse(raw_content)[field_id]
     end
-    value.size == 1 ? value.first : value
+    if value.size == 1
+      value.first
+    elsif value.all?(&:empty?)
+      ''
+    else
+      value.reject(&:blank?).join(', ')
+    end
   end
 
   def form_name
@@ -108,4 +126,19 @@ class Submission < ActiveRecord::Base
       data
     end
 
+    def create_questions_and_answers
+      person_attributes = Person.new.attributes.keys - %w(id created_at updated_at)
+      relevant = field_values.reject do |f|
+        person_attributes.include?(f[:text].parameterize('_')) || f[:value].empty?
+      end
+      relevant.each do |field|
+        question = Question.where(text: field[:text]).first_or_create
+        Answer.create(
+          value: field[:value],
+          question: question,
+          person: person,
+          submission: self
+        )
+      end
+    end
 end
