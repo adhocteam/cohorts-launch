@@ -143,32 +143,19 @@
         = render partial: 'people/gift_card', collection: @person.gift_cards.order("created_at DESC")
 .row
   .span12
-    - if @person.submissions.any?
-      %h3 Form Submissions
+    - if @person.answers.any?
+      %h3 Answers
       %table.table
         %tr
-          %th Form
-          %th Content
-        - for submission in @person.submissions
-          %a{id: "submission-#{submission.id}"}
+          %th Question
+          %th Answer
+          %th Answered on
+        - for answer in @person.answers
+          %a{id: "answer-#{answer.id}"}
           %tr
-            %td
-              %strong= submission.form_name
-              = succeed "Form" do
-                %br/
-              Type: #{submission.form_type}
-              %br/
-              %span{title: submission.created_at}
-                = time_ago_in_words submission.created_at
-                ago
-              %br/
-              %span{style: "font-size:small; color:#ccc; font-style:italic"}= submission.ip_addr
-            %td
-              %table.table.table-striped
-                - for field_id,field_desc in submission.fields do
-                  %tr
-                    %td= field_desc[:title]
-                    %td= submission.field_value(field_id)
+            %td= answer.question.text
+            %td= answer.value
+            %td= answer.created_at.strftime('%b %e, %Y at %l:%M %p')
     - else
       / no form submissions. FIXME: null state?
 .row

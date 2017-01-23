@@ -1,7 +1,7 @@
 %p#notice= @success
 %p#error= @error
 .page-header
-  %h1= t '.title', default: "Search Results - Ransack"
+  %h1= t '.title', default: "Search"
 .row
   .span12{style: "text-align:right"}
     / Search SQL = <haml:loud> @results.to_sql </haml:loud>
@@ -31,7 +31,7 @@
     = f.select :primary_connection_id_in, [[human_connection_type_name(0),0],[ human_connection_type_name(1),1], [human_connection_type_name(4),4], [ human_connection_type_name(3),  3], [human_connection_type_name(2), 2]], {include_blank: true}, {multiple: true,  class: "multiple", size: '5' }
     = f.label :primary_connection_description_cont
     = f.search_field :primary_connection_description_cont
-  .span5
+  .span3
     = f.label :tags_id_eq_all
     = f.collection_select :tags_id_eq_all, @tag_list, :id, :name, {include_blank: true}, { multiple: true, size: @tag_list.count + 1 }
     = f.label :participation_type_in
