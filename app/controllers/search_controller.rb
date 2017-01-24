@@ -62,9 +62,10 @@ class SearchController < ApplicationController
 
   def index_ransack
     @q = Person.ransack(params[:q])
-    @results = @q.result.includes(:tags).page(params[:page])
+    @results = @q.result.includes(:tags, :questions, :answers).page(params[:page])
     @tags = params[:tags_id_eq_any].blank? ? '[]' : Tag.where(name: params[:tags_id_eq_any].split(',').map(&:strip)).to_json(methods: [:value, :label, :type])
-    @tag_list = Tag.all
+    @tag_list = Tag.order(:name)
+    @question_list = Question.order(:text)
     @participation_list = Person.uniq.pluck(:participation_type) # Need to better define these
     @verified_list = Person.uniq.pluck(:verified)
     @mailchimp_result = 'Mailchimp export not attempted with this search'
@@ -75,7 +76,7 @@ class SearchController < ApplicationController
         if params[:segment_name].present?
           list_name = params.delete(:segment_name)
           @q = Person.ransack(params[:q])
-          @results_mailchimp = @q.result.includes(:tags)
+          @results_mailchimp = @q.result.includes(:tags, :questions, :answers)
           @mce = MailchimpExport.new(name: list_name, recipients: @results_mailchimp.collect(&:email_address), created_by: current_user.id)
           if @mce.with_user(current_user).save
             Rails.logger.info("[SearchController#export] Sent #{@mce.recipients.size} email addresses to a static segment named #{@mce.name}")
@@ -89,7 +90,7 @@ class SearchController < ApplicationController
         end
       end
       format.csv do
-        @results = @q.result.includes(:tags)
+        @results = @q.result.includes(:tags, :questions, :answers)
         fields = Person.column_names
         fields.push('tags')
         output = CSV.generate do |csv|

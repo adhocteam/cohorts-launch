@@ -51,6 +51,7 @@ class Person < ActiveRecord::Base
   has_many :comments, as: :commentable, dependent: :destroy
   has_many :submissions, dependent: :destroy
   has_many :answers, dependent: :destroy
+  has_many :questions, through: :answers
 
   has_many :gift_cards
   accepts_nested_attributes_for :gift_cards, reject_if: :all_blank
