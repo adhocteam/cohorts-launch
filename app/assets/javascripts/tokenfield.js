@@ -6,7 +6,7 @@ $(document).on('ready page:load',function() {
   // value is either the person ID or tag name, string
   // name is always a string, name of object, what is displayed
   var tokenSelector = '.tokenfield';
-  if ($(tokenSelector).length) {
+  if ($(tokenSelector).length && $("[data-submit-id]").length) {
     var bloodhound, filter, tokenSelector, cached_suggestions;
     var hiddenInput, searchUrl, prePopulate;
 
