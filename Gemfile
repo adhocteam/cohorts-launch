@@ -167,6 +167,9 @@ gem 'money-rails'
 # masked inputs
 gem 'maskedinput-rails'
 
+# Need a non-digested asset for Wufoo CSS
+gem "non-stupid-digest-assets"
+
 group :test do
   # mock tests w/mocha
   gem 'mocha', require: false

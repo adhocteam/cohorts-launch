@@ -241,6 +241,8 @@ GEM
     newrelic_rpm (3.17.2.327)
     nokogiri (1.7.0.1)
       mini_portile2 (~> 2.1.0)
+    non-stupid-digest-assets (1.0.9)
+      sprockets (>= 2.0)
     notiffany (0.1.1)
       nenv (~> 0.1)
       shellany (~> 0.0)
@@ -493,6 +495,7 @@ DEPENDENCIES
   money-rails
   mysql2
   newrelic_rpm
+  non-stupid-digest-assets
   paper_trail
   paper_trail-globalid
   phony_rails
