@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 require 'active_support/concern'
 require 'elasticsearch/model'
+require 'elasticsearch/dsl'
 # rubocop:disable Metrics/BlockLength
 module Searchable
 
@@ -22,7 +23,7 @@ module Searchable
         }
       }
     } do
-      mapping do
+      mappings dynamic: 'false' do
         indexes :id, index: :not_analyzed
         indexes :first_name, analyzer: :snowball
         indexes :last_name, analyzer: :snowball
@@ -97,9 +98,9 @@ module Searchable
         connection_id_string = params[:connection_id_type].join(' ')
       end
 
-      Person.search options do
+      query = Elasticsearch::DSL::Search.search do
         query do
-          boolean do
+          bool do
             params.each do |k, v|
               # all of this is a bit bananas.
               # looking forard to new elastic search gem
@@ -107,27 +108,48 @@ module Searchable
 
               case k.to_sym
               when :connection_description
-                must { string "primary_connection_description:#{v} OR secondary_connection_description:#{v}" }
+                must do
+                  _or do
+                    match primary_connection_description: v
+                    match secondary_connection_description: v
+                  end
+                end
               when :device_description
-                must { string "primary_device_description:#{v} OR secondary_device_description:#{v}" }
+                must do
+                  _or do
+                    match primary_device_description: v
+                    match secondary_device_description: v
+                  end
+                end
               when :device_id_type
-                must { string "primary_device_id:#{device_id_string} OR secondary_device_id:#{device_id_string}" }
+                must do
+                  _or do
+                    match primary_device_id: device_id_string
+                    match secondary_device_id: device_id_string
+                  end
+                end
               when :tags
-                must { string "tag_values:#{v}" }
+                must { match tag_values: v }
               when :submissions
-                must { string "submission_values:#{v}" }
+                must { match submission_values: v }
               when :connection_id_type
-                must { string "primary_connection_id:#{connection_id_string} OR secondary_connection_id:#{connection_id_string}" }
+                must do
+                  _or do
+                    match primary_connection_id: connection_id_string
+                    match secondary_connection_id: connection_id_string
+                  end
+                end
               when :address
-                must { string "address_1:#{v}" }
+                must { match address_1: v }
               else # no more special cases.
-                must { string "#{k}:#{v}" }
+                must { match Hash[k, v] }
               end
             end
           end
         end
         # filter :terms, tag_values: params[:tags] if params[:tags].present?
       end
+      Person.__elasticsearch__.search(query)
     end
     # rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
