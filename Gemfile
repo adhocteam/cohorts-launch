@@ -45,6 +45,7 @@ group :development do
   gem 'quiet_assets'
 
   gem 'byebug'
+  gem 'rails_real_favicon'
 end
 
 # Use rails 12factor for staging and production
