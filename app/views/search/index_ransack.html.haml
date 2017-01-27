@@ -108,31 +108,34 @@
     .offset4.span8= will_paginate @results, renderer: BootstrapPagination::Rails
   .row
     .span12
-      = link_to "Save this list as CSV", search_index_ransack_path(params.merge(format: 'csv').symbolize_keys), class: "btn"
+      = form_tag search_index_ransack_path(params.merge(format: 'csv').symbolize_keys), class: "form-inline" do
+        = label_tag :submissions, "Submissions to include in CSV"
+        = select_tag :submissions, options_for_select(Submission.all.map(&:form_name).uniq), { include_blank: false, multiple: true }
+        = submit_tag 'Export list as CSV', class: 'btn'
       %span
         = link_to "Export this list to MailChimp", "#", class: "btn", id: "export-to-mailchimp-form-toggle"
       %span= link_to "Send text messages to this list", "#", class: "btn", id: "export-to-twilio-form-toggle"
   .row
     .span12
       #export-to-mailchimp-form{style: "display:none"}
-        = form_tag search_export_path, remote: true, class: "form-inline"
-        = text_field_tag :segment_name, '', class: "input-xlarge", placeholder: "enter a name for this list (segment)"
-        - if params[:q]
-          - params[:q].each do |param_key, param_value|
-            = hidden_field_tag "q[#{param_key}]", param_value
-        = submit_tag "Export", class: "btn btn-primary", data: {disable_with: "Exporting ..."}
+        = form_tag search_export_path, remote: true, class: "form-inline" do
+          = text_field_tag :segment_name, '', class: "input-xlarge", placeholder: "enter a name for this list (segment)"
+          - if params[:q]
+            - params[:q].each do |param_key, param_value|
+              = hidden_field_tag "q[#{param_key}]", param_value
+          = submit_tag "Export", class: "btn btn-primary", data: {disable_with: "Exporting ..."}
     .span12
       #export-to-twilio-form{style: "display:none"}
-        = form_tag search_exportTwilio_path, remote: true, class: "form-inline"
-        - if params[:q]
-          - params[:q].each do |param_key, param_value|
-            = hidden_field_tag "q[#{param_key}]", param_value
-        = text_area_tag :message1, '', class: "input-xlarge", placeholder: "Enter a message to send (required)", required: true
-        %br/
-        = text_area_tag :message2, '', class: "input-xlarge", placeholder: "Enter a 2nd message to send. (Optional)"
-        %br/
-        Twilio-Wufoo Connection? #{select_tag :twiliowufoo_campaign, options_for_select([[nil, nil]] + TwilioWufoo.all.order(:name).collect{|twiliowufoo| [twiliowufoo.name, twiliowufoo.id]}, selected: params[:twiliowufoo_campaign]), class: "input"}
-        \#{submit_tag "Send messages through Twilio", class: "btn btn-primary", data: { confirm: 'These messages will be added to the queue and sent as soon as possible. Are you sure you want to send these?' }}
+        = form_tag search_exportTwilio_path, remote: true, class: "form-inline" do
+          - if params[:q]
+            - params[:q].each do |param_key, param_value|
+              = hidden_field_tag "q[#{param_key}]", param_value
+          = text_area_tag :message1, '', class: "input-xlarge", placeholder: "Enter a message to send (required)", required: true
+          %br/
+          = text_area_tag :message2, '', class: "input-xlarge", placeholder: "Enter a 2nd message to send. (Optional)"
+          %br/
+          Twilio-Wufoo Connection? #{select_tag :twiliowufoo_campaign, options_for_select([[nil, nil]] + TwilioWufoo.all.order(:name).collect{|twiliowufoo| [twiliowufoo.name, twiliowufoo.id]}, selected: params[:twiliowufoo_campaign]), class: "input"}
+          \#{submit_tag "Send messages through Twilio", class: "btn btn-primary", data: { confirm: 'These messages will be added to the queue and sent as soon as possible. Are you sure you want to send these?' }}
 - else
   .row
     .span12{style: "margin-top: 30px;"}

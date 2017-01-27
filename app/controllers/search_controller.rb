@@ -93,6 +93,11 @@ class SearchController < ApplicationController
         @results = @q.result(distinct: true).includes(:tags, :questions, :answers)
         fields = Person.column_names
         fields.push('tags')
+        if index_params[:submissions]
+          @submissions = index_params[:submissions].reject(&:empty?)
+          @questions = Submission.select { |submission| @submissions.include? submission.form_name }.map(&:questions).flatten.uniq
+          @questions.each { |q| fields.push(q.text) }
+        end
         output = CSV.generate do |csv|
           # Generate the headers
           csv << fields.map(&:titleize)
@@ -121,13 +126,16 @@ class SearchController < ApplicationController
                 else
                   person.tag_values.join('|')
                 end
+              elsif @questions&.map(&:text).include? f
+                q = @questions.find { |question| question.text == f }
+                person.answers.find_by(question: q)&.value
               else
                 field_value
               end
             end
           end
         end
-        send_data output,  filename: "Search-#{Time.zone.today}.csv"
+        send_data output, type: 'text/csv', filename: "Search-#{Time.zone.today}.csv"
       end
     end
   end
@@ -223,7 +231,8 @@ class SearchController < ApplicationController
         :submissions,
         :tags,
         :preferred_contact_method,
-        :page)
+        :page,
+        submissions: [])
     end
   # rubocop:enable Metrics/MethodLength
 end
