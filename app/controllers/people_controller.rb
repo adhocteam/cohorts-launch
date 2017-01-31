@@ -50,11 +50,10 @@ class PeopleController < ApplicationController
     @people = if params[:tags].blank? || params[:tags] == ''
                 Person.paginate(page: params[:page]).order(sort_column + ' ' + sort_direction).where(active: true)
               else
-                tag_names =  params[:tags].split(',').map(&:strip)
-                tags = Tag.where(name: tag_names)
+                tags = Tag.where(name: params[:tags])
                 Person.paginate(page: params[:page]).order(sort_column + ' ' + sort_direction).where(active: true).includes(:tags).where(tags: { id: tags.pluck(:id) })
               end
-    @tags = params[:tags].blank? ? '[]' : Tag.where(name: params[:tags].split(',').map(&:strip)).to_json(methods: [:value, :label, :type])
+    @tags = params[:tags].blank? ? '[]' : Tag.where(name: params[:tags].map(&:strip)).to_json(methods: [:value, :label, :type])
   end
 
   # GET /people/1

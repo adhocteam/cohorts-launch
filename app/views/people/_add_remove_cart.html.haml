@@ -1,16 +1,15 @@
 / event invitation scheduling handling.
-- in_cart = session[:cart].blank? || !session[:cart].include?(person.id)
-- add_class = in_cart ? '' : 'hide'
-- delete_class = in_cart ? 'hide' : ''
-/ <haml:loud> in_cart </haml:loud>
-= link_to t('.schedule', default: "add to invite"), |
-  add_cart_path(person_id: person.id),              |
-  class: "btn btn-mini #{add_class}",               |
-  id: "#{person.id}-cart-add",                      |
-  remote: true                                      |
--#
-= link_to t('.schedule', default: "remove from invite"), |
-  delete_cart_path(person_id: person.id),                |
-  id: "#{person.id}-cart-delete",                        |
-  class:"btn btn-mini #{delete_class}",                  |
-  remote: true                                           |
+- classes ||= ''
+- not_in_cart = session[:cart].blank? || !session[:cart].include?(person.id)
+- if not_in_cart
+  = link_to t('.schedule', default: "Add to invite"),
+    add_cart_path(person_id: person.id),
+    class: "ui mini #{classes} button",
+    id: "#{person.id}-cart-add",
+  remote: true
+- else
+  = link_to t('.schedule', default: "Remove from invite"),
+    delete_cart_path(person_id: person.id),
+    id: "#{person.id}-cart-delete",
+    class:"ui mini #{classes} button",
+    remote: true

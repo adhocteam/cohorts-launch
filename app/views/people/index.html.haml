@@ -1,87 +1,90 @@
 - model_class = Person
-.row.page-header
-  .span2
-    %h1= t '.title', default: "People"
-  .span2
-    %label{for: "tags"} Tags
-    = form_tag '/people', method: :get do
-      = text_field_tag :tags,                            |
-        params[:tags],                                   |
-        class: 'tokenfield input-small span4',           |
-        id:'tag-field',                                  |
-        data: { search_url: '/taggings/search?q=%QUERY', |
-          submit_id: 'tag-field',                        |
-          submit_on_tag: true,                           |
-          pre_populate: @tags                            |
-        }                                                |
-  .span3
-    = submit_tag "Search", name: nil, class: "btn btn-primary pull-right"
-  .span2
-  .span3
-    = form_tag({action: :import_csv}, multipart: true) do
-      Import CSV list: #{file_field_tag "file", accept: 'text/csv'}
-      %br/
-      = submit_tag "Upload People", id: "submitData" , class: "btn btn-primary", data: { confirm: 'These people will be uploaded to Cohorts. Are you sure you want to continue?' }
-.row
-  .span12
-    %p.pull-right
-      = Person.count
-      people are members of Cohorts.
-.row
-  .span12
-    %table.table.table-striped
-      %thead
-        %tr
-          %th Name
-          %th Address
-          %th Ward
-          %th Email address
-          %th Phone number
-          %th= sortable 'verified','Verified?'
-          %th= sortable 'created_at', 'Signup date'
-          %th Preferred Contact Method
-          %th= sortable 'tag_count_cache', 'Tag Count'
-          %th Invites
-          %th Reservations
-          %th &nbsp;
-      %tbody
-        - @people.each do |person|
-          %tr{id: "person-#{person.id}"}
-            %td= link_to "#{person.first_name} #{person.last_name}", person_path(person)
-            %td= address_fields_to_sentence(person)
-            %td= best_in_place person, :geography_id
-            %td= best_in_place person, :email_address
-            %td= best_in_place person, :phone_number
-            %td= best_in_place person, :verified, as: :select, collection: @verified_types.map{|p| [p,p]}
-            %td= person.created_at.to_s(:short)
-            %td
-              = best_in_place person, :preferred_contact_method, |
-                as: :select,                                     |
-                collection: { 'SMS'=>'SMS',                      |
-                'EMAIL'=>'EMAIL'}                                |
-            %td
-              = person.tag_count
-            %td
-              = V2::EventInvitation.joins(:invitees).where(invitation_invitees_join_table: {person_id: person.id}).size
-            %td
-              = V2::Reservation.where(person_id: person.id).size
-            %td
-              = render partial: 'add_remove_cart',locals: {person: person}
-              = link_to t('.edit', default: t('helpers.links.edit')), |
-                edit_person_path(person), class: 'btn btn-mini'       |
-              -#
-              = link_to t('.destroy', default: t('helpers.links.destroy')),                                               |
-                person_path(person),                                                                                         |
-                method: :delete,                                                                                          |
-                data: { confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure?')) }, |
-                class: 'btn btn-mini btn-danger'                                                                          |
-              -#
-              = link_to 'deactivate',                                                                                        |
-                deactivate_people_path(person),                                                                              |
-                remote: true,                                                                                                |
-                method: :post,                                                                                               |
-                data: { confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure?')) }, |
-                class: 'btn btn-mini btn-danger'                                                                          |
+.ui.grid
+  .row
+    .two.wide.column
+      %h1.ui.header= t '.title', default: "People"
+    .eight.wide.column
+      = form_tag '/people', method: :get, class: 'ui form' do
+        .field
+          = select_tag :tags, options_from_collection_for_select(Tag.all, "name", "name"),
+              class: 'ui fluid search dropdown',
+              multiple: true,
+              prompt: 'Tags'
+        -# = submit_tag "Search", name: nil, class: "ui small green button"
+    .four.wide.column
+      = form_tag({action: :import_csv}, multipart: true, class: 'ui form') do
+        .ui.buttons
+          .ui.left.attached.button.fake-file-field
+            %i.table.icon
+            %span.button-text Import CSV file
+          .hidden-file-field
+            = file_field_tag "file", accept: 'text/csv'
+          = button_tag type: 'submit', class: 'right attached ui icon button', id: "submitData", data: { confirm: 'These people will be uploaded to Cohorts. Are you sure you want to continue?' } do
+            %i.upload.icon
+    .two.wide.column
+      .ui.mini.green.statistic
+        .value= Person.count
+        .label members
+  .ui.divider
+  .row
+    .column
+      %table.ui.tablet.stackable.sortable.striped.table
+        %thead
+          %tr
+            %th Name
+            %th Verified?
+            %th Signup Date
+            %th Contact By
+            %th Tag Count
+            %th Invites
+            %th Reservations
+            %th.center.aligned Actions
+        %tbody
+          - @people.each do |person|
+            %tr{id: "person-#{person.id}"}
+              %td
+                .ui.list
+                  .item
+                    %i.user.icon
+                    .content= link_to "#{person.first_name} #{person.last_name}", person_path(person), class: 'strong green'
+                  .item
+                    %i.marker.icon
+                    .content= address_fields_to_sentence(person)
+                  .item
+                    %i.mail.icon
+                    .content= best_in_place person, :email_address
+                  .item
+                    %i.phone.icon
+                    .content= best_in_place person, :phone_number
+              %td= best_in_place person, :verified, as: :select, collection: @verified_types.map{|p| [p,p]}
+              %td= person.created_at.to_s(:short)
+              %td
+                = best_in_place person, :preferred_contact_method, |
+                  as: :select,                                     |
+                  collection: { 'SMS'=>'SMS',                      |
+                  'EMAIL'=>'EMAIL'}                                |
+              %td
+                = person.tag_count
+              %td
+                = V2::EventInvitation.joins(:invitees).where(invitation_invitees_join_table: {person_id: person.id}).size
+              %td
+                = V2::Reservation.where(person_id: person.id).size
+              %td.center.aligned
+                .ui.mini.vertical.buttons
+                  = render partial: 'add_remove_cart',locals: {person: person, classes: 'bottom attached'}
+                  = link_to t('.edit', default: t('helpers.links.edit')),
+                    edit_person_path(person), class: 'ui attached button'
+                  = link_to 'Deactivate',
+                    deactivate_people_path(person),
+                    remote: true,
+                    method: :post,
+                    data: { confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure?')) },
+                    class: 'ui attached button'
+                  = link_to t('.destroy', default: t('helpers.links.destroy')),
+                    person_path(person),
+                    method: :delete,
+                    data: { confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure?')) },
+                    class: 'ui top attached button'
 .row
   .span12{style: "text-align:center"}
-    = will_paginate @people, renderer: BootstrapPagination::Rails
+    = will_paginate @people, renderer: WillPaginateSemanticUi::ActionView::Renderer
