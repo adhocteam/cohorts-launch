@@ -21,6 +21,11 @@ gem 'puma'
 # Use HAML for views
 gem 'haml-rails'
 
+# Use Semantic UI for UI
+gem 'less-rails-semantic_ui'
+gem 'autoprefixer-rails'
+gem "will_paginate_semantic_ui"
+
 group :development do
   # this whole group makes finding performance issues much friendlier
   gem 'rack-mini-profiler'
@@ -44,7 +49,10 @@ group :development do
   # silences logging of requests for assets
   gem 'quiet_assets'
 
+  # for debugging in dev
   gem 'byebug'
+
+  # for generating favicons
   gem 'rails_real_favicon'
 end
 

@@ -1,0 +1,7 @@
+/*******************************
+    User Variable Overrides
+*******************************/
+
+@tabletMinimumGutter: 0em;
+@computerMinimumGutter: 0em;
+@largeMonitorMinimumGutter: 0em;

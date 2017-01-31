@@ -43,6 +43,8 @@ GEM
       rake (>= 10.4, < 12.0)
     arel (6.0.4)
     ast (2.3.0)
+    autoprefixer-rails (6.5.1)
+      execjs
     aws-sdk (2.5.8)
       aws-sdk-resources (= 2.5.8)
     aws-sdk-core (2.5.8)
@@ -81,6 +83,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
+    commonjs (0.2.7)
     concurrent-ruby (1.0.4)
     daemons (1.2.4)
     database_cleaner (1.5.3)
@@ -205,6 +208,15 @@ GEM
     jwt (1.5.6)
     launchy (2.4.3)
       addressable (~> 2.3)
+    less (2.6.0)
+      commonjs (~> 0.2.7)
+    less-rails (2.7.1)
+      actionpack (>= 4.0)
+      less (~> 2.6.0)
+      sprockets (> 2, < 4)
+      tilt
+    less-rails-semantic_ui (2.2.3.0)
+      less-rails (>= 2.6.0, < 2.8.0)
     libv8 (3.16.14.17)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -454,6 +466,8 @@ GEM
     will_paginate (3.1.5)
     will_paginate-bootstrap (0.2.5)
       will_paginate (>= 3.0.3)
+    will_paginate_semantic_ui (2.0.1)
+      will_paginate (> 3.0.0)
     wit (3.4.0)
     wuparty (1.2.6)
       httparty (>= 0.6.1)
@@ -468,6 +482,7 @@ PLATFORMS
 DEPENDENCIES
   aasm
   annotate
+  autoprefixer-rails
   aws-sdk
   best_in_place (~> 3.0.1)
   bullet
@@ -506,6 +521,7 @@ DEPENDENCIES
   jdbc-sqlite3
   jquery-rails
   jquery-validation-rails
+  less-rails-semantic_ui
   mail (= 2.6.3)
   maskedinput-rails
   memory_profiler
@@ -553,6 +569,7 @@ DEPENDENCIES
   whenever
   will_paginate
   will_paginate-bootstrap (~> 0.2.5)
+  will_paginate_semantic_ui
   wit (~> 3.4.0)
   wuparty
 

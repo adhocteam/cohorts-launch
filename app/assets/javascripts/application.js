@@ -24,6 +24,7 @@
 //= require moment/moment.min
 //= require fullcalendar/fullcalendar.min
 //= require jquery-touchswipe/jquery.touchSwipe.min
+//= require semantic_ui/semantic_ui
 //= require_tree .
 //= require maskedinput
 
@@ -49,6 +50,42 @@ $(document).on('ready page:load',function() {
     if (type !== null) {
       show_ajax_message(msg, type);
     }
+  });
+
+  // Add active class to active menu items
+  $('.ui.top.menu > a.item').each( function(index) {
+    if ($(this).attr('href') == location.pathname && !$(this).hasClass('logo')) {
+      $(this).addClass('active green');
+      $(this).find('.label').addClass('green');
+    }
+  });
+  $('.ui.tabular.menu > a.item').each( function(index) {
+    if ($(this).attr('href') == location.pathname) {
+      $(this).addClass('active');
+    }
+  });
+
+  // Initialize Semantic elements
+  $('.ui.dropdown').dropdown();
+  $('.ui.checkbox').checkbox();
+  $('.ui.calendar').calendar({
+    type: 'date'
+  });
+  $('.ui.calendar').calendar('clear');
+  $('.ui.modal').modal();
+  $('.sortable.table').tablesort();
+
+  $('.tooltippy').popup();
+
+  // Turn file input into a button
+  $('.hidden-file-field').hide();
+  $('.fake-file-field').click(function(e) {
+    $("input[type='file']").click();
+  });
+  $('.hidden-file-field').change(function() {
+    $('.button-text').text(
+      $('input[type=file]').val().split('\\').pop()
+    );
   });
 
 });

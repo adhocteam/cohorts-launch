@@ -9,6 +9,7 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
+ *= require semantic_ui/semantic_ui
  *= require datepicker/bootstrap-datepicker
  *= require tokenfield/bootstrap-tokenfield
  *= require tokenfield/tokenfield-typeahead
@@ -17,3 +18,45 @@
  *= stub static
  *= stub wufoo
  */
+
+ body {
+   background-color: #f9f9f9 !important;
+ }
+
+ .ui.page.container.segment {
+   background-color: #fff;
+   min-height: 100%;
+   padding-top: 5em;
+ }
+
+ .ui.page-header {
+   margin-top: 0em !important;
+ }
+
+ .ui.labels#tag-list {
+   margin-top: 1em;
+ }
+
+ .ui.label .tag-name.detail {
+   margin-left: 0em;
+ }
+
+ .delete-link .icon {
+   margin: 0;
+ }
+
+ #comments {
+   margin-top: 1em;
+ }
+
+ a.green {
+   color: #31B684;
+ }
+
+ .strong {
+   font-weight: bold;
+ }
+
+.mr {
+  margin-right: 1em;
+}
