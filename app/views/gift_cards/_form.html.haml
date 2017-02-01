@@ -1,4 +1,4 @@
-= form_for @gift_card do |f|
+= form_for @gift_card, html: { class: 'ui form' } do |f|
   - if @gift_card.errors.any?
     #error_explanation
       %h2
@@ -8,37 +8,28 @@
         - @gift_card.errors.full_messages.each do |message|
           %li= message
   .field
-    = f.label :batch_id
-    %br/
-    = f.text_field :batch_id, class: 'input-mini', placeholder: '4321'
+    = f.label :batch_id, 'Batch ID'
+    = f.text_field :batch_id, placeholder: '4321'
   .field
-    = f.label :proxy_id
-    %br/
-    = f.text_field :proxy_id, class: 'input-mini'
-  .field.input-prepend
+    = f.label :proxy_id, 'Proxy ID'
+    = f.text_field :proxy_id
+  .field
     = f.label :gift_card_number
-    %br/
-    %span.add-on ****-****-***
-    = f.text_field :gift_card_number, placeholder: "#####", class: 'input-small', id: "new-cardnumber"
+    = f.text_field :gift_card_number, placeholder: "#####", id: "new-cardnumber"
   .field
     = f.label :expiration_date
-    %br/
-    = f.text_field :expiration_date,class: 'input-mini'
+    = f.text_field :expiration_date
   .field
-    = f.label :person_id
-    %br/
+    = f.label :person_id, 'Person ID'
     = f.number_field :person_id
   .field
     = f.label :notes
-    %br/
     = f.text_field :notes
   .field
     = f.label :created_by
-    %br/
     = f.number_field :created_by
   .field
     = f.label :reason
-    %br/
-    = f.select :reason, GiftCard.reasons.keys.to_a, { prompt: "Reason" }
+    = f.select :reason, GiftCard.reasons.keys.to_a, { prompt: "Reason" }, class: 'ui dropdown'
   .actions
-    = f.submit
+    = f.submit 'Update', class: 'ui green button'

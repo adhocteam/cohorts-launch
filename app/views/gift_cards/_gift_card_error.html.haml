@@ -1,6 +1,6 @@
 - if gift_card && gift_card.errors.size > 0
-  #errorExplanation
-    %h3
+  #errorExplanation.ui.negative.message
+    %h3.ui.header
       = pluralize(gift_card.errors.size, "error")
       prohibited this record from being saved.
     %p There were problems with the following fields:

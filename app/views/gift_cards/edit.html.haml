@@ -1,5 +1,7 @@
-%h1 Editing Gift Card
+%h1.ui.header.page-header
+  Editing Gift Card
+  = @gift_card.id
+= link_to 'Show', @gift_card, class: 'ui button'
+= link_to 'Back', gift_cards_path, class: 'ui button'
+%br/
 = render 'form'
-= link_to 'Show', @gift_card
-|
-\#{link_to 'Back', gift_cards_path}

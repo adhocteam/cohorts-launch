@@ -1,22 +1,29 @@
 %p#notice= notice
-%p
-  %strong Gift Card Number:
-  = @gift_card.gift_card_number
-%p
-  %strong Expiration date:
-  = @gift_card.expiration_date
-%p
-  %strong Person:
-  = @gift_card.person_id
-%p
-  %strong Notes:
-  = @gift_card.notes
-%p
-  %strong Created by:
-  = @gift_card.created_by
-%p
-  %strong Reason:
-  = @gift_card.reason
-= link_to 'Edit', edit_gift_card_path(@gift_card)
-|
-\#{link_to 'Back', gift_cards_path}
+%h1.ui.header.page-header
+  Showing Gift Card
+  = @gift_card.id
+.ui.huge.list
+  .item
+    .header Gift Card Number
+    = @gift_card.gift_card_number
+  .item
+    .header Expiration date
+    = @gift_card.expiration_date
+  .item
+    .header Person
+    = @gift_card.person.full_name
+  .item
+    .header Created by
+    = @gift_card.created_by
+  .item
+    .header Reason
+    = @gift_card.reason
+  .item
+    .header Notes
+    = @gift_card.notes
+= link_to edit_gift_card_path(@gift_card), class: 'ui labeled icon button' do
+  %i.edit.icon
+  Edit
+= link_to gift_cards_path, class: 'ui labeled icon button' do
+  %i.left.arrow.icon
+  Back

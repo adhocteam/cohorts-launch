@@ -1,80 +1,88 @@
-= will_paginate @recent_signups, renderer: BootstrapPagination::Rails
-%h1 Recent sign-ups who need gift cards
-= search_form_for @q_recent_signups, as: :q_signups, url: gift_cards_path, method: :get, class: 'form-inline' do |f_rs|
-  %label{for: "created_at_date_gteq"} People created on or after
-  = f_rs.text_field :created_at_date_gteq, class: 'text_field input-small', id: 'datepicker_start', placeholder: 'yyyy-mm-dd'
-  = f_rs.submit 'Search', class: "btn btn-primary"
-  = link_to 'Clear Search', request.path, class:"btn"
+= will_paginate @recent_signups, renderer: WillPaginateSemanticUi::ActionView::Renderer
+%h1.ui.header.page-header Recent sign-ups who need gift cards
+= search_form_for @q_recent_signups, as: :q_signups, url: gift_cards_path, method: :get, class: 'ui form' do |f|
+  .three.fields
+    .field
+      .ui.calendar
+        .ui.left.icon.input
+          %i.calendar.icon
+          = f.text_field :created_at_date_gteq, placeholder: 'People created on or after'
+    .field
+      = f.submit 'Search', class: "ui green button"
+      = link_to 'Clear Search', request.path, class:"ui button"
 #error-div
-%table.table.table-striped
+- @new_gift_cards.each_with_index do |gift_card, index|
+  .ui.padded.raised.segment{ id: "person-#{@recent_signups[index].id}"}
+    .ui.grid
+      .row
+        .six.wide.column
+          .ui.large.list
+            .item
+              %i.user.icon
+              .strong.content= @recent_signups[index].full_name
+            .item
+              %i.marker.icon
+              - address = address_fields_to_sentence(@recent_signups[index])
+              .content= address.blank? ? 'No address' : address
+            .item
+              %i.comments.icon
+              .content= @recent_signups[index].verified || 'Not verified'
+        .ten.wide.column
+          = form_for [@recent_signups[index], gift_card], remote: true, html: { class: 'ui form' } do |form|
+            = form.hidden_field :person_id, value: @recent_signups[index].id
+            = form.hidden_field :reason, value: "signup"
+            .three.fields
+              .field{id: "new-batchid-#{@recent_signups[index].id}"}
+                .ui.mini.input
+                  = form.text_field :batch_id, placeholder: "Batch ID"
+              .field{id: "new-proxyid-#{@recent_signups[index].id}"}
+                .ui.mini.input
+                  = form.text_field :proxy_id, placeholder: "Proxy ID"
+              .field{id: "new-cardnumber-#{@recent_signups[index].id}"}
+                .ui.mini.input
+                  = form.text_field :gift_card_number, placeholder: '****-****-***'
+            .three.fields
+              .field{id: "new-expirationdate-#{@recent_signups[index].id}"}
+                .ui.mini.input
+                  = form.text_field :expiration_date, placeholder: "MM/YY"
+              .field
+                .ui.mini.left.icon.input
+                  %i.dollar.icon
+                  = form.text_field :amount, value: "5.00", readonly: true
+              .field
+                = form.submit 'Add Gift Card', class: "ui mini fluid green button"
+      - @recent_signups[index].possible_duplicates.each do |key, val|
+        .row
+          .column
+            .ui.message
+              Possible Duplicate ID
+              = link_to "#{key} #{val['person'].full_name}", person_path(val['person'])
+              Matching on
+              = val['match_count']
+              variables:
+              = val['matches_on'].to_sentence
+%h1.ui.header Gift Cards
+= search_form_for @q_giftcards, url: gift_cards_path, method: :get, class: 'ui form' do |f|
+  .three.fields
+    .field
+      = f.search_field :gift_card_number_cont, class: 'ui mini input', placeholder: 'Gift card number contains'
+    .field
+      .ui.calendar
+        .ui.left.icon.input
+          %i.calendar.icon
+          = f.text_field :created_at_date_gteq, id: 'datepicker_start', placeholder: 'Created on or after'
+    .field
+      .ui.calendar
+        .ui.left.icon.input
+          %i.calendar.icon
+          = f.text_field :created_at_date_lteq, id: 'datepicker_end', placeholder: 'Created on or before'
+  = f.submit 'Search', class: "ui green button"
+  = link_to 'Clear Search', request.path, class:"ui button"
+= will_paginate @gift_cards, renderer: WillPaginateSemanticUi::ActionView::Renderer
+%table.ui.sortable.striped.table
   %thead
     %tr
-      %th Person ID
-      %th Verified
-      %th Name
-      %th Address
-      %th Batch
-      %th ProxyID
-      %th Card Number
-      %th Expiration Date
-      %th Amount
-      %th Mailed?
-      %th{colspan: "3"}
-  %tbody
-    - @new_gift_cards.each_with_index do |gift_card, index|
-      %tr
-        = form_for([@recent_signups[index], gift_card], remote: true) do |form|
-          - if gift_card.errors.any?
-            #error_explanation
-              %h2
-                = pluralize(gift_card.errors.count, "error")
-                prohibited this gift_card from being saved:
-              %ul
-                - gift_card.errors.full_messages.each do |message|
-                  %li= message
-          %td{rowspan: "2"}
-            = form.text_field :person_id, value: @recent_signups[index].id, readonly: true, class: "span1"
-          %td
-            = @recent_signups[index].verified
-          %td
-            = @recent_signups[index].full_name
-          %td
-            = address_fields_to_sentence(@recent_signups[index])
-          %td{id: "new-batchid-#{@recent_signups[index].id}"}
-            = form.text_field :batch_id, class: 'input-small', placeholder: "Batch ID"
-          %td{id: "new-proxyid-#{@recent_signups[index].id}"}
-            = form.text_field :proxy_id,class: 'input-mini', placeholder: "Proxy ID"
-          %td.input-prepend{id: "new-cardnumber-#{@recent_signups[index].id}"}
-            %span.add-on ****-****-***
-            = form.text_field :gift_card_number,class: 'input-small', placeholder: "#####"
-          %td{id: "new-expirationdate-#{@recent_signups[index].id}"}
-            = form.text_field :expiration_date, class: 'input-mini',placeholder: "MM/YY"
-          %td
-            = form.text_field :amount, value: "5.00", readonly: true, class: "span1"
-          = form.hidden_field :reason, value: "signup"
-          %td{id: "new-submit-#{@recent_signups[index].id}"}= form.submit 'Add Gift Card', class: "btn"
-      %tr
-        %td{colspan: "6"}
-          - @recent_signups[index].possible_duplicates.each do |key, val|
-            Possible Duplicate ID ##{link_to "#{key} #{val['person'].full_name}", person_path(val['person'])} Matching on #{val['match_count']} variables: #{val['matches_on'].to_sentence}
-            %br/
-%h1 Listing Gift Cards
-.span12
-  = search_form_for @q_giftcards, url: gift_cards_path, method: :get, class: 'form-inline' do |f|
-    = f.label :gift_card_number_cont
-    = f.search_field :gift_card_number_cont, class: 'input-mini'
-    %label{for: "created_at_date_gteq"} Created on or after
-    = f.text_field :created_at_date_gteq, class: 'text_field input-small', id: 'datepicker_start', placeholder: 'yyyy-mm-dd'
-    %label{for: "created_at_date_lteq"} Created on or before
-    = f.text_field :created_at_date_lteq, class: 'text_field input-small', id: 'datepicker_end', placeholder: 'yyyy-mm-dd'
-    = f.submit 'Search', class: "btn btn-primary"
-    = link_to 'Clear Search', request.path, class:"btn"
-= will_paginate @gift_cards, renderer: BootstrapPagination::Rails
-%table.table.table-striped
-  %thead
-    %tr
-      %th Gift Card ID
-      %th Person ID
+      %th ID
       %th Name
       %th Reason
       %th Giftable ID
@@ -84,25 +92,10 @@
       %th Expiration Date
       %th Amount
       %th Created On
-      %th Edit?
-      %th{colspan: "3"}
+      %th.center.aligned Actions
   %tbody#gift_cards
     - @gift_cards.each do |gift_card|
-      %tr
-        %td= gift_card.id
-        %td= gift_card.person_id
-        %td= link_to "#{gift_card.person.full_name}", person_path(gift_card.person)
-        %td= gift_card.reason.titleize
-        %td= gift_card.giftable_id
-        %td= gift_card.batch_id
-        %td= gift_card.proxy_id
-        %td= gift_card.gift_card_number
-        %td= gift_card.expiration_date
-        %td= humanized_money_with_symbol gift_card.amount
-        %td= gift_card.created_at.strftime('%m/%d/%Y')
-        %td= link_to 'Show', gift_card
-        %td= link_to 'Edit', edit_gift_card_path(gift_card)
-        %td= link_to 'Destroy', gift_card, method: :delete, data: { confirm: 'Are you sure?' }
+      = render partial: 'gift_card', locals: { gift_card: gift_card }
 %br/
-= link_to "Save this list as CSV", gift_cards_path(params.merge(format: 'csv')), class: "btn"
-= link_to 'New Gift card', new_gift_card_path
+= link_to 'New Gift card', new_gift_card_path, class: 'ui green button'
+= link_to "Save this list as CSV", gift_cards_path(params.merge(format: 'csv')), class: "ui button"
