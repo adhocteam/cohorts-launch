@@ -6,5 +6,11 @@
   %td= gift_card.expiration_date
   %td= humanized_money_with_symbol gift_card.amount
   %td= gift_card.created_at.strftime('%m/%d/%Y')
-  %td= link_to 'Edit', edit_gift_card_path(gift_card)
-  %td= link_to 'Destroy', gift_card, method: :delete, data: { confirm: 'Are you sure?' }
+  %td.center.aligned
+    .ui.icon.buttons
+      = link_to gift_card, class: 'ui tooltippy left attached icon button', title: 'Show' do
+        %i.unhide.icon
+      = link_to edit_gift_card_path(gift_card), class: 'ui tooltippy attached icon button', title: 'Edit' do
+        %i.edit.icon
+      = link_to gift_card, method: :delete, data: { confirm: 'Are you sure?' }, class: 'ui tooltippy right attached icon button', title: 'Delete' do
+        %i.delete.icon

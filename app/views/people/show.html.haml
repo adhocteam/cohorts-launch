@@ -1,179 +1,254 @@
 - content_for :page_title, @person.full_name
-.page-header
-  %h1= @person.full_name
-  = render partial: 'add_remove_cart',locals: { person: @person }
-.row
-  .span6
-    .row
-      .span3
-        %h3 About
-        %dl
-          %dt Verified?
-          %dd= best_in_place @person, :verified
-          %dt Address
-          %dd= address_fields_to_sentence(@person)
-          %dt Ward
-          %dd
-            - if @person.geography_id.present?
-              = link_to @person.geography_id, search_index_path(adv: 1, geography_id: @person.geography_id )
-          %dt Primary device
-          %dd
-            = best_in_place @person,:primary_device_description
-            %span.muted
-              (#{best_in_place @person, :primary_device_id, as: :select, collection:  Cohorts::Application.config.device_mappings.collect{|i| [i.last, i.first]}})
-          %dt Secondary device
-          %dd
-            = best_in_place @person,:secondary_device_description
-            %span.muted
-              (#{best_in_place @person, :secondary_device_id, as: :select, collection:  Cohorts::Application.config.device_mappings.collect{|i| [i.last, i.first]}})
-          %dt Primary connection method
-          %dd
-            = best_in_place @person,:primary_connection_description
-            %span.muted
-              (#{best_in_place @person, :primary_connection_id , as: :select, collection: Cohorts::Application.config.connection_mappings.collect{|i| [i.last,i.first.to_s.humanize]}})
-          %dt Secondary connection method
-          %dd
-            = best_in_place @person,:secondary_connection_description
-            %span.muted
-              (#{best_in_place @person, :secondary_connection_id , as: :select, collection: Cohorts::Application.config.connection_mappings.collect{|i| [i.last,i.first.to_s.humanize]}})
-          %dt Preferred participation method
-          %dd= best_in_place @person, :participation_type, as: :select, collection: %w(in-person remote)
-          %dt Interviews
-          %dd= link_to "Calendar", calendar_path(token: @person.token)
-          %dt Invitations
-          %dd= @person.event_invitations.size
-          %dt Reserved
-          %dd= @person.v2_reservations.size
-          %dt Attended
-          %dd= @person.v2_reservations.attended.size
-          %dt Cancel
-          %dd
-            = @person.v2_reservations.cancelled.size
-          %dd= best_in_place @person, :participation_type
-      .span3
-        %h3 Contact
-        %dl
-          %dt Phone
-          %dd= best_in_place @person, :phone_number, display_with: :number_to_phone
-          %dt Email
-          %dd= best_in_place @person, :email_address
-          %dt Preferred Contact Method
-          %dd= best_in_place @person, :preferred_contact_method, as: :select, collection: [['SMS','SMS'], ['EMAIL','EMAIL']]
-          %dt Voted in last election?
-          %dd= best_in_place @person, :voted, as: :select, collection: %w(YES NO)
-          %dt Facebook
-          %dd link to facebook
-          %dt Twitter
-          %dd link to twitter
-          %dt Signup at
-          %dd= @person.signup_at ? @person.signup_at.to_s(:long) : 'unknown'
-    .row
-      .span6
-        %h3 Tags
-        %ul#tag-list
-          = render partial: 'taggings/tagging', collection: @person.taggings
-        = form_for(@tagging, remote: true, html: { class: "form-inline" }) do |form|
-          = form.hidden_field :taggable_type, value: "Person"
-          = form.hidden_field :taggable_id, value: @person.id
-          = form.text_field :name, id: 'tag-typeahead', class: "input tokenfield span2 tag-typehead", placeholder: "new tag", autocomplete: 'off'
-          = form.submit "Add", class: "btn span1"
-  .span6
-    %h3 Location
-    %a{href: "https://maps.google.com?q=#{CGI.escape(address_fields_to_sentence(@person)).html_safe}", target: "_blank", title: "View in Google Maps"}
-      %img{src: "https://maps.googleapis.com/maps/api/staticmap?markers=|#{CGI.escape(address_fields_to_sentence(@person)).html_safe}&zoom=14&size=570x200&sensor=false"}/
-    / <img src="https://maps.googleapis.com/maps/api/streetview?size=570x200&amp;amp;location=<haml:loud> CGI.escape(address_fields_to_sentence(@person)).html_safe </haml:loud>&amp;amp;sensor=false">
-.row
-  .span6
-    %h3 Notes
-    = form_for([@person, @comment], remote: true) do |form|
-      = form.hidden_field :commentable_type, value: 'Person'
-      = form.hidden_field :commentable_id, value: @person.id
-      = form.text_area :content, rows: 3, class: "span6 input-block-level"
-      = form.submit 'Add note', class: "btn"
-    #comments
-      = render partial: 'comment', collection: @person.comments.order("created_at DESC")
-  #person-events.span6
-    %h3 Communications
-    %table.table
-      %tr
-        %th Campaign Name
-      - @twilio_wufoo_forms.each do |form|
+.ui.equal.width.grid
+  .column
+    %h1.ui.header.page-header= @person.full_name
+  .right.aligned.column
+    = render partial: 'add_remove_cart',locals: { person: @person }
+.ui.divider
+.ui.padded.grid
+  .row
+    .four.wide.column
+      %h3.ui.header Contact
+      .ui.relaxed.list
+        .item
+          %i.marker.icon
+          .content
+            .header Address
+            .description= address_fields_to_sentence(@person)
+        .item
+          %i.phone.icon
+          .content
+            .header Phone
+            .description= best_in_place @person, :phone_number, display_with: :number_to_phone
+        .item
+          %i.mail.icon
+          .content
+            .header Email
+            .description= best_in_place @person, :email_address
+        .item
+          %i.text.telephone.icon
+          .content
+            .header Preferred Contact Method
+            .description= best_in_place @person, :preferred_contact_method, as: :select, collection: [['SMS','SMS'], ['EMAIL','EMAIL']]
+        .item
+          %i.facebook.icon
+          .content
+            .header Facebook
+            .description link to facebook
+        .item
+          %i.twitter.icon
+          .content
+            .header Twitter
+            .description link to twitter
+        .item
+          %i.history.icon
+          .content
+            .header Signup at
+            .description= @person.signup_at ? @person.signup_at.to_s(:long) : 'unknown'
+    .four.wide.column
+      %h3.ui.header About
+      .ui.relaxed.list
+        .item
+          %i.help.circle.icon
+          .content
+            .header Verified?
+            .description= best_in_place @person, :verified
+        .item
+          %i.checkmark.box.icon
+          .content
+            .header Voted in last election?
+            .description= best_in_place @person, :voted, as: :select, collection: %w(Yes No)
+        - if @person.geography_id.present?
+          .item
+            %i.street.view.icon
+            .content
+              .header Ward
+              .description= link_to @person.geography_id, search_index_path(adv: 1, geography_id: @person.geography_id )
+        .item
+          %i.desktop.icon
+          .content
+            .header Primary device
+            .description
+              = best_in_place @person,:primary_device_description
+              %span.muted
+                (#{best_in_place @person, :primary_device_id, as: :select, collection:  Cohorts::Application.config.device_mappings.collect{|i| [i.last, i.first]}})
+        .item
+          %i.mobile.icon
+          .content
+            .header Secondary device
+            .description
+              = best_in_place @person,:secondary_device_description
+              %span.muted
+                (#{best_in_place @person, :secondary_device_id, as: :select, collection:  Cohorts::Application.config.device_mappings.collect{|i| [i.last, i.first]}})
+        .item
+          %i.wifi.icon
+          .content
+            .header Primary connection method
+            .description
+              = best_in_place @person,:primary_connection_description
+              %span.muted
+                (#{best_in_place @person, :primary_connection_id , as: :select, collection: Cohorts::Application.config.connection_mappings.collect{|i| [i.last,i.first.to_s.humanize]}})
+        .item
+          %i.signal.icon
+          .content
+            .header Secondary connection method
+            .description
+              = best_in_place @person,:secondary_connection_description
+              %span.muted
+                (#{best_in_place @person, :secondary_connection_id , as: :select, collection: Cohorts::Application.config.connection_mappings.collect{|i| [i.last,i.first.to_s.humanize]}})
+        .item
+          %i.comments.icon
+          .content
+            .header Preferred participation method
+            .description= best_in_place @person, :participation_type, as: :select, collection: %w(in-person remote)
+        .item
+          %i.talk.icon
+          .content
+            .header Interviews
+            .description= link_to "Calendar", calendar_path(token: @person.token), class: 'green'
+    .eight.wide.column
+      %h3.ui.header Location
+      %a{href: "https://maps.google.com?q=#{CGI.escape(address_fields_to_sentence(@person)).html_safe}", target: "_blank", title: "View in Google Maps"}
+        %img{src: "https://maps.googleapis.com/maps/api/staticmap?markers=|#{CGI.escape(address_fields_to_sentence(@person)).html_safe}&zoom=14&size=540x270&sensor=false"}/
+      / <img src="https://maps.googleapis.com/maps/api/streetview?size=570x200&amp;amp;location=<haml:loud> CGI.escape(address_fields_to_sentence(@person)).html_safe </haml:loud>&amp;amp;sensor=false">
+  .equal.width.row
+    .column
+      %h3.ui.header Statistics
+      .ui.tiny.green.statistic#gift_card_total
+        .value
+          %i.dollar.icon
+          = humanized_money @person.gift_card_total
+        .label total sent
+      .ui.tiny.green.statistic
+        .value
+          %i.send.icon
+          = @person.event_invitations.size
+        .label= 'Invitation'.pluralize(@person.event_invitations.size)
+      .ui.tiny.green.statistic
+        .value
+          %i.wait.icon
+          = @person.v2_reservations.size
+        .label= 'Reservation'.pluralize(@person.v2_reservations.size)
+      .ui.tiny.green.statistic
+        .value
+          %i.checkmark.icon
+          = @person.v2_reservations.attended.size
+        .label Attended
+      .ui.tiny.green.statistic
+        .value
+          %i.delete.icon
+          = @person.v2_reservations.cancelled.size
+        .label Cancelled
+  .equal.width.row
+    .column
+      %h3.ui.header Tags
+      = form_for(@tagging, remote: true, html: { class: "ui form" }) do |form|
+        = form.hidden_field :taggable_type, value: "Person"
+        = form.hidden_field :taggable_id, value: @person.id
+        .field
+          .ui.fluid.left.icon.input
+            %i.tags.icon
+            = form.text_field :name, placeholder: "New tag", autocomplete: 'off'
+      .ui.green.labels#tag-list
+        = render partial: 'taggings/tagging', collection: @person.taggings
+    .column
+      %h3.ui.header Notes
+      = form_for([@person, @comment], remote: true, html: { class: "ui form" }) do |form|
+        = form.hidden_field :commentable_type, value: 'Person'
+        = form.hidden_field :commentable_id, value: @person.id
+        .field
+          .ui.fluid.left.icon.input
+            %i.edit.icon
+            = form.text_field :content, placeholder: 'New note'
+      .ui.comments#comments
+        = render partial: 'comment', collection: @person.comments.order("created_at DESC")
+  - if @twilio_wufoo_forms.count.positive?
+    #person-events.row
+      %h3.ui.header Communications
+      %table.ui.striped.table
         %tr
-          %td
-            = form.name
-.row
-  .span12
-    %h3 Add New Gift Card
-    #error-div
-    = form_for([@person, @gift_card], remote: true) do |form|
-      - if @gift_card.errors.any?
-        #error_explanation
-          %h2
-            = pluralize(@gift_card.errors.count, "error")
-            prohibited this gift_card from being saved:
-          %ul
-            - @gift_card.errors.full_messages.each do |message|
-              %li= message
-      = form.hidden_field :person_id, value: @person.id
-      = form.select :reason, [['Signup', 'signup'], ['Test', 'test'], ['Referral', 'referral'], ['Other', 'other']], { prompt: "Reason" }, class: 'input-small', id: "new-reason"
-      = form.text_field :notes, placeholder: 'Notes', class: 'input-medium', id: 'new-notes'
-      = form.text_field :proxy_id, placeholder: "ProxyID",class: 'input-mini', id: "new-proxyid"
-      = form.text_field :batch_id, placeholder: "BatchID",class: 'input-mini', id: "new-batchid"
-      .input-prepend
-        %span.add-on ****-****-***
-        = form.text_field :gift_card_number, placeholder: "#####", class: 'input-small', id: "new-cardnumber"
-      = form.text_field :expiration_date, placeholder: "MM/YY", class: 'input-mini', id: "new-expirationdate"
-      = form.text_field :amount, placeholder: "Amount",class: 'input-mini', id: "new-amount"
-      = form.submit 'Add Gift Card', class: "btn"
-  .span12
-    %h3
-      Gift Cards - Total:
-      %span#gift_card_total= humanized_money_with_symbol @person.gift_card_total
-    %table.table.table-striped
-      %tr
-        %th Reason
-        %th Giftable ID
-        %th Batch
-        %th Card Number
-        %th Expiration Date
-        %th Amount
-        %th Created On
-        %th{colspan: "2"}
-      %tbody#people_gift_cards
-        = render partial: 'people/gift_card', collection: @person.gift_cards.order("created_at DESC")
-.row
-  .span12
-    - if @person.answers.any?
-      %h3 Answers
-      %table.table
-        %tr
-          %th Question
-          %th Answer
-          %th Answered on
-        - for answer in @person.answers
-          %a{id: "answer-#{answer.id}"}
+          %th Campaign Name
+        - @twilio_wufoo_forms.each do |form|
           %tr
-            %td= answer.question.text
-            %td= answer.value
-            %td= answer.created_at.strftime('%b %e, %Y at %l:%M %p')
-    - else
-      / no form submissions. FIXME: null state?
-.row
-  .form-actions.span12
-    = link_to t('.back', default: t("helpers.links.back")), |
-      people_path, class: 'btn'                             |
-    -#
-    = link_to t('.edit', default: t("helpers.links.edit")), |
-      edit_person_path(@person), class: 'btn'               |
-    -#
-    = link_to t('.destroy', default: t("helpers.links.destroy")),                                               |
-      person_path(@person),                                                                                        |
-      method: 'delete',                                                                                         |
-      data: { confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure?')) }, |
-      class: 'btn btn-danger'                                                                                   |
-    -#
-    = link_to 'deactivate',                                                                                        |
-      deactivate_people_path(@person),                                                                             |
-      method: :post,                                                                                               |
-      data: { confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure?')) }, |
-      class: 'btn btn-danger'                                                                                   |
+            %td
+              = form.name
+  .equal.width.row
+    .column
+      %h3.ui.header
+        Gift Cards
+      #error-div
+      = form_for([@person, @gift_card], remote: true, html: { class: 'ui form' }) do |form|
+        - if @gift_card.errors.any?
+          #errorExplanation.ui.negative.message
+            %h3.ui.header
+              = pluralize(gift_card.errors.size, "error")
+              prohibited this record from being saved.
+            %p There were problems with the following fields:
+            %ul
+              - gift_card.errors.full_messages.each do |msg|
+                %li= msg
+        = form.hidden_field :person_id, value: @person.id
+        = form.hidden_field :reason, value: "signup"
+        .six.fields
+          .field{id: "new-batchid-#{@person.id}"}
+            .ui.mini.input
+              = form.text_field :batch_id, placeholder: "Batch ID"
+          .field{id: "new-proxyid-#{@person.id}"}
+            .ui.mini.input
+              = form.text_field :proxy_id, placeholder: "Proxy ID"
+          .field{id: "new-cardnumber-#{@person.id}"}
+            .ui.mini.input
+              = form.text_field :gift_card_number, placeholder: 'Card Number'
+          .field{id: "new-expirationdate-#{@person.id}"}
+            .ui.mini.input
+              = form.text_field :expiration_date, placeholder: "MM/YY"
+          .field
+            .ui.mini.input
+              = form.text_field :amount, value: nil, placeholder: 'Amount'
+          .field
+            = form.submit 'Add Gift Card', class: "ui mini fluid green button"
+      %table.ui.sortable.striped.table
+        %thead
+          %tr
+            %th Reason
+            %th Giftable ID
+            %th Batch
+            %th Card Number
+            %th Expiration Date
+            %th Amount
+            %th Created On
+            %th.center.aligned Actions
+        %tbody#people_gift_cards
+          = render partial: 'people/gift_card', collection: @person.gift_cards.order("created_at DESC")
+  - if @person.answers.any?
+    .equal.width.row
+      .column
+        %h3.ui.header Answers
+        %table.ui.striped.sortable.table
+          %thead
+            %tr
+              %th Question
+              %th Answer
+              %th Answered on
+          %tbody
+            - for answer in @person.answers
+              %a{id: "answer-#{answer.id}"}
+              %tr
+                %td= answer.question.text
+                %td= answer.value
+                %td= answer.created_at.strftime('%b %e, %Y at %l:%M %p')
+  .equal.width.row
+    .column
+      .ui.icon.buttons
+        = link_to people_path, class: 'ui tooltippy left attached icon button', title: 'Back' do
+          %i.left.arrow.icon
+        = link_to edit_person_path(@person), class: 'ui tooltippy attached icon button', title: 'Edit' do
+          %i.edit.icon
+        = link_to deactivate_people_path(@person), method: :post,
+        data: { confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure?')) },
+        class: 'ui tooltippy attached icon button', title: 'Deactivate' do
+          %i.hide.icon
+        = link_to person_path(@person), method: 'delete',
+        data: { confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure?')) },
+        class: 'ui tooltippy right attached icon button', title: 'Delete' do
+          %i.delete.icon
