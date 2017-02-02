@@ -1,3 +1,7 @@
-%li.tagging{id: "tagging-#{tagging.id}"}
-  = link_to tagging.tag.name, search_index_ransack_path("q[tags_id_eq_all]" => tagging.tag.id)
-  = link_to '<i class="icon-remove-circle"></i>'.html_safe, tagging_path(tagging), method: :delete, remote: true, class: "delete-link", title: "delete this tag"
+- readonly ||= false
+.ui.label{ id: "tagging-#{tagging.id}" }
+  = link_to search_index_ransack_path("q[tags_id_eq_all]" => params), class: 'tag-name detail' do
+    = tagging.tag.name
+  - unless readonly
+    = link_to tagging_path(tagging), method: :delete, remote: true, class: "delete-link", title: "delete this tag" do
+      %i.delete.link.icon

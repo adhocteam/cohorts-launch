@@ -1,3 +1,4 @@
-$("#tag-list").append("#{escape_javascript(render partial: 'taggings/tagging', locals: {tagging: @tagging })}");
+$("#tag-list").append("#{escape_javascript(render partial: 'taggings/tagging', locals: {tagging: @tagging })}")
+$("#tagging-#{@tagging.id}").hide().transition('scale');
 $("#tagging_name").val('');
 $('input#tag-typeahead').typeahead('val','');
