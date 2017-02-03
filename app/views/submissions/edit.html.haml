@@ -1,26 +1,38 @@
-.page-header
-  %h1 Editing submission
-= render 'formMatch'
-%table.table
-  %tr
-    %th Form
-    %th Content
-  %a{id: "submission-#{@submission.id}"}
-  %tr
-    %td
-      %strong= @submission.form_name
-      %br/
-      %span{title: @submission.created_at}
-        = time_ago_in_words @submission.created_at
-        ago
-      %br/
-      %span{style: "font-size:small; color:#ccc; font-style:italic"}= @submission.ip_addr
-    %td
-      %table.table.table-striped
-        - for field_id,field_desc in @submission.fields do
+%h1.ui.header.page-header
+  Editing submission:
+  = @submission.form_name
+.ui.grid
+  .equal.width.row
+    .column
+      %p
+        Submitted on
+        = @submission.created_at.strftime('%b %e, %Y at %l:%M %p')
+      %table.ui.striped.table
+        %thead
           %tr
-            %td= field_desc[:title]
-            %td= @submission.field_value(field_id)
-= link_to 'Show', @submission
-|
-\#{link_to 'Back', submissions_path}
+            %th Question
+            %th Answer
+        %tbody
+          - for field_id,field_desc in @submission.fields do
+            %tr
+              %td= field_desc[:title]
+              %td= @submission.field_value(field_id)
+  .equal.width.row
+    .column
+      .ui.message This form can be used to match a submission from Wufoo  with an existing Person.
+      .ui.segment
+        = form_for @submission, html: { class: 'ui form' } do |f|
+          - if @submission.errors.any?
+            #error_explanation.ui.negative.message
+              %ul
+                - @submission.errors.full_messages.each do |msg|
+                  %li= msg
+          .field
+            = f.label "Person"
+            = f.select :person_id, Person.all.collect { |p| [ p.full_name, p.id ] }, {include_blank: true}, class: 'ui search selection dropdown'
+          .field
+            = f.label :form_type
+            = f.select :form_type, Submission.form_types.keys.map {|form_type| [form_type.titleize,form_type]}, {}, class: 'ui dropdown'
+          .form-actions
+            = f.submit 'Save', class: "ui green button"
+            = link_to 'Back', :back, class: "ui button"
