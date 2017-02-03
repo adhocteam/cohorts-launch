@@ -107,7 +107,7 @@
               %br/
               Preferred Contact Method: #{search_result_field result.preferred_contact_method, :preferred_contact_method}
   .row
-    .offset4.span8= will_paginate @results, renderer: BootstrapPagination::Rails
+    .offset4.span8= will_paginate @results, renderer: WillPaginateSemanticUi::ActionView::Renderer
   .row
     .span12
       = link_to "Save this list as CSV", search_index_path(params.merge(format: :csv)), class: "btn"
