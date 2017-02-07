@@ -3,11 +3,11 @@
   token = '#{@person.nil? ? false : @person.token}';
 - if current_user
   = render partial: 'layouts/v2_event_menu'
-.well.well-sm
+.ui.message
   Calendar for #{@visitor.full_name}
 #calendar
-%div
-  = link_to "Add to this your calendar", controller: 'calendar', action: :feed, token: @visitor.token, protocol: 'webcal', format: :ics
+%br/
+= link_to "Add to this your calendar", {controller: 'calendar', action: :feed, token: @visitor.token, protocol: 'webcal', format: :ics}, {class: 'ui button'}
 / this is where we drop our modals
 #show-reservation
 #show-invitation

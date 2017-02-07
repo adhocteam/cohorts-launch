@@ -1,7 +1,6 @@
-%h1 SMS Campaigns
-%br/
-%h3 Tests - Active
-%table.table.table-striped.table-responsive
+%h1.ui.header.page-header SMS Campaigns
+%h3.ui.dividing.header Tests - Active
+%table.ui.striped.table
   %thead
     %tr
       %th Active?
@@ -31,8 +30,8 @@
         %td= link_to 'Show', twilio_wufoo
         %td= link_to 'Edit', edit_twilio_wufoo_path(twilio_wufoo)
         %td= link_to 'Destroy', twilio_wufoo, method: :delete, data: { confirm: 'Are you sure?' }
-%h3 Signups - Active
-%table.table.table-striped.table-responsive
+%h3.ui.dividing.header Signups - Active
+%table.ui.striped.table
   %thead
     %tr
       %th Active?
@@ -62,8 +61,8 @@
         %td= link_to 'Show', twilio_wufoo
         %td= link_to 'Edit', edit_twilio_wufoo_path(twilio_wufoo)
         %td= link_to 'Destroy', twilio_wufoo, method: :delete, data: { confirm: 'Are you sure?' }
-%h3 Inactive
-%table.table.table-striped.table-responsive
+%h3.ui.dividing.header Inactive
+%table.ui.striped.table
   %thead
     %tr
       %th Active?
@@ -92,5 +91,5 @@
         %td= link_to 'Edit', edit_twilio_wufoo_path(twilio_wufoo)
         %td= link_to 'Destroy', twilio_wufoo, method: :delete, data: { confirm: 'Are you sure?' }
 %br/
-= link_to 'New Twilio-Wufoo Connection', new_twilio_wufoo_path, class: 'btn btn-mini'
-= link_to "Import Phone Numbers", '/twilio_messages/sendmessages', class: 'btn btn-mini'
+= link_to 'New Twilio-Wufoo Connection', new_twilio_wufoo_path, class: 'ui button'
+= link_to "Import Phone Numbers", '/twilio_messages/sendmessages', class: 'ui button'

@@ -53,5 +53,5 @@
             %td= link_to 'Destroy', twilio_message, method: :delete, data: { confirm: 'Are you sure?' }
 .row
   .span12{style: "text-align:center"}
-    = will_paginate @twilio_messages, renderer: BootstrapPagination::Rails
+    = will_paginate @twilio_messages, renderer: WillPaginateSemanticUi::ActionView::Renderer
 = link_to 'New Twilio message', new_twilio_message_path
