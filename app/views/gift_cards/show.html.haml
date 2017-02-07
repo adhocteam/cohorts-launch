@@ -11,7 +11,7 @@
     = @gift_card.expiration_date
   .item
     .header Person
-    = @gift_card.person.full_name
+    = @gift_card.person&.full_name
   .item
     .header Created by
     = @gift_card.created_by

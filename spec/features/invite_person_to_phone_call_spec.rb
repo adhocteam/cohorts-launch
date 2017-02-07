@@ -85,11 +85,11 @@ feature 'Invite person to a phone call' do
 
     visit '/v2/event_invitations/new'
 
-    select '30 mins', from: 'Call length'
+    select '30 mins', from: 'Call length', visible: false
 
     fill_in 'Date', with: '20/02/2016'
-    select '12:00', from: 'Start time'
-    select '13:15', from: 'End time'
+    select '12:00', from: 'Start time', visible: false
+    select '13:15', from: 'End time', visible: false
 
     click_button 'Send invitation'
     message = dismiss_confirm do
@@ -103,8 +103,8 @@ feature 'Invite person to a phone call' do
 
     visit '/v2/event_invitations/new'
 
-    select '13:00', from: 'Start time'
-    select '12:15', from: 'End time'
+    select '13:00', from: 'Start time', visible: false
+    select '12:15', from: 'End time', visible: false
 
     click_button 'Send invitation'
     message = accept_alert do

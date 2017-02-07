@@ -13,9 +13,8 @@ feature 'tag person'  do
     visit "/people/#{person.id}"
     expect(page).to have_button('Add')
 
-    fill_in_autocomplete '#tag-typeahead', tag_name
-
-    find_button('Add').trigger('click')
+    fill_in 'tagging[name]', with: tag_name
+    page.execute_script("$('form#new_tagging').submit()")
     wait_for_ajax
     sleep 1 # wait for our page to save
     # gotta reload so that we don't cache tags
@@ -37,15 +36,15 @@ feature 'tag person'  do
 
     expect(page).to have_button('Add')
     sleep 1
-    fill_in_autocomplete '#tag-typeahead', tag_name
+    fill_in 'tagging[name]', with: tag_name
     wait_for_ajax
     sleep 1
-    find_button('Add').trigger('click')
+    page.execute_script("$('form#new_tagging').submit()")
     wait_for_ajax
     sleep 1
     expect(page.evaluate_script("$('a.delete-link').length")).to eq(1)
 
-    expect(find(:css, '#tag-typeahead').value).to_not eq(tag_name)
+    expect(find(:css, '#tagging_name').value).to_not eq(tag_name)
     page.execute_script("$('a.delete-link').click();")
     wait_for_ajax
     sleep 1
