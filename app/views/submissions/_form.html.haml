@@ -1,23 +1,25 @@
-.row
-  .span6
-    = form_for(@submission) do |f|
-      %fieldset
-        %legend Submission
+.ui.grid
+  .equal.width.row
+    .column
+      .ui.message This form can be used to add a submission from Wufoo and join it with an existing Person.
+      = form_for(@submission, html: { class: 'ui form' }) do |f|
         - if @submission.errors.any?
           #error_explanation.alert.alert-error
             %ul
               - @submission.errors.full_messages.each do |msg|
                 %li= msg
-        = f.label "Person ID (Number)"
-        = f.text_field :person_id, class: 'span2'
-        = f.label 'Wufoo Form ID'
-        = f.select :form_id, TwilioWufoo.wufoo_form_ids, class: 'span6', include_blank: true
-        = f.label 'Wufoo Form Entry ID Number'
-        = f.text_field :entry_id, class: 'span2'
-        = f.label :form_type
-        = f.select(:form_type, Submission.form_types.keys.map {|form_type| [form_type.titleize,form_type]})
-        .form-actions
-          = f.submit 'Save', class: 'btn btn-primary'
-          = link_to 'Cancel', :back, class: 'btn'
-  .span6
-    %p.well This form can be used to add a submission from Wufoo and join it with an existing Person.
+        .field
+          = f.label "Person"
+          = f.select :person_id, Person.all.collect { |p| [ p.full_name, p.id ] }, {include_blank: true}, class: 'ui search selection dropdown'
+        .field
+          = f.label 'Wufoo Form ID'
+          = f.select :form_id, TwilioWufoo.wufoo_form_ids, {include_blank: true}, class: 'ui dropdown'
+        .field
+          = f.label 'Wufoo Form Entry ID Number'
+          = f.text_field :entry_id
+        .field
+          = f.label :form_type
+          = f.select(:form_type, Submission.form_types.keys.map {|form_type| [form_type.titleize,form_type]}, {}, class: 'ui dropdown')
+        .field
+          = f.submit 'Save', class: 'ui green button'
+          = link_to 'Cancel', :back, class: 'ui button'

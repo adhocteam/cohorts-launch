@@ -1,57 +1,56 @@
 - model_class = TwilioMessage
-.row.page-header
-  .span12
-    %h1= t '.title', default: "Text Message Log"
-.row
-  .span12
-    %table.table.table-striped.span12
-      %thead
-        %tr
-          %td date_created
-          %td date_updated
-          %td date_sent
-          /
-            <td>message_sid</td>
-          %td from
-          %td to
-          %td body
-          %td status
-          %td error_code
-          %td error_message
-          %td direction
-          %td wufoo_formid
-          %td conversation_count
-          %td signup_verify
-          %td created_at
-          %td updated_at
-          /
-            <td>account_sid</td>
-      %tbody
-        - @twilio_messages.each do |twilio_message|
+%h1.ui.header.page-header= t '.title', default: "Text Message Log"
+.ui.grid
+  .equal.width.row
+    .column
+      %table.ui.sortable.striped.table
+        %thead
           %tr
-            %td= twilio_message.date_created
-            %td= twilio_message.date_updated
-            %td= twilio_message.date_sent
+            %td date_created
+            %td date_updated
+            %td date_sent
             /
-              <td style="word-wrap: break-word"><haml:loud> twilio_message.message_sid </haml:loud></td>
-            %td= twilio_message.from
-            %td= twilio_message.to
-            %td= twilio_message.body
-            %td= twilio_message.status
-            %td= twilio_message.error_code
-            %td= twilio_message.error_message
-            %td= twilio_message.direction
-            %td= twilio_message.wufoo_formid
-            %td= twilio_message.conversation_count
-            %td= twilio_message.signup_verify
-            %td= twilio_message.created_at
-            %td= twilio_message.updated_at
+              <td>message_sid</td>
+            %td from
+            %td to
+            %td body
+            %td status
+            %td error_code
+            %td error_message
+            %td direction
+            %td wufoo_formid
+            %td conversation_count
+            %td signup_verify
+            %td created_at
+            %td updated_at
             /
-              <td style="word-wrap: break-word"><haml:loud> twilio_message.account_sid </haml:loud></td>
-            %td= link_to 'Show', twilio_message
-            %td= link_to 'Edit', edit_twilio_message_path(twilio_message)
-            %td= link_to 'Destroy', twilio_message, method: :delete, data: { confirm: 'Are you sure?' }
-.row
-  .span12{style: "text-align:center"}
-    = will_paginate @twilio_messages, renderer: WillPaginateSemanticUi::ActionView::Renderer
-= link_to 'New Twilio message', new_twilio_message_path
+              <td>account_sid</td>
+        %tbody
+          - @twilio_messages.each do |twilio_message|
+            %tr
+              %td= twilio_message.date_created
+              %td= twilio_message.date_updated
+              %td= twilio_message.date_sent
+              /
+                <td style="word-wrap: break-word"><haml:loud> twilio_message.message_sid </haml:loud></td>
+              %td= twilio_message.from
+              %td= twilio_message.to
+              %td= twilio_message.body
+              %td= twilio_message.status
+              %td= twilio_message.error_code
+              %td= twilio_message.error_message
+              %td= twilio_message.direction
+              %td= twilio_message.wufoo_formid
+              %td= twilio_message.conversation_count
+              %td= twilio_message.signup_verify
+              %td= twilio_message.created_at
+              %td= twilio_message.updated_at
+              /
+                <td style="word-wrap: break-word"><haml:loud> twilio_message.account_sid </haml:loud></td>
+              %td= link_to 'Show', twilio_message
+              %td= link_to 'Edit', edit_twilio_message_path(twilio_message)
+              %td= link_to 'Destroy', twilio_message, method: :delete, data: { confirm: 'Are you sure?' }
+  .equal.width.row
+    .center.aligned.column
+      = will_paginate @twilio_messages, renderer: WillPaginateSemanticUi::ActionView::Renderer
+= link_to 'New Twilio message', new_twilio_message_path, class: 'ui button'

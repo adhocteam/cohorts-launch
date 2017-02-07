@@ -1,23 +1,24 @@
-.row
-  .span12
-    %table.table.table-striped
-      %thead
-        %tr
-          %th Name
-          %th Description
-          %th Url
-          %th Source url
-          %th Creator name
-          %th Program
-      %tbody
-        - @applications.each do |application|
+.ui.grid
+  .equal.width.row
+    .column
+      %table.ui.sortable.striped.table
+        %thead
           %tr
-            %td= link_to application.name, application
-            %td= application.description
-            %td= application.url
-            %td= application.source_url
-            %td= application.creator_name
-            %td= link_to application.program.name, application.program
-.row
-  .span12
-    %p= link_to 'New Application', new_application_path
+            %th Name
+            %th Description
+            %th Url
+            %th Source url
+            %th Creator name
+            %th Program
+        %tbody
+          - @applications.each do |application|
+            %tr
+              %td= link_to application.name, application
+              %td= application.description
+              %td= application.url
+              %td= application.source_url
+              %td= application.creator_name
+              %td= link_to application.program.name, application.program
+  .equal.width.row
+    .column
+      %p= link_to 'New Application', new_application_path, class: 'ui button'
