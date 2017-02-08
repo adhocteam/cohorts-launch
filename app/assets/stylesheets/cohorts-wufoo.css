@@ -1,0 +1,154 @@
+
+#container,
+html.embed, * {
+	background-color: none;
+	background-color: transparent !important;
+	-webkit-transition: all 0.25s ease-in-out;
+	-moz-transition: all 0.25s ease-in-out;
+	transition: all 0.25s ease-in-out;
+}
+
+
+#container *{
+	 -webkit-box-sizing: border-box;
+	 -moz-box-sizing: border-box;
+	 box-sizing: border-box;
+}
+
+
+/* Logo */
+#logo {display: none;}
+
+/* Backgrounds */
+#logo{background-image:none;background-color:none;}
+#container{background-color: transparent;}
+.wufoo .focused{background:#FFF7C0}
+.wufoo .instruct{background-color:#F5F5F5}
+
+.wufoo header.info {
+	margin: 0 0 2em 0;
+	padding: 0;
+}
+
+.wufoo header.info h2 {
+	font-size: 2em;
+	font-weight: bold;
+}
+
+/* Borders */
+#container{border: none}
+.wufoo .info{border-bottom: none;}
+.wufoo .instruct{border:1px solid #e6e6e6}
+
+/* Typography */
+.wufoo .info h2{font-size:160%;font-family:inherit;color:#fff;}
+
+.wufoo .info div{font-size:95%;font-family:inherit;color:#444}
+
+.wufoo .section h3{font-size:110%;font-family:inherit;background: none; color:#fff}
+.wufoo .section div{font-size:85%;font-family:inherit;color:#444}
+
+.wufoo label.desc, .wufoo legend.desc {
+	font-size: 1.1em;
+	padding: 0 0 .2em 0;
+	font-family:inherit;
+	color:#fff;
+}
+
+.wufoo li div, .wufoo li div label, .wufoo li span label{font-family:inherit;color:#444}
+
+.wufoo li {
+	width: 100%;
+	display: block;
+	clear: both;
+	margin: 0 0 2.5em 0 !important;
+	padding: 0 !important;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.wufoo li#fo8li1 span {
+	display: inline-lock;
+	width: 49%;
+	margin: 0;
+	padding: 0;
+}
+.wufoo li#fo8li1 span:last-of-type {
+	float: right;
+}
+
+.wufoo input.text,
+.wufoo textarea.textarea,
+.wufoo select.select,
+.wufoo label.choice {
+	font-size:100%;
+	font-family:inherit;
+}
+
+
+
+.wufoo input.field.text,
+.wufoo textarea.field.textarea {
+	background: #fff !important;
+	padding: .75em;
+	width: 100%;
+	color: #444 !important;
+	opacity: .9;
+}
+
+.wufoo input.field.text:hover,
+.wufoo input.field.text:active,
+.wufoo input.field.text:focus,
+.wufoo textarea.field.textarea:hover,
+.wufoo textarea.field.textarea:active,
+.wufoo textarea.field.textarea:focus {
+	opacity: 1;
+}
+
+.wufoo textarea.field.textarea {
+	width: 50%;
+}
+
+.wufoo label {
+	color: #fff !important;
+	font-size: 1.1em;
+	padding: 0 0 .25em 0;
+}
+
+.wufoo textarea.textarea
+
+.wufoo label.choice{color:#fff}
+.wufoo .instruct{
+	font-size:80%;
+	font-family:inherit;
+	color:#fff;
+	background: rgba(0,0,0,.25);
+}
+
+input.btTxt {
+	display: block;
+	font-weight: bold;
+	border-radius: 0;
+	padding: 1em;
+}
+
+input#saveForm {
+	background: #163e83 !important;
+	color: #fff !important;
+	width: 100% !important;
+	display: block;
+	border: none !important;
+	opacity: .9;
+}
+
+input#saveForm:hover {
+	opacity: 1;
+	cursor: pointer;
+}
+
+form li {
+	clear: both;
+	display: block;
+	margin: 0 0 2em 0 !important;
+}
