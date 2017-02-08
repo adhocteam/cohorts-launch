@@ -48,3 +48,4 @@ screenshot*
 .byebug_history
 dump.rdb
 coverage
+public/assets/*

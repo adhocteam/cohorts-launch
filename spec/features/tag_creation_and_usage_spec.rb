@@ -11,7 +11,6 @@ feature 'tag person'  do
 
     tag_name = Faker::Company.buzzword
     visit "/people/#{person.id}"
-    expect(page).to have_button('Add')
 
     fill_in 'tagging[name]', with: tag_name
     page.execute_script("$('form#new_tagging').submit()")
@@ -34,7 +33,6 @@ feature 'tag person'  do
     tag_name = Faker::Company.buzzword
     visit "/people/#{person.id}"
 
-    expect(page).to have_button('Add')
     sleep 1
     fill_in 'tagging[name]', with: tag_name
     wait_for_ajax
