@@ -16,7 +16,7 @@
  *= require fullcalendar/fullcalendar.min
  *= require_tree .
  *= stub static
- *= stub wufoo
+ *= stub cohorts-wufoo
  */
 
  body {
