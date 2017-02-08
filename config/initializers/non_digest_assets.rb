@@ -1,1 +1,1 @@
-NonStupidDigestAssets.whitelist += ['wufoo.css']
+NonStupidDigestAssets.whitelist += ['cohorts-wufoo.css']
