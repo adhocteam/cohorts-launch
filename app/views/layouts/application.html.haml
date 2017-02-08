@@ -4,6 +4,7 @@
     %title
       Cohorts | #{title = yield(:page_title); title.present? ? title : controller_name.humanize.titlecase}
     = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
+    = stylesheet_link_tag 'https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic&subset=latin'
     = javascript_include_tag "application", "data-turbolinks-track" => true
     = csrf_meta_tags
     = render 'application/favicon'
