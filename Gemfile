@@ -26,6 +26,9 @@ gem 'less-rails-semantic_ui'
 gem 'autoprefixer-rails'
 gem "will_paginate_semantic_ui"
 
+# Use old Sprockets to avoid deprecation warnings
+gem "sprockets", '3.6.3'
+
 group :development do
   # this whole group makes finding performance issues much friendlier
   gem 'rack-mini-profiler'
