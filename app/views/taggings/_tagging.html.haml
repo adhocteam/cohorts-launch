@@ -1,6 +1,6 @@
 - readonly ||= false
 .ui.label{ id: "tagging-#{tagging.id}" }
-  = link_to search_index_ransack_path("q[tags_id_eq_all]" => params), class: 'tag-name detail' do
+  = link_to search_index_ransack_path("q[tags_id_eq_all]" => tagging.tag.id), class: 'tag-name detail' do
     = tagging.tag.name
   - unless readonly
     = link_to tagging_path(tagging), method: :delete, remote: true, class: "delete-link", title: "delete this tag" do
