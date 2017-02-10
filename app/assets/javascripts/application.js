@@ -66,7 +66,19 @@ $(document).on('ready page:load',function() {
   });
 
   // Initialize Semantic elements
-  $('.ui.dropdown').dropdown();
+  $.fn.dropdown.settings.selectOnKeydown = false;
+  $.fn.dropdown.settings.forceSelection = false;
+  $('.ui.dropdown').dropdown({
+    onChange: function(value) {
+      var target = $(this).parent();
+      if(value) {
+  	    target.find('.dropdown.icon').removeClass('dropdown').addClass('delete').on('click', function() {
+          target.dropdown('clear');
+          $(this).removeClass('delete').addClass('dropdown');
+        });
+      }
+    }
+  });
   $('.ui.checkbox').checkbox();
   $('.ui.calendar').calendar({
     type: 'date'
