@@ -1,7 +1,12 @@
-.recent-signup
-  %span.name= link_to "#{person.first_name} #{person.last_name}", person
-  %br/
-  %span.address= address_fields_to_sentence(person)
-  %br/
-  %span.signup-gift-card
-    Gift Card Mailed: #{t person.signup_gc_sent.class}
+.recent-signup.ui.list
+  .item
+    .header.name= link_to "#{person.first_name} #{person.last_name}", person
+  .item
+    %i.marker.icon
+    - address = address_fields_to_sentence(person)
+    .content.address= address.empty? ? 'No address' : address
+  .item
+    %i.payment.icon
+    .content.signup-gift-card
+      Gift Card Mailed:
+      = t person.signup_gc_sent.class
