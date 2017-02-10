@@ -64,3 +64,17 @@
 #notifications .ui.message {
   margin-bottom: 2em;
 }
+
+.ui.action.input .ui.dropdown:first-child {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.ui.action.input .ui.dropdown:last-child {
+    border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.ui.action.input .ui.fluid.search.selection.dropdown input.search {
+  width: 100%;
+}

@@ -66,9 +66,9 @@ $(document).on('ready page:load',function() {
   });
 
   // Initialize Semantic elements
-  $.fn.dropdown.settings.selectOnKeydown = false;
-  $.fn.dropdown.settings.forceSelection = false;
   $('.ui.dropdown').dropdown({
+    selectOnKeydown: false,
+    forceSelection: false,
     onChange: function(value) {
       var target = $(this).parent();
       if(value) {
@@ -86,8 +86,24 @@ $(document).on('ready page:load',function() {
   $('.ui.calendar').calendar('clear');
   $('.ui.modal').modal();
   $('.sortable.table').tablesort();
-
   $('.tooltippy').popup();
+
+  // Allow additions to some dropdowns
+  $('.ui.dropdown.allow-addition').dropdown({
+    selectOnKeydown: false,
+    forceSelection: false,
+    allowAdditions: true,
+    hideAdditions: false,
+    onChange: function(value) {
+      var target = $(this);
+      if(value) {
+  	    target.find('.dropdown.icon').removeClass('dropdown').addClass('delete').on('click', function() {
+          target.dropdown('clear');
+          $(this).removeClass('delete').addClass('dropdown');
+        });
+      }
+    }
+  });
 
   // Turn file input into a button
   $('.hidden-file-field').hide();
@@ -101,10 +117,14 @@ $(document).on('ready page:load',function() {
   });
 
   // Close alerts
-  $('.ui.message .close').on('click', function() {
+  $('.ui.message .close').click(function() {
     $(this)
       .closest('.message')
       .transition('fade');
   });
 
+  // Submit button hack
+  $('.ui.submit.button').click(function() {
+    $(this).parents('form').submit();
+  });
 });
