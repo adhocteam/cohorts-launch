@@ -35,4 +35,14 @@ module Helpers
     end
   end
 
+  # for Semantic-ui dropdown https://stackoverflow.com/questions/34921509/capybara-cant-find-select-box-for-semantic-ui
+  def select_from_dropdown(item_text, options)
+    # find dropdown selector
+    dropdown = find_field(options[:from], visible: false).first(:xpath, './/..')
+    # click on dropdown
+    dropdown.trigger('click')
+    # click on menu item
+    dropdown.find('.menu .item', text: item_text).click
+  end
+
 end
