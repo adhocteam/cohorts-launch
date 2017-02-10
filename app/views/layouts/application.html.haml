@@ -67,8 +67,8 @@
     .ui.page.padded.container.segment
       #notifications
         - if flash[:notice] || flash[:alert] || flash[:error] || flash[:success]
-          %div{class: "alert #{flash[:notice].present? ? "alert-success" : "alert-error"}"}
-            %button.close{"data-dismiss" => "alert", type: "button"} &times;
+          %div{class: "ui message #{flash[:notice].present? || flash[:success].present? ? "positive" : "negative"}"}
+            %i.close.icon
             = flash[:alert]
             = flash[:notice]
             = flash[:error]

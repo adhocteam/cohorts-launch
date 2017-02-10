@@ -88,4 +88,11 @@ $(document).on('ready page:load',function() {
     );
   });
 
+  // Close alerts
+  $('.ui.message .close').on('click', function() {
+    $(this)
+      .closest('.message')
+      .transition('fade');
+  });
+
 });
