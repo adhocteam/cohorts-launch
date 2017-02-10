@@ -127,4 +127,7 @@ $(document).on('ready page:load',function() {
   $('.ui.submit.button').click(function() {
     $(this).parents('form').submit();
   });
+  $('.search.link.icon').click(function() {
+    $(this).parents('form').submit();
+  });
 });
