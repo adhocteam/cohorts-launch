@@ -120,7 +120,7 @@ $(document).on('ready page:load',function() {
   $('.ui.message .close').click(function() {
     $(this)
       .closest('.message')
-      .transition('fade');
+      .transition('slide down');
   });
 
   // Submit button hack

@@ -1,27 +1,13 @@
 # frozen_string_literal: true
-# == Schema Information
-#
-# Table name: submissions
-#
-#  id              :integer          not null, primary key
-#  raw_content     :text(65535)
-#  person_id       :integer
-#  ip_addr         :string(255)
-#  entry_id        :string(255)
-#  form_structure  :text(65535)
-#  field_structure :text(65535)
-#  created_at      :datetime
-#  updated_at      :datetime
-#  form_id         :string(255)
-#  form_type       :integer          default(0)
-#
-
+# rubocop:disable Metrics/ClassLength
 class Submission < ActiveRecord::Base
   has_paper_trail
   validates_presence_of :raw_content
 
   belongs_to :person
   validates :person_id, numericality: { only_integer: true, allow_nil: true }
+
+  belongs_to :form
 
   has_many :answers
   has_many :questions, through: :answers
@@ -34,9 +20,13 @@ class Submission < ActiveRecord::Base
     test: 4
   }
 
-  after_create :create_questions_and_answers
+  after_create :find_form_and_create_answers
 
   self.per_page = 15
+
+  def form_hash
+    @form_hash ||= JSON.parse(form_structure)['Hash']
+  end
 
   def fields
     # return the set of fields that make up a submission
@@ -126,15 +116,12 @@ class Submission < ActiveRecord::Base
       data
     end
 
-    def create_questions_and_answers
-      person_attributes = Person.new.attributes.keys - %w(id created_at updated_at)
-      relevant = field_values.reject do |f|
-        person_attributes.include?(f[:text].parameterize('_')) || f[:value].empty?
-      end
-      relevant.each do |field|
-        question = Question.where(text: field[:text]).first_or_create
+    def find_form_and_create_answers
+      Form.update_forms
+      update(form: Form.find_by(hash_id: form_hash))
+      form.questions.each do |question|
         Answer.create(
-          value: field[:value],
+          value: field_value(question.field_id),
           question: question,
           person: person,
           submission: self

@@ -1,0 +1,24 @@
+%p#notice= notice
+
+%p
+  %b Hash:
+  = @form.hash
+%p
+  %b Name:
+  = @form.name
+%p
+  %b Description:
+  = @form.description
+%p
+  %b Url:
+  = @form.url
+%p
+  %b Created on:
+  = @form.created_on
+%p
+  %b Last update:
+  = @form.last_update
+
+= link_to 'Edit', edit_form_path(@form)
+\|
+= link_to 'Back', forms_path

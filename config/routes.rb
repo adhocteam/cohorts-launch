@@ -1,4 +1,5 @@
 Cohorts::Application.routes.draw do
+  resources :forms, only: [:index, :update]
   resources :gift_cards
   resources :mailchimp_updates
   namespace :public do

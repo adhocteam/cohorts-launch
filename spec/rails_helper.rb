@@ -18,6 +18,11 @@ Redis.current = MockRedis.new # mocking out redis for our tests
 require 'devise'
 require 'support/controller_macros'
 
+require 'capybara'
+Capybara.configure do |config|
+  config.server_port = 3001
+end
+
 ActiveRecord::Migration.maintain_test_schema!
 
 Shoulda::Matchers.configure do |config|

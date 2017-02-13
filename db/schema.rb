@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170120141619) do
+ActiveRecord::Schema.define(version: 20170209153043) do
 
   create_table "answers", force: :cascade do |t|
     t.integer  "question_id",   limit: 4
@@ -82,6 +82,18 @@ ActiveRecord::Schema.define(version: 20170120141619) do
     t.datetime "updated_at"
     t.integer  "created_by",     limit: 4
     t.integer  "updated_by",     limit: 4
+  end
+
+  create_table "forms", force: :cascade do |t|
+    t.string   "hash_id",     limit: 255
+    t.string   "name",        limit: 255
+    t.text     "description", limit: 65535
+    t.string   "url",         limit: 255
+    t.boolean  "hidden",                    default: false
+    t.datetime "created_on"
+    t.datetime "last_update"
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
   end
 
   create_table "gift_cards", force: :cascade do |t|
@@ -174,11 +186,17 @@ ActiveRecord::Schema.define(version: 20170120141619) do
   end
 
   create_table "questions", force: :cascade do |t|
-    t.text     "text",       limit: 65535
-    t.string   "short_text", limit: 255
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.text     "text",         limit: 65535
+    t.string   "short_text",   limit: 255
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.integer  "form_id",      limit: 4
+    t.string   "datatype",     limit: 255
+    t.string   "field_id",     limit: 255
+    t.datetime "version_date"
   end
+
+  add_index "questions", ["form_id"], name: "fk_rails_c9a7493f77", using: :btree
 
   create_table "reservations", force: :cascade do |t|
     t.integer  "person_id",    limit: 4
@@ -200,9 +218,11 @@ ActiveRecord::Schema.define(version: 20170120141619) do
     t.text     "field_structure", limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "form_id",         limit: 255
     t.integer  "form_type",       limit: 4,     default: 0
+    t.integer  "form_id",         limit: 4
   end
+
+  add_index "submissions", ["form_id"], name: "fk_rails_6575b196ef", using: :btree
 
   create_table "taggings", force: :cascade do |t|
     t.string   "taggable_type", limit: 255
@@ -330,4 +350,6 @@ ActiveRecord::Schema.define(version: 20170120141619) do
   add_foreign_key "answers", "people"
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "submissions"
+  add_foreign_key "questions", "forms"
+  add_foreign_key "submissions", "forms"
 end

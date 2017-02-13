@@ -26,6 +26,7 @@
         People
         .ui.label= Person.where(active: true).count
       = link_to "Gift Cards", gift_cards_path, class: 'item'
+      = link_to "Forms", forms_path, class: 'item'
       = link_to submissions_path, class: 'item' do
         Submissions
         - unmatched_count = Submission.where('person_id is ?', nil).count

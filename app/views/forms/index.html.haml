@@ -1,0 +1,26 @@
+%h1.ui.header.page-header Wufoo Forms
+
+%table.ui.sortable.striped.table
+  %thead
+    %tr
+      %th Name
+      %th Description
+      %th Created
+      %th Last update
+      %th.center.aligned Actions
+
+  %tbody
+    - @forms.each do |form|
+      %tr
+        %td= link_to form.name, "https://adhocteamus.wufoo.com/forms/#{form.url}"
+        %td= form.description
+        %td= form.created_on.strftime('%b %e, %Y at %l:%M %p')
+        %td= form.last_update.strftime('%b %e, %Y at %l:%M %p')
+        %td.center.aligned.collapsing
+          .ui.icon.buttons
+            = link_to form_path(form, form: { hidden: true }), method: :put, class: 'ui tooltippy left attached icon button', title: 'Hide (non-Cohorts form)' do
+              %i.hide.icon
+            = link_to "https://adhocteamus.wufoo.com/build/#{form.url}", class: 'ui tooltippy right attached icon button', title: 'Edit' do
+              %i.edit.icon
+
+= link_to 'New Wufoo Form', 'https://adhocteamus.wufoo.com/build/', class: 'ui green button'

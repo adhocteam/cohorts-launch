@@ -52,6 +52,9 @@ Style/Documentation:
 Style/GuardClause:
   Enabled: false
 
+Style/Next:
+  Enabled: false
+
 Style/AlignParameters:
   EnforcedStyle: with_fixed_indentation
 
