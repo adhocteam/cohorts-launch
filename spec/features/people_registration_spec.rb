@@ -4,14 +4,14 @@ require 'faker'
 
 feature 'People registration' do
   scenario 'with valid data' do
-    visit '/registration'
+    visit '/admin/registration'
 
     expect { complete_form_with_valid_data }.to change(Person, :count).by(1)
     # expect(page).to have_text('Person was successfully created.')
   end
 
   scenario 'with invalid data' do
-    visit '/registration'
+    visit '/admin/registration'
 
     complete_form_with_invalid_data
 

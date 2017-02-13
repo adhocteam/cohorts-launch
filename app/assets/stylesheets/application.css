@@ -15,7 +15,8 @@
  *= require tokenfield/tokenfield-typeahead
  *= require fullcalendar/fullcalendar.min
  *= require_tree .
- *= stub static
+ *= stub signup
+ *= stub vets_signup
  *= stub cohorts-wufoo
  */
 

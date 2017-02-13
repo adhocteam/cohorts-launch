@@ -9,7 +9,7 @@ $(document).on('ready page:load', function () {
 
   var event_sources = {
     reservations: {
-      url: "/calendar/reservations.json" + token_param,
+      url: "/admin/calendar/reservations.json" + token_param,
       lazyFetching: false,
       displayed: false
     },

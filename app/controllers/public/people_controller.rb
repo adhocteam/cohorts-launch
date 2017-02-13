@@ -46,7 +46,7 @@ class Public::PeopleController < ApplicationController
     if @person && @person.id == d_params[:person_id].to_i
       @person.deactivate!('email')
     else
-      redirect_to root_path
+      redirect_to admin_root_path
     end
   end
 
