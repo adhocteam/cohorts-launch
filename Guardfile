@@ -36,21 +36,7 @@ group :red_green_refactor, halt_on_fail: true do
 
     # Capybara features specs
     watch(rails.view_dirs)     { |m| rspec.spec.("features/#{m[1]}") }
-    watch(rails.layouts)       { |m| rspec.spec.("features/#{m[1]}") }
-
-    watch('app/models/v2/event.rb') { 'spec/features/invite_person_to_phone_call_spec.rb' }
-    watch('app/models/v2/event.rb') { 'spec/features/sms_invitation_to_phone_call_spec.rb' }
-    watch('app/models/v2/event.rb') { 'spec/features/person_responds_to_interview_invitation_over_email_spec.rb' }
-    watch('app/models/v2/event_invitation.rb') { 'spec/features/invite_person_to_phone_call_spec.rb' }
-    watch('app/models/v2/event_invitation.rb') { 'spec/features/sms_invitation_to_phone_call_spec.rb' }
-    watch('app/models/v2/event_invitation.rb') { 'spec/features/person_responds_to_interview_invitation_over_email_spec.rb' }
-    watch('app/models/v2/time_window.rb') { 'spec/features/invite_person_to_phone_call_spec.rb' }
-    watch('app/models/v2/time_window.rb') { 'spec/features/sms_invitation_to_phone_call_spec.rb' }
-    watch('app/models/v2/time_window.rb') { 'spec/features/person_responds_to_interview_invitation_over_email_spec.rb' }
-    watch('app/models/v2/time_slot.rb') { 'spec/features/invite_person_to_phone_call_spec.rb' }
-    watch('app/models/v2/time_slot.rb') { 'spec/features/sms_invitation_to_phone_call_spec.rb' }
-    watch('app/models/v2/time_slot.rb') { 'spec/features/person_responds_to_interview_invitation_over_email_spec.rb' }
-    watch('app/models/v2/reservation.rb') { 'spec/features/person_responds_to_interview_invitation_over_email_spec.rb' }
+    watch(rails.layouts)       { |m| rspec.spec.("features/#{m[1]}") }z
 
     watch('app/mailers/event_invitation_mailer.rb') { 'spec/features/invite_person_to_phone_call_spec.rb' }
     watch('app/mailers/event_invitation_mailer.rb') { 'spec/features/person_responds_to_interview_invitation_over_email_spec.rb' }

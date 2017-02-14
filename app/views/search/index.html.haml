@@ -77,7 +77,6 @@
           %tr
             %td.span4
               %strong= link_to "#{result.first_name} #{result.last_name}", person_path(id: result.id)
-              = render partial: 'people/add_remove_cart',locals: {person: Person.find_by(id: result.id)}
               %br/
               %br/
               Tags:

@@ -61,7 +61,6 @@ class PeopleController < ApplicationController
   def show
     @comment = Comment.new commentable: @person
     @gift_card = GiftCard.new
-    @reservation = Reservation.new person: @person
     @tagging = Tagging.new taggable: @person
     @outgoingmessages = TwilioMessage.where(to: @person.normalized_phone_number).where.not(wufoo_formid: nil)
     @twilio_wufoo_formids = @outgoingmessages.pluck(:wufoo_formid).uniq

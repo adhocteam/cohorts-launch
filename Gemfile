@@ -161,9 +161,6 @@ gem 'aasm'
 # cron jobs for backups and sending reminders
 gem 'whenever', require: false
 
-# natural language processing API
-gem 'wit', '~> 3.4.0'
-
 # handling emoji!
 gem 'emoji'
 

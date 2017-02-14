@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170209153043) do
+ActiveRecord::Schema.define(version: 20170214212123) do
 
   create_table "answers", force: :cascade do |t|
     t.integer  "question_id",   limit: 4
@@ -25,19 +25,6 @@ ActiveRecord::Schema.define(version: 20170209153043) do
   add_index "answers", ["person_id"], name: "index_answers_on_person_id", using: :btree
   add_index "answers", ["question_id"], name: "index_answers_on_question_id", using: :btree
   add_index "answers", ["submission_id"], name: "index_answers_on_submission_id", using: :btree
-
-  create_table "applications", force: :cascade do |t|
-    t.string   "name",         limit: 255
-    t.text     "description",  limit: 65535
-    t.string   "url",          limit: 255
-    t.string   "source_url",   limit: 255
-    t.string   "creator_name", limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "program_id",   limit: 4
-    t.integer  "created_by",   limit: 4
-    t.integer  "updated_by",   limit: 4
-  end
 
   create_table "comments", force: :cascade do |t|
     t.text     "content",          limit: 65535
@@ -68,21 +55,6 @@ ActiveRecord::Schema.define(version: 20170209153043) do
   add_index "delayed_jobs", ["delayed_reference_type"], name: "delayed_jobs_delayed_reference_type", using: :btree
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
   add_index "delayed_jobs", ["queue"], name: "delayed_jobs_queue", using: :btree
-
-  create_table "events", force: :cascade do |t|
-    t.string   "name",           limit: 255
-    t.text     "description",    limit: 65535
-    t.datetime "starts_at"
-    t.datetime "ends_at"
-    t.text     "location",       limit: 65535
-    t.text     "address",        limit: 65535
-    t.integer  "capacity",       limit: 4
-    t.integer  "application_id", limit: 4
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "created_by",     limit: 4
-    t.integer  "updated_by",     limit: 4
-  end
 
   create_table "forms", force: :cascade do |t|
     t.string   "hash_id",     limit: 255
@@ -115,13 +87,6 @@ ActiveRecord::Schema.define(version: 20170209153043) do
 
   add_index "gift_cards", ["giftable_type", "giftable_id"], name: "index_gift_cards_on_giftable_type_and_giftable_id", using: :btree
   add_index "gift_cards", ["reason"], name: "gift_reason_index", using: :btree
-
-  create_table "invitation_invitees_join_table", force: :cascade do |t|
-    t.integer  "person_id",           limit: 4
-    t.integer  "event_invitation_id", limit: 4
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
-  end
 
   create_table "mailchimp_exports", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -176,15 +141,6 @@ ActiveRecord::Schema.define(version: 20170209153043) do
     t.string   "contact_representative",           limit: 255
   end
 
-  create_table "programs", force: :cascade do |t|
-    t.string   "name",        limit: 255
-    t.text     "description", limit: 65535
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "created_by",  limit: 4
-    t.integer  "updated_by",  limit: 4
-  end
-
   create_table "questions", force: :cascade do |t|
     t.text     "text",         limit: 65535
     t.string   "short_text",   limit: 255
@@ -197,17 +153,6 @@ ActiveRecord::Schema.define(version: 20170209153043) do
   end
 
   add_index "questions", ["form_id"], name: "fk_rails_c9a7493f77", using: :btree
-
-  create_table "reservations", force: :cascade do |t|
-    t.integer  "person_id",    limit: 4
-    t.integer  "event_id",     limit: 4
-    t.datetime "confirmed_at"
-    t.integer  "created_by",   limit: 4
-    t.datetime "attended_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "updated_by",   limit: 4
-  end
 
   create_table "submissions", force: :cascade do |t|
     t.text     "raw_content",     limit: 65535
@@ -309,30 +254,6 @@ ActiveRecord::Schema.define(version: 20170209153043) do
     t.datetime "updated_at"
     t.integer  "user_id",     limit: 4
     t.string   "title",       limit: 255
-  end
-
-  create_table "v2_events", force: :cascade do |t|
-    t.integer  "user_id",     limit: 4
-    t.string   "description", limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "v2_reservations", force: :cascade do |t|
-    t.integer  "time_slot_id",        limit: 4
-    t.integer  "person_id",           limit: 4
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "user_id",             limit: 4
-    t.integer  "event_id",            limit: 4
-    t.integer  "event_invitation_id", limit: 4
-    t.string   "aasm_state",          limit: 255
-  end
-
-  create_table "v2_time_slots", force: :cascade do |t|
-    t.integer  "event_id",   limit: 4
-    t.datetime "start_time"
-    t.datetime "end_time"
   end
 
   create_table "versions", force: :cascade do |t|

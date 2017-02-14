@@ -70,11 +70,6 @@ class PersonTest < ActiveSupport::TestCase
     assert_equal comments(:one).content, people(:one).comments.first.content
   end
 
-  test 'should know about events' do
-    assert_equal 2, people(:one).events.count
-    assert_equal 1, people(:two).events.count
-  end
-
   test 'can add a tag to a person' do
     assert !people(:one).tags.detect { |tag| tag.name == 'foo bar baz' }
 

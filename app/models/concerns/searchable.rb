@@ -54,11 +54,6 @@ module Searchable
           indexes :content, analyzer: :snowball
         end
 
-        # events
-        indexes :reservations do
-          indexes :event_id, index: :not_analyzed
-        end
-
         # submissions
         # indexes the output of the Submission#indexable_values method
         indexes :submission_values, analyzer: :snowball
@@ -162,9 +157,6 @@ module Searchable
       include: {
         comments: {
           only: [:content]
-        },
-        reservations: {
-          only: [:event_id]
         }
       }
     )

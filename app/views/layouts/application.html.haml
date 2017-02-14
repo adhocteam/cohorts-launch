@@ -33,15 +33,6 @@
         - if unmatched_count.positive?
           .ui.label= unmatched_count
       .ui.dropdown.item
-        Interview
-        .ui.label= (session[:cart] ||= []).size
-        %i.dropdown.icon
-        .menu
-          = link_to "Calendar", calendar_path, class: 'item'
-          = link_to "Invite", new_v2_event_invitation_path, class: 'item'
-          = link_to "Events", v2_event_invitations_path, class: 'item'
-          = link_to "Reservations", v2_reservations_path, class: 'item'
-      .ui.dropdown.item
         More
         %i.dropdown.icon
         .menu
@@ -49,8 +40,6 @@
           = link_to "Add Submission", new_submission_path, class: 'item'
           = link_to "MailChimp Updates", mailchimp_updates_path, class: 'item'
           = link_to "Text Message Log", twilio_messages_path, class: 'item'
-          = link_to "Programs", programs_path, class: 'item'
-          = link_to "Applications", applications_path, class: 'item'
       .right.menu
         .item
           = search_form_for @q, url: search_index_ransack_path, method: :get do |f|

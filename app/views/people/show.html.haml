@@ -3,7 +3,6 @@
   .column
     %h1.ui.header.page-header= @person.full_name
   .right.aligned.column
-    = render partial: 'add_remove_cart',locals: { person: @person }
 .ui.divider
 .ui.padded.grid
   .row
@@ -101,11 +100,6 @@
           .content
             .header Preferred participation method
             .description= best_in_place @person, :participation_type, as: :select, collection: %w(in-person remote)
-        .item
-          %i.talk.icon
-          .content
-            .header Interviews
-            .description= link_to "Calendar", calendar_path(token: @person.token), class: 'green'
     .eight.wide.column
       %h3.ui.header Location
       %a{href: "https://maps.google.com?q=#{CGI.escape(address_fields_to_sentence(@person)).html_safe}", target: "_blank", title: "View in Google Maps"}
@@ -119,26 +113,6 @@
           %i.dollar.icon
           = humanized_money @person.gift_card_total
         .label total sent
-      .ui.tiny.green.statistic
-        .value
-          %i.send.icon
-          = @person.event_invitations.size
-        .label= 'Invitation'.pluralize(@person.event_invitations.size)
-      .ui.tiny.green.statistic
-        .value
-          %i.wait.icon
-          = @person.v2_reservations.size
-        .label= 'Reservation'.pluralize(@person.v2_reservations.size)
-      .ui.tiny.green.statistic
-        .value
-          %i.checkmark.icon
-          = @person.v2_reservations.attended.size
-        .label Attended
-      .ui.tiny.green.statistic
-        .value
-          %i.delete.icon
-          = @person.v2_reservations.cancelled.size
-        .label Cancelled
   .equal.width.row
     .column
       %h3.ui.header Tags

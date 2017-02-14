@@ -36,8 +36,6 @@
             %th Signup Date
             %th Contact By
             %th Tag Count
-            %th Invites
-            %th Reservations
             %th.center.aligned Actions
         %tbody
           - @people.each do |person|
@@ -65,15 +63,10 @@
                   'EMAIL'=>'EMAIL'}                                |
               %td
                 = person.tag_count
-              %td
-                = V2::EventInvitation.joins(:invitees).where(invitation_invitees_join_table: {person_id: person.id}).size
-              %td
-                = V2::Reservation.where(person_id: person.id).size
               %td.center.aligned
                 .ui.mini.vertical.buttons
-                  = render partial: 'add_remove_cart',locals: {person: person, classes: 'bottom attached'}
                   = link_to t('.edit', default: t('helpers.links.edit')),
-                    edit_person_path(person), class: 'ui attached button'
+                    edit_person_path(person), class: 'ui bottom attached button'
                   = link_to 'Deactivate',
                     deactivate_people_path(person),
                     remote: true,
