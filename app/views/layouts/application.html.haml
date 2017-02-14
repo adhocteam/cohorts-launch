@@ -32,7 +32,6 @@
         - unmatched_count = Submission.where('person_id is ?', nil).count
         - if unmatched_count.positive?
           .ui.label= unmatched_count
-      = link_to "SMS Campaigns", twilio_wufoos_path, class: 'item'
       .ui.dropdown.item
         Interview
         .ui.label= (session[:cart] ||= []).size
@@ -42,7 +41,6 @@
           = link_to "Invite", new_v2_event_invitation_path, class: 'item'
           = link_to "Events", v2_event_invitations_path, class: 'item'
           = link_to "Reservations", v2_reservations_path, class: 'item'
-      = link_to "Focus Group", events_path, class: 'item'
       .ui.dropdown.item
         More
         %i.dropdown.icon
