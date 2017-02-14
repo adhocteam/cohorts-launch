@@ -79,6 +79,7 @@ $(document).on('ready page:load',function() {
       }
     }
   });
+  $('.ui.menu .ui.dropdown').dropdown();
   $('.ui.checkbox').checkbox();
   $('.ui.calendar').calendar({
     type: 'date'
