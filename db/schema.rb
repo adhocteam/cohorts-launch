@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170214212123) do
+ActiveRecord::Schema.define(version: 20170215163504) do
 
   create_table "answers", force: :cascade do |t|
     t.integer  "question_id",   limit: 4
@@ -25,6 +25,12 @@ ActiveRecord::Schema.define(version: 20170214212123) do
   add_index "answers", ["person_id"], name: "index_answers_on_person_id", using: :btree
   add_index "answers", ["question_id"], name: "index_answers_on_question_id", using: :btree
   add_index "answers", ["submission_id"], name: "index_answers_on_submission_id", using: :btree
+
+  create_table "clients", force: :cascade do |t|
+    t.string   "name",       limit: 255, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "comments", force: :cascade do |t|
     t.text     "content",          limit: 65535
@@ -55,6 +61,19 @@ ActiveRecord::Schema.define(version: 20170214212123) do
   add_index "delayed_jobs", ["delayed_reference_type"], name: "delayed_jobs_delayed_reference_type", using: :btree
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
   add_index "delayed_jobs", ["queue"], name: "delayed_jobs_queue", using: :btree
+
+  create_table "engagements", force: :cascade do |t|
+    t.integer  "client_id",    limit: 4
+    t.string   "topic",        limit: 255,   null: false
+    t.date     "start_date"
+    t.date     "end_date"
+    t.text     "notes",        limit: 65535
+    t.text     "search_query", limit: 65535
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "engagements", ["client_id"], name: "index_engagements_on_client_id", using: :btree
 
   create_table "forms", force: :cascade do |t|
     t.string   "hash_id",     limit: 255
@@ -153,6 +172,27 @@ ActiveRecord::Schema.define(version: 20170214212123) do
   end
 
   add_index "questions", ["form_id"], name: "fk_rails_c9a7493f77", using: :btree
+
+  create_table "research_sessions", force: :cascade do |t|
+    t.integer  "engagement_id", limit: 4
+    t.datetime "datetime",                    null: false
+    t.text     "notes",         limit: 65535
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
+
+  add_index "research_sessions", ["engagement_id"], name: "index_research_sessions_on_engagement_id", using: :btree
+
+  create_table "session_invites", id: false, force: :cascade do |t|
+    t.integer  "research_session_id", limit: 4, null: false
+    t.integer  "person_id",           limit: 4, null: false
+    t.boolean  "attended"
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+  end
+
+  add_index "session_invites", ["person_id"], name: "index_session_invites_on_person_id", using: :btree
+  add_index "session_invites", ["research_session_id"], name: "index_session_invites_on_research_session_id", using: :btree
 
   create_table "submissions", force: :cascade do |t|
     t.text     "raw_content",     limit: 65535
@@ -271,6 +311,8 @@ ActiveRecord::Schema.define(version: 20170214212123) do
   add_foreign_key "answers", "people"
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "submissions"
+  add_foreign_key "engagements", "clients"
   add_foreign_key "questions", "forms"
+  add_foreign_key "research_sessions", "engagements"
   add_foreign_key "submissions", "forms"
 end

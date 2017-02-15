@@ -15,6 +15,8 @@ class Person < ActiveRecord::Base
   has_many :forms, through: :submissions
   has_many :answers, dependent: :destroy
   has_many :questions, through: :answers
+  has_many :session_invites
+  has_many :research_sessions, through: :session_invites
 
   has_many :gift_cards
   accepts_nested_attributes_for :gift_cards, reject_if: :all_blank
