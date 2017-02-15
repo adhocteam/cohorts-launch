@@ -1,1 +1,170 @@
-// Signup page styles
+// Static pages
+
+
+// Variables
+
+$color-primary: #2a9e6a;
+$color-secondary: #112e51;
+$color-tertiary: #444444;
+$color-white: #fff;
+$color-content: #444;
+
+// Header
+
+header {
+  padding: 1em 0 0 0;
+}
+
+
+// Logo
+
+h1 {
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: 1px;
+  text-indent: -350%;
+  display: block;
+  background: image-url('banner.svg') top center no-repeat;
+  width: 220px;
+  height: 50px;
+  background-size: contain;
+  margin: 2em 0 0 0;
+  padding: 0;
+}
+
+
+
+// Grid
+
+.row {
+  margin: 0 auto;
+  max-width: 48em;
+  padding: 0 1em;
+}
+
+
+// Globals
+
+html, body {
+  font-size: 16px;
+  padding: 0;
+  margin: 0;
+  line-height: 1.5em;
+}
+
+@font-sans: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+@font-serif: "Bitter", Georgia, "Times New Roman", Times, serif;
+@font-weight-bold: font-weight: bold;
+
+@font-body: @font-sans;
+@font-display: @font-serif;
+@display-type: @font-display; // cmsgov-style variable
+
+
+html {
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+
+// Headings
+
+h1, h2, h3, h4, h5, h6 {
+  color: $color-primary;
+  font-weight: 700;
+  margin: 0;
+  padding: .5em 0;
+  line-height: 1.5em;
+}
+
+h2 {
+
+}
+
+h3 {
+  font-size: 1.75em;
+  padding-top: 2em;
+}
+
+h4 {
+  font-size: 1.75em;
+}
+
+h5 {
+
+}
+
+h6 {
+
+}
+
+
+// Hero
+
+.hero {
+  background: $color-secondary;
+  color: $color-white;
+  padding: 3em 0em;
+  height: 67vh;
+  margin: 0 0 2em 0;
+  display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-ms-flex-align: center;
+	-webkit-align-items: center;
+	-webkit-box-align: center;
+	align-items: center;
+  h1, h2, h3, h4, h5, h6 {color: $color-white; font-size: 2.6em;}
+
+}
+
+.container {
+  position: relative;
+}
+
+.main {
+  padding-bottom: 2em;
+  &:before {
+  content: ' ';
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: 47%;
+  top: -2em;
+  border-color: $color-secondary transparent transparent $color-secondary;
+  }
+
+}
+
+// Form
+
+.form {
+
+  &:before {
+  content: ' ';
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: 47%;
+  top: -1.8em;
+  border: 16px solid;
+  border-color: transparent $color-primary $color-primary transparent;
+  }
+
+
+
+  background: $color-primary;
+  padding: 3em 0;
+  color: #fff;
+  margin: 2em 0 0 0;
+
+}
+
+// Footer
+
+footer {
+  color: $color-primary;
+}
+
+footer a {
+  color: $color-primary;
+}
