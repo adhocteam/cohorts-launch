@@ -1,0 +1,15 @@
+- modalId = "#{action}-client-#{client.id.to_s + '-' unless action == 'create'}modal"
+- formId = "#{action}-client-#{client.id.to_s + '-' unless action == 'create'}form"
+.ui.modal{ id: modalId }
+  .header= "#{action.capitalize} Client"
+  .content
+    - if action == 'destroy'
+      = form_for client, method: :delete, format: :js, remote: true, html: { class: 'ui form', id: formId } do |f|
+        %p Are you sure? This will delete the client along with all engagements.
+    - else
+      = form_for client, format: :js, remote: true, html: { class: 'ui form', id: formId } do |f|
+        = f.label :name
+        = f.text_field :name
+  .actions
+    %input.ui.button{ class: action == 'destroy' ? 'negative' : 'positive', type: 'submit', value: action.capitalize, form: formId }
+    .ui.cancel.button Cancel

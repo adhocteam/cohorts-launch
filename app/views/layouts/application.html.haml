@@ -32,6 +32,9 @@
         - unmatched_count = Submission.where('person_id is ?', nil).count
         - if unmatched_count.positive?
           .ui.label= unmatched_count
+      = link_to 'Clients', clients_path, class: 'item'
+      = link_to 'Engagements', engagements_path, class: 'item'
+      = link_to 'Sessions', research_sessions_path, class: 'item'
       .ui.dropdown.item
         More
         %i.dropdown.icon

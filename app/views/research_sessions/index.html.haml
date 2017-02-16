@@ -1,0 +1,17 @@
+%h1.ui.header.page-header Sessions
+
+%table.ui.sortable.striped.table
+  %thead
+    %tr
+      %th Date and Time
+      %th Engagement
+      %th Client
+      %th People
+      %th.center.aligned Actions
+
+  %tbody#research_session-table
+    - @research_sessions.each do |research_session|
+      = render partial: 'research_session', locals: { research_session: research_session }
+
+.ui.green.modal-show.button#create-research_session-modal New Session
+= render partial: 'modal', locals: { research_session: ResearchSession.new, action: 'create' }

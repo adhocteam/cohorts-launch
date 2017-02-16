@@ -1,0 +1,14 @@
+%h1.ui.header.page-header Clients
+
+%table.ui.sortable.striped.table
+  %thead
+    %tr
+      %th Name
+      %th.center.aligned Actions
+
+  %tbody#client-table
+    - @clients.each do |client|
+      = render partial: 'client', locals: { client: client }
+
+.ui.green.modal-show.button#create-client-modal New Client
+= render partial: 'modal', locals: { client: Client.new, action: 'create' }

@@ -1,0 +1,13 @@
+$('.ui.modal#update-engagement-#{@engagement.id}-modal').remove();
+$('.ui.modal#destroy-engagement-#{@engagement.id}-modal').remove();
+$('#engagement-#{@engagement.id}').replaceWith("#{escape_javascript(render partial: 'engagements/engagement', locals: { engagement: @engagement } )}");
+$('.ui.modal').modal({onShow: function () {
+$('.ui.dropdown').dropdown();
+$('.ui.modal .ui.calendar').calendar({
+type: 'date'
+});
+}});
+$('.ui.modal-show.button').click(function() {
+modalId = $(this).attr('id');
+$('.ui.modal#' + modalId).modal('show');
+});

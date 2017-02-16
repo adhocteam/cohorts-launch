@@ -84,6 +84,8 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     commonjs (0.2.7)
+    composite_primary_keys (8.1.5)
+      activerecord (~> 4.2.0)
     concurrent-ruby (1.0.4)
     daemons (1.2.4)
     database_cleaner (1.5.3)
@@ -490,6 +492,7 @@ DEPENDENCIES
   capybara-email
   capybara-screenshot
   coffee-rails
+  composite_primary_keys
   daemons
   database_cleaner
   delayed_job_active_record

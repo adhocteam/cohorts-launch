@@ -1,0 +1,17 @@
+%h1.ui.header.page-header Engagements
+
+%table.ui.sortable.striped.table
+  %thead
+    %tr
+      %th Topic
+      %th Client
+      %th Start date
+      %th End date
+      %th.center.aligned Actions
+
+  %tbody#engagement-table
+    - @engagements.each do |engagement|
+      = render partial: 'engagement', locals: { engagement: engagement }
+
+.ui.green.modal-show.button#create-engagement-modal New Engagement
+= render partial: 'modal', locals: { engagement: Engagement.new, action: 'create' }

@@ -1,5 +1,8 @@
 Cohorts::Application.routes.draw do
   scope '/admin' do
+    resources :clients, except: [:show, :new, :edit]
+    resources :engagements, except: [:show, :new, :edit]
+    resources :research_sessions, except: [:show, :new, :edit]
     resources :forms, only: [:index, :update]
     resources :gift_cards
     resources :mailchimp_updates

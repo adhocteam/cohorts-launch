@@ -1,0 +1,10 @@
+%tr{ id: "client-#{client.id}" }
+  %td= client.name
+  %td.center.aligned.collapsing
+    .ui.icon.buttons
+      .ui.left.attached.icon.modal-show.button{ id: "update-client-#{client.id}-modal" }
+        %i.edit.icon
+      = render partial: 'modal', locals: { client: client, action: 'update' }
+      .ui.right.attached.icon.modal-show.button{ id: "destroy-client-#{client.id}-modal" }
+        %i.delete.icon
+      = render partial: 'modal', locals: { client: client, action: 'destroy' }

@@ -1,0 +1,8 @@
+$('.ui.modal#update-client-#{@client.id}-modal').remove();
+$('.ui.modal#destroy-client-#{@client.id}-modal').remove();
+$('#client-#{@client.id}').replaceWith("#{escape_javascript(render partial: 'clients/client', locals: { client: @client } )}");
+$('.ui.modal').modal();
+$('.ui.modal-show.button').click(function() {
+modalId = $(this).attr('id');
+$('.ui.modal#' + modalId).modal('show');
+});

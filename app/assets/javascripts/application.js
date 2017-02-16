@@ -66,28 +66,37 @@ $(document).on('ready page:load',function() {
   });
 
   // Initialize Semantic elements
-  $('.ui.dropdown').dropdown({
-    selectOnKeydown: false,
-    forceSelection: false,
-    onChange: function(value) {
-      var target = $(this).parent();
-      if(value) {
-  	    target.find('.dropdown.icon').removeClass('dropdown').addClass('delete').on('click', function() {
-          target.dropdown('clear');
-          $(this).removeClass('delete').addClass('dropdown');
-        });
+  var initializeDropdowns = function () {
+    $('.ui.dropdown').dropdown({
+      selectOnKeydown: false,
+      forceSelection: false,
+      onChange: function(value) {
+        var target = $(this).parent();
+        if(value) {
+    	    target.find('.dropdown.icon').removeClass('dropdown').addClass('delete').on('click', function() {
+            target.dropdown('clear');
+            $(this).removeClass('delete').addClass('dropdown');
+          });
+        }
       }
-    }
-  });
+    });
+  }
+  initializeDropdowns();
   $('.ui.menu .ui.dropdown').dropdown();
   $('.ui.checkbox').checkbox();
   $('.ui.calendar').calendar({
     type: 'date'
   });
-  $('.ui.calendar').calendar('clear');
-  $('.ui.modal').modal();
+  $('.ui.datetime.calendar').calendar();
   $('.sortable.table').tablesort();
   $('.tooltippy').popup();
+  $('.ui.modal').modal({onShow: function () {
+    initializeDropdowns();
+    $('.ui.modal .ui.calendar').calendar({
+      type: 'date'
+    });
+    $('.ui.datetime.calendar').calendar();
+  }});
 
   // Allow additions to some dropdowns
   $('.ui.dropdown.allow-addition').dropdown({
@@ -130,5 +139,11 @@ $(document).on('ready page:load',function() {
   });
   $('.search.link.icon').click(function() {
     $(this).parents('form').submit();
+  });
+
+  // Modals
+  $('.ui.modal-show.button').click(function() {
+    modalId = $(this).attr('id');
+    $('.ui.modal#' + modalId).modal('show');
   });
 });

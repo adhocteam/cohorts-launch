@@ -1,0 +1,13 @@
+%tr{ id: "engagement-#{engagement.id}" }
+  %td= engagement.topic
+  %td= engagement.client.name
+  %td= engagement.start_date
+  %td= engagement.end_date
+  %td.center.aligned.collapsing
+    .ui.icon.buttons
+      .ui.left.attached.icon.modal-show.button{ id: "update-engagement-#{engagement.id}-modal" }
+        %i.edit.icon
+      = render partial: 'modal', locals: { engagement: engagement, action: 'update' }
+      .ui.right.attached.icon.modal-show.button{ id: "destroy-engagement-#{engagement.id}-modal" }
+        %i.delete.icon
+      = render partial: 'modal', locals: { engagement: engagement, action: 'destroy' }

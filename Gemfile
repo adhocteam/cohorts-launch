@@ -180,6 +180,9 @@ gem 'maskedinput-rails'
 # Need a non-digested asset for Wufoo CSS
 gem "non-stupid-digest-assets"
 
+# Allow composite primary keys for join tables
+gem 'composite_primary_keys'
+
 group :test do
   # mock tests w/mocha
   gem 'mocha', require: false
