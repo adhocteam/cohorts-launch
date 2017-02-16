@@ -48,8 +48,10 @@ html.embed, * {
 .wufoo .info h2{font-size:160%;font-family:inherit;color:#fff;}
 
 
-.wufoo select {
-	background: #fff;
+.wufoo select.select {
+	background: #fff !important;
+	height: 2.85em;
+	color: #444 !important;
 }
 
 .wufoo section div,
