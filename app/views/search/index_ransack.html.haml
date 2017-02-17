@@ -72,7 +72,8 @@
       - if params[:q]
         - params[:q].each do |param_key, param_value|
           - if param_value.present? and param_value != [""]
-            = "#{param_key}: #{param_value.reject(&:blank?)}"
+            = param_key
+            \: "#{param_value}"
       - else
         None
     - if @results.any?
