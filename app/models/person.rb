@@ -3,8 +3,6 @@
 # rubocop:disable ClassLength
 class Person < ActiveRecord::Base
   has_paper_trail
-
-  include Searchable
   include ExternalDataMappings
 
   phony_normalize :phone_number, default_country_code: 'US'

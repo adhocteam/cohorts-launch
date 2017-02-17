@@ -95,10 +95,6 @@ Vagrant.configure(2) do |config|
   config.vm.provision :shell, privileged: false, inline: %(
     sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password password'
     sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password password'
-
-    # installing elastic search
-    wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
-    echo "deb http://packages.elastic.co/elasticsearch/2.x/debian stable main" |  sudo tee -a /etc/apt/sources.list.d/elasticsearch-2.x.list
     sudo apt-get -qq update
     sudo apt-get -qq install -y \
       mysql-server-5.6 \
@@ -114,13 +110,10 @@ Vagrant.configure(2) do |config|
       nginx-full \
       openjdk-7-jre \
       phantomjs \
-      elasticsearch\
       redis-server
 
 
     mysqladmin -u root -ppassword password '';
-    sudo update-rc.d elasticsearch defaults;
-    sudo service elasticsearch start;
     # automatically cd to /vagrant/
     echo 'if [ -d /vagrant/ ]; then cd /vagrant/; fi' >> /home/vagrant/.bashrc
   )

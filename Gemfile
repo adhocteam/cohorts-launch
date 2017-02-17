@@ -93,13 +93,6 @@ gem 'jbuilder', '~> 1.0.1'
 
 gem 'twitter-bootstrap-rails', '~> 2.2.0'
 
-#  ElasticSearch integration
-gem 'elasticsearch-model'
-gem 'elasticsearch-rails'
-gem 'elasticsearch-dsl'
-gem 'faraday_middleware'
-gem 'faraday_middleware-aws-signers-v4'
-
 # AWS
 gem 'aws-sdk'
 

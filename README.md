@@ -16,7 +16,6 @@ Setup
 Cohorts is a Ruby on Rails app. The regular rules apply:
 1. Locally or in a VM, install dependencies:
     * **MySQL** - `sudo apt-get mysql-server` / `brew install mysql`
-    * **Elasticsearch** - `sudo apt-get elasticsearch` / `brew install elasticsearch`
     * **Ruby 2.3.1** - Install using [rbenv](https://github.com/rbenv/rbenv) or [rvm](https://rvm.io/rvm/install)
     * **Bundler** - `gem install bundler` after installing Ruby
 2. Clone this repo
