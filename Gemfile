@@ -3,9 +3,7 @@ ruby '2.3.1'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 4.2.0'
 
-# gem 'pg' # soooooon!
-# must use this version of mysql2 for rails 4.0.0
-gem 'mysql2'
+gem 'pg'
 
 gem 'redis' # ephemeral storage. used for expiring wit.ai contexts
 
