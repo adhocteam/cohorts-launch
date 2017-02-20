@@ -1,10 +1,12 @@
 .recent-signup.ui.list
   .item
-    .header.name= link_to "#{person.first_name} #{person.last_name}", person
+    .header.name
+      %abbr= link_to "#{person.initials}", person
+      = render partial: 'people/hidden_info_popup', locals: { title: 'name', hidden_info: person.full_name }
   .item
     %i.marker.icon
-    - address = address_fields_to_sentence(person)
-    .content.address= address.empty? ? 'No address' : address
+    - address = city_state_to_sentence(person)
+    .content.address= address
   .item
     %i.payment.icon
     .content.signup-gift-card

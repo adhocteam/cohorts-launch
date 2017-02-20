@@ -146,4 +146,16 @@ $(document).on('ready page:load',function() {
     modalId = $(this).attr('id');
     $('.ui.modal#' + modalId).modal('show');
   });
+
+  // Hidden information
+  $('.hidden-info').hide();
+  $('.hide-text').hide();
+  $('.hidden-info-container').has('.hidden-info').click(function () {
+    $(this).find('.view-text').toggle();
+    $(this).find('.hide-text').toggle();
+    $(this).find('.hidden-info').transition('slide down');
+  });
+  $('.hidden-info-link').popup({
+    on: 'click'
+  });
 });

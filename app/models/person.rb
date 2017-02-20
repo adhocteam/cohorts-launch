@@ -91,8 +91,6 @@ class Person < ActiveRecord::Base
     'Field10': :email_address,
     'Field11': :phone_number,
     'Field12': :participation_type,
-    'Field16': :voted,
-    'Field18': :contact_representative,
     'Field22': :primary_device_id,
     'Field24': :primary_device_description,
     'Field26': :primary_connection_id
@@ -189,7 +187,6 @@ class Person < ActiveRecord::Base
                                       MMERGE3: geography_id || '',
                                       MMERGE4: postal_code || '',
                                       MMERGE5: participation_type || '',
-                                      MMERGE6: voted || '',
                                       MMERGE8: primary_device_description || '',
                                       MMERGE9: secondary_device_id || '',
                                       MMERGE10: secondary_device_description || '',
@@ -269,8 +266,16 @@ class Person < ActiveRecord::Base
     [first_name, last_name].join(' ')
   end
 
+  def initials
+    first_name[0] + last_name[0]
+  end
+
   def address_fields_to_sentence
     [address_1, address_2, city, state, postal_code].reject(&:blank?).join(', ')
+  end
+
+  def city_state_to_sentence
+    [city, state].reject(&:blank?).join(', ')
   end
 
   def deactivate!(method = nil)

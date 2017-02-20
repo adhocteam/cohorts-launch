@@ -44,10 +44,10 @@
                 .ui.list
                   .item
                     %i.user.icon
-                    .content= link_to "#{person.first_name} #{person.last_name}", person_path(person), class: 'strong green'
+                    .content= link_to "#{person.initials}", person_path(person), class: 'strong green'
                   .item
                     %i.marker.icon
-                    .content= address_fields_to_sentence(person)
+                    .content= city_state_to_sentence(person)
                   .item
                     %i.mail.icon
                     .content= best_in_place person, :email_address

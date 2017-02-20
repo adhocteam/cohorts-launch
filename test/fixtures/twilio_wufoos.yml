@@ -19,8 +19,10 @@ one:
   name: MyString
   wufoo_formid: MyString
   twilio_keyword: MyString
+  status: true
 
 two:
   name: MyString
   wufoo_formid: MyString
   twilio_keyword: MyString
+  status: true

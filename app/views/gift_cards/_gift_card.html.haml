@@ -1,6 +1,6 @@
 %tr.gift_card{id: "gift_card-#{gift_card.id}"}
   %td= gift_card.id
-  %td= link_to "#{gift_card.person.full_name}", person_path(gift_card.person), class: 'green'
+  %td= link_to "#{gift_card.person.initials}", person_path(gift_card.person), class: 'green'
   %td= gift_card.reason.titleize
   %td= gift_card.giftable_id
   %td= gift_card.batch_id

@@ -19,8 +19,6 @@ class ActiveSupport::TestCase
       'Field1'       => 'Jim', # first name
       'Field2'       => 'Tester', # last name
       'Field10'      => 'jim@example.com',
-      'Field153'     => 'No',  # voted
-      'Field154'     => 'Yes', # called 311
       'Field39'      => 'Desktop computer', # type of primary
       'Field21'      => 'make model of primary', # desc of primary
       'Field40'      => 'Laptop',

@@ -19,10 +19,10 @@
           .ui.large.list
             .item
               %i.user.icon
-              .strong.content= @recent_signups[index].full_name
+              .strong.content= @recent_signups[index].initials
             .item
               %i.marker.icon
-              - address = address_fields_to_sentence(@recent_signups[index])
+              - address = city_state_to_sentence(@recent_signups[index])
               .content= address.blank? ? 'No address' : address
             .item
               %i.comments.icon
@@ -56,7 +56,7 @@
           .column
             .ui.message
               Possible Duplicate ID
-              = link_to "#{key} #{val['person'].full_name}", person_path(val['person'])
+              = link_to "#{key} #{val['person'].initials}", person_path(val['person'])
               Matching on
               = val['match_count']
               variables:

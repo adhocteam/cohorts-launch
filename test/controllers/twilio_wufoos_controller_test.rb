@@ -34,7 +34,7 @@ class TwilioWufoosControllerTest < ActionController::TestCase
 
   test 'should create twilio_wufoo' do
     assert_difference('TwilioWufoo.count') do
-      post :create, twilio_wufoo: { name: @twilio_wufoo.name, twilio_keyword: @twilio_wufoo.twilio_keyword, wufoo_formid: @twilio_wufoo.wufoo_formid }
+      post :create, twilio_wufoo: { name: @twilio_wufoo.name, twilio_keyword: @twilio_wufoo.twilio_keyword, wufoo_formid: @twilio_wufoo.wufoo_formid, status: true }
     end
 
     assert_redirected_to twilio_wufoo_path(assigns(:twilio_wufoo))

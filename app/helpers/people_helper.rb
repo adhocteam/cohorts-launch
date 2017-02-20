@@ -1,42 +1,14 @@
 # frozen_string_literal: true
-# == Schema Information
-#
-# Table name: people
-#
-#  id                               :integer          not null, primary key
-#  first_name                       :string(255)
-#  last_name                        :string(255)
-#  email_address                    :string(255)
-#  address_1                        :string(255)
-#  address_2                        :string(255)
-#  city                             :string(255)
-#  state                            :string(255)
-#  postal_code                      :string(255)
-#  geography_id                     :integer
-#  primary_device_id                :integer
-#  primary_device_description       :string(255)
-#  secondary_device_id              :integer
-#  secondary_device_description     :string(255)
-#  primary_connection_id            :integer
-#  primary_connection_description   :string(255)
-#  phone_number                     :string(255)
-#  participation_type               :string(255)
-#  created_at                       :datetime
-#  updated_at                       :datetime
-#  signup_ip                        :string(255)
-#  signup_at                        :datetime
-#  voted                            :string(255)
-#  secondary_connection_id          :integer
-#  secondary_connection_description :string(255)
-#  verified                         :string(255)
-#  preferred_contact_method         :string(255)
-#  token                            :string(255)
-#
-
 module PeopleHelper
 
   def address_fields_to_sentence(person)
-    [person.address_1, person.address_2, person.city, person.state, person.postal_code].reject(&:blank?).join(', ')
+    str = [person.address_1, person.address_2, person.city, person.state, person.postal_code].reject(&:blank?).join(', ')
+    str.empty? ? 'No address' : str
+  end
+
+  def city_state_to_sentence(person)
+    str = [person.city, person.state].reject(&:blank?).join(', ')
+    str.empty? ? 'No address' : str
   end
 
   # FIXME: Refactor and re-enable cop
@@ -71,7 +43,6 @@ module PeopleHelper
                                   MMERGE3: person.geography_id,
                                   MMERGE4: person.postal_code,
                                   MMERGE5: person.participation_type,
-                                  MMERGE6: person.voted,
                                   MMERGE8: person.primary_device_description,
                                   MMERGE9: person.secondary_device_id,
                                   MMERGE10: person.secondary_device_description,

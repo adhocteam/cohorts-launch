@@ -79,3 +79,10 @@
 .ui.action.input .ui.fluid.search.selection.dropdown input.search {
   width: 100%;
 }
+
+.hidden-info-link {
+  font-size: 8pt;
+  font-weight: normal;
+  color: gray;
+  text-decoration: underline;
+}
