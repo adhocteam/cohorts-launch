@@ -1,16 +1,4 @@
 # frozen_string_literal: true
-# == Schema Information
-#
-# Table name: tags
-#
-#  id             :integer          not null, primary key
-#  name           :string(255)
-#  created_by     :integer
-#  created_at     :datetime
-#  updated_at     :datetime
-#  taggings_count :integer          default(0), not null
-#
-
 class Tag < ActiveRecord::Base
 
   validates_uniqueness_of :name

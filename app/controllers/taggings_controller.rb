@@ -1,17 +1,4 @@
 # frozen_string_literal: true
-# == Schema Information
-#
-# Table name: taggings
-#
-#  id            :integer          not null, primary key
-#  taggable_type :string(255)
-#  taggable_id   :integer
-#  created_by    :integer
-#  created_at    :datetime
-#  updated_at    :datetime
-#  tag_id        :integer
-#
-
 class TaggingsController < ApplicationController
 
   def create

@@ -1,18 +1,4 @@
 # frozen_string_literal: true
-# == Schema Information
-#
-# Table name: mailchimp_updates
-#
-#  id          :integer          not null, primary key
-#  raw_content :text(65535)
-#  email       :string(255)
-#  update_type :string(255)
-#  reason      :string(255)
-#  fired_at    :datetime
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#
-
 class MailchimpUpdate < ActiveRecord::Base
   scope :latest, -> { order('fired_at DESC') }
   after_save :update_person

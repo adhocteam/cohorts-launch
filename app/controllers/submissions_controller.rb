@@ -1,21 +1,4 @@
 # frozen_string_literal: true
-# == Schema Information
-#
-# Table name: submissions
-#
-#  id              :integer          not null, primary key
-#  raw_content     :text(65535)
-#  person_id       :integer
-#  ip_addr         :string(255)
-#  entry_id        :string(255)
-#  form_structure  :text(65535)
-#  field_structure :text(65535)
-#  created_at      :datetime
-#  updated_at      :datetime
-#  form_id         :string(255)
-#  form_type       :integer
-#
-
 class SubmissionsController < ApplicationController
 
   skip_before_action :authenticate_user!, if: :should_skip_janky_auth?
