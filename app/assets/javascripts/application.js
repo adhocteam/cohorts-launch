@@ -70,6 +70,7 @@ $(document).on('ready page:load',function() {
     $('.ui.dropdown').dropdown({
       selectOnKeydown: false,
       forceSelection: false,
+      fullTextSearch: true,
       onChange: function(value) {
         var target = $(this).parent();
         if(value) {
@@ -102,6 +103,7 @@ $(document).on('ready page:load',function() {
   $('.ui.dropdown.allow-addition').dropdown({
     selectOnKeydown: false,
     forceSelection: false,
+    fullTextSearch: true,
     allowAdditions: true,
     hideAdditions: false,
     onChange: function(value) {

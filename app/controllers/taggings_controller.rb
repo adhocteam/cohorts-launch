@@ -2,8 +2,10 @@
 class TaggingsController < ApplicationController
 
   def create
-    @tag = Tag.find_or_initialize_by(name: params[:tagging].delete(:name))
-    @tag.created_by ||= current_user.id
+    unless (@tag = Tag.where('lower(name) = ?', tagging_params[:name].downcase).first)
+      @tag = Tag.create(name: tagging_params[:name])
+      @tag.created_by ||= current_user.id
+    end
     if @tag.name != ''
       @tagging = Tagging.new(taggable_type: params[:tagging][:taggable_type],
                              taggable_id: params[:tagging][:taggable_id],
@@ -15,14 +17,16 @@ class TaggingsController < ApplicationController
       end
     else
       respond_to do |format|
-        format.js { render text: "console.log('tag save error')" }
+        format.js { render text: "console.log('tag save error (tag may already exist)')" }
       end
     end
   end
 
   def bulk_create
-    @tag = Tag.where(name: tagging_params[:name]).first_or_create
-    @tag.created_by ||= current_user.id
+    unless (@tag = Tag.where('lower(name) = ?', tagging_params[:name].downcase).first)
+      @tag = Tag.create(name: tagging_params[:name])
+      @tag.created_by ||= current_user.id
+    end
     if @tag.name != ''
       tagging_params[:taggable_ids].each do |id|
         @tagging = Tagging.where(taggable_type: tagging_params[:taggable_type],
