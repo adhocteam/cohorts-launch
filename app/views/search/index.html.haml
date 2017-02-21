@@ -43,7 +43,7 @@
         %h4.ui.green.header Filter by survey responses
         .field
           = f.label :questions_id_eq_any, 'Has answered any of'
-          = f.collection_select :questions_id_eq_any, @question_list, :id, :text, {}, { multiple: true, class: 'ui search selection dropdown', size: @question_list.count + 1 }
+          = f.collection_select :questions_id_eq_any, @question_list, :id, :text, {}, { multiple: true, class: 'ui search selection dropdown non-fuzzy', size: @question_list.count + 1 }
         .field
           = f.label :answers_value_cont
           = f.search_field :answers_value_cont

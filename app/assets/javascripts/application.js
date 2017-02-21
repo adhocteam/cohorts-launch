@@ -81,6 +81,38 @@ $(document).on('ready page:load',function() {
         }
       }
     });
+    // Some searches shouldn't be fuzzy
+    $('.ui.non-fuzzy.dropdown').dropdown({
+      selectOnKeydown: false,
+      forceSelection: false,
+      fullTextSearch: 'exact',
+      onChange: function(value) {
+        var target = $(this).parent();
+        if(value) {
+    	    target.find('.dropdown.icon').removeClass('dropdown').addClass('delete').on('click', function() {
+            target.dropdown('clear');
+            $(this).removeClass('delete').addClass('dropdown');
+          });
+        }
+      }
+    });
+    // Allow additions to some dropdowns
+    $('.ui.dropdown.allow-addition').dropdown({
+      selectOnKeydown: false,
+      forceSelection: false,
+      fullTextSearch: true,
+      allowAdditions: true,
+      hideAdditions: false,
+      onChange: function(value) {
+        var target = $(this);
+        if(value) {
+          target.find('.dropdown.icon').removeClass('dropdown').addClass('delete').on('click', function() {
+            target.dropdown('clear');
+            $(this).removeClass('delete').addClass('dropdown');
+          });
+        }
+      }
+    });
   }
   initializeDropdowns();
   $('.ui.menu .ui.dropdown').dropdown();
@@ -98,24 +130,6 @@ $(document).on('ready page:load',function() {
     });
     $('.ui.datetime.calendar').calendar();
   }});
-
-  // Allow additions to some dropdowns
-  $('.ui.dropdown.allow-addition').dropdown({
-    selectOnKeydown: false,
-    forceSelection: false,
-    fullTextSearch: true,
-    allowAdditions: true,
-    hideAdditions: false,
-    onChange: function(value) {
-      var target = $(this);
-      if(value) {
-  	    target.find('.dropdown.icon').removeClass('dropdown').addClass('delete').on('click', function() {
-          target.dropdown('clear');
-          $(this).removeClass('delete').addClass('dropdown');
-        });
-      }
-    }
-  });
 
   // Turn file input into a button
   $('.hidden-file-field').hide();
