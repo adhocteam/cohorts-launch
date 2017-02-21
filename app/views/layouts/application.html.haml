@@ -45,7 +45,7 @@
           = link_to "Text Message Log", twilio_messages_path, class: 'item'
       .right.menu
         .item
-          = search_form_for @q, url: search_index_ransack_path, method: :get do |f|
+          = search_form_for @q, url: search_index_path, method: :get do |f|
             .ui.transparent.icon.input
               = f.search_field :nav_bar_search_cont, placeholder: "Search..."
               %i.search.link.icon

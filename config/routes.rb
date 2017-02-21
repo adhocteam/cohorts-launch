@@ -47,8 +47,7 @@ Cohorts::Application.routes.draw do
     resources :taggings, only: [:create, :destroy]
 
     get  'search/index'
-    get  'search/index_ransack'
-    post 'search/index_ransack'
+    post 'search/index'
     post 'search/export_ransack'
     post 'search/export' # send search results elsewhere, i.e. Mailchimp
     post 'search/exportTwilio'

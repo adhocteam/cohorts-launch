@@ -1,141 +1,174 @@
-.page-header
-  %h1= t '.title', default: "Search Results"
-.row
-  .span12{style: "text-align:right"}
-    %span{"data-target" => "#advanced-search", "data-toggle" => "collapse"} Show advanced search
-.row
-  = form_tag search_index_path, method: :get, id: "search-form"
-  = hidden_field_tag :adv, '1'
-  #advanced-search{class: "collapse #{"in" if params[:adv]}"}
-    .span4
-      %fieldset
-        %label{for: "first_name"} First name
-        = text_field_tag :first_name, params[:first_name], class: "input"
-        %label{for: "last_name"} Last name
-        = text_field_tag :last_name, params[:last_name], class: "input"
-        %label{for: "email_address"} Email address
-        = text_field_tag :email_address, params[:email_address], class: "input"
-        %label{for: "phone_number"} Phone number
-        = text_field_tag :phone_number, params[:phone_number], class: "input"
-        %label{for: "postal_code"} ZIP Code
-        = text_field_tag :postal_code, params[:postal_code], class: "input"
-        /
-          <label for="address">Phone Number</label>
-          <haml:loud> text_field_tag :phone_number, params[:phone_number], class: &amp;#39;input-large&amp;#39;, placeholder: &amp;quot;11 digit number start with 1&amp;quot; </haml:loud>
-    .span3
-      %label{for: "device_id_type"} Device Type
-      = select_tag :device_id_type,                                                                                                                                                                                                                                           |
-        options_for_select([[human_device_type_name(0), 0],[human_device_type_name(1), 1], [human_device_type_name(2), 2], [human_device_type_name(3), 3]] , include_blank: true, selected: params[:device_id_type]) , multiple: true,  class: "multiple", size: '4' |
-      %label{for: "connection_id_type"} Connection Type
-      = select_tag :connection_id_type,                                                                                                                                                                                                                                                                                               |
-        options_for_select([[human_connection_type_name(0), 0],[human_connection_type_name(1), 1], [human_connection_type_name(4), 4], [human_connection_type_name(3), 3], [human_connection_type_name(2), 2]] , include_blank: true, selected: params[:connection_id_type]) , multiple: true,  class: "multiple", size: '5' |
-      %label{for: "preferred contact method"} Preferred Contact Method
-      = select_tag :preferred_contact_method,                                                                                                                       |
-        options_for_select([["All", '*'],["Email", 'EMAIL'], ["SMS", 'SMS']], include_blank: true, selected: params[:preferred_contact_method]) , class: "input" |
-    .span5
-      %label{for: "device_description"} Device description
-      = text_field_tag :device_description, params[:device_description], class: "input span5"
-      %label{for: "connection_description"} Connection description
-      = text_field_tag :connection_description, params[:connection_description], class: "input span5"
-      %label{for: "tags"} Tags
-      = text_field_tag :tags,                            |
-        params[:tags],                                   |
-        class: 'tokenfield input-large span5',           |
-        data: { search_url: '/taggings/search?q=%QUERY', |
-          submit_id: 'search-tag-hidden-input',          |
-          pre_populate: @tags                            |
-        }                                                |
-      = hidden_field_tag :tags_hidden,'', id:'search-tag-hidden-input'
-      %label{for: "additional"} &nbsp;
-      %span.btn.btn-default{"data-target" => "#additional-options", "data-toggle" => "collapse"} Click to Show Additional Options
-      #additional-options.collapse
-        %label{for: "verified"} Verified?
-        = select_tag :verified,                                                                                          |
-          options_for_select([[nil,nil]] + Person.uniq.pluck(:verified), selected: params[:verified]), class: "input" |
-        %label{for: "geography_id"} Ward
-        = text_field_tag :geography_id, params[:geography_id], class: "input-small"
-        %label{for: "address"} Address
-        = text_field_tag :address, params[:address], class: 'input-large'
-        %label{for: "submissions"} Form submission content
-        = text_field_tag :submissions, params[:submissions], class: "input span4"
-        %label{for: "event_id"} Event
-        = select_tag :event_id,                                                                                                           |
-          options_for_select([[nil, nil]] + Event.all.order(:name).collect{|event| [event.name, event.id]}, selected: params[:event_id]), |
-          class: "input"                                                                                                               |
-  .span12
-    = submit_tag "Search", name: nil, class: "btn btn-primary"
-- if @results.any?
-  .row
-    .span12
-      %p.pull-right
-        Showing #{@results.size} #{'result'.pluralize(@results)}
-        - if @results.total > @results.size
-          of #{@results.total} total
-      %table.table.table-striped
-        - @results.each_with_index do |result, idx|
-          - next unless Person.find_by(id: result.id)
-          %tr
-            %td.span4
-              %strong= link_to "#{result.first_name} #{result.last_name}", person_path(id: result.id)
-              %br/
-              %br/
-              Tags:
-              - if !(result.tag_values.blank?)
-                = search_result_field result.tag_values, :tags
-            %td.span4
-              Address: #{search_result_field result.address_1, :address}
-              %br/
-              City: #{search_result_field result.city, :city}  ZIP: #{search_result_field result.postal_code, :postal_code}
-              %br/
-              Ward: #{search_result_field result.geography_id, :geography_id}
-              %br/
-              Phone: #{search_result_field number_to_phone(result.phone_number), :phone_number}
-              %br/
-              Email: #{search_result_field result.email_address, :email_address}
-              %br/
-              Verified?: #{search_result_field result.verified, :verified}
-            %td.span4
-              Primary Device: #{search_result_field result.primary_device_description, :device_description} (#{search_result_field human_device_type_name(result.primary_device_id), :device_id_type})
-              %br/
-              Secondary Device: #{search_result_field result.secondary_device_description, :device_description} (#{search_result_field human_device_type_name(result.secondary_device_id), :device_id_type})
-              %br/
-              Primary Connection: #{search_result_field human_connection_type_name(result.primary_connection_id), :connection_id} #{search_result_field result.primary_connection_description, :connection_description}
-              %br/
-              - if result.secondary_connection_description.present?
-                Secondary Connection: #{search_result_field result.secondary_connection_description, :connection_description}
-              %br/
-              Preferred Contact Method: #{search_result_field result.preferred_contact_method, :preferred_contact_method}
-  .row
-    .offset4.span8= will_paginate @results, renderer: WillPaginateSemanticUi::ActionView::Renderer
-  .row
-    .span12
-      = link_to "Save this list as CSV", search_index_path(params.merge(format: :csv)), class: "btn"
-      %span= link_to "Export this list to MailChimp", "#", class: "btn", id: "export-to-mailchimp-form-toggle"
-      %span= link_to "Send text messages to this list", "#", class: "btn", id: "export-to-twilio-form-toggle"
-      /
-        <span><a href="#" id="export-to-mailchimp-form-toggle">Export this list to MailChimp</a></span>
-  .row
-    .span12
-      #export-to-mailchimp-form
-        = form_tag search_export_path, remote: true, class: "form-inline"
-        = text_field_tag :name, '', class: "input-xlarge", placeholder: "enter a name for this list (segment)"
-        = hidden_field_tag :adv, '1'
-        - [:first_name, :last_name, :email_address, :postal_code, :address, :tags, :device_id_type, :connection_id_type, :preferred_contact_method, :device_description, :connection_description, :verified, :geography_id, :submissions, :event_id ].each do |field|
-          = hidden_field_tag field, params[field]
-        = submit_tag "Export", class: "btn btn-primary", data: {disable_with: "Exporting ..."}
-    .span12
-      #export-to-twilio-form
-        = form_tag search_exportTwilio_path, remote: true, class: "form-inline"
-        = text_area_tag :message1, '', class: "input-xlarge", placeholder: "Enter a message to send (required)", required: true
-        %br/
-        = text_area_tag :message2, '', class: "input-xlarge", placeholder: "Enter a 2nd message to send. (Optional)"
-        %br/
-        Twilio-Wufoo Connection? #{select_tag :twiliowufoo_campaign, options_for_select([[nil, nil]] + TwilioWufoo.all.order(:name).collect{|twiliowufoo| [twiliowufoo.name, twiliowufoo.id]}, selected: params[:twiliowufoo_campaign]), class: "input"}
-        \#{hidden_field_tag :adv, '1'}
-        - [:first_name, :last_name, :email_address, :postal_code, :address, :tags, :device_id_type, :connection_id_type, :preferred_contact_method, :device_description, :connection_description, :verified, :geography_id, :submissions, :event_id ].each do |field|
-          = hidden_field_tag field, params[field]
-        = submit_tag "Send messages through Twilio", class: "btn btn-primary", data: { confirm: 'These messages will be added to the queue and sent as soon as possible. Are you sure you want to send these?' }
-- else
-  .row
-    .span12{style: "margin-top: 30px;"}
-      %p There are no Cohorts members that match your search.
+%p#notice= @success
+%p#error= @error
+%h1.ui.dividing.header.page-header= t '.title', default: "Search"
+= search_form_for @q, url: 'index', method: :get, class: 'ui form' do |f|
+  .ui.vertically.divided.grid
+    .equal.width.row
+      .column
+        %h4.ui.green.header Search for a person
+        .field
+          = f.label :full_name_cont
+          = f.search_field :full_name_cont
+        .field
+          = f.label :email_address_cont
+          = f.search_field :email_address_cont
+        .field
+          = f.label :phone_number_cont
+          = f.search_field :phone_number_cont
+        .field
+          = f.label :address_1_cont
+          = f.search_field :address_1_cont
+      .divider-column
+        .ui.vertical.divider
+      .column
+        %h4.ui.green.header Filter by tags and attributes
+        .field
+          = f.label :tags_id_eq_all, 'Has tags'
+          = f.collection_select :tags_id_eq_all, @tag_list, :id, :name, {}, { multiple: true, class: 'ui search selection dropdown', size: @tag_list.count + 1 }
+        .field
+          = f.label :preferred_contact_method_cont, 'Preferred contact method'
+          = f.select :preferred_contact_method_cont, [["Email", 'EMAIL'], ["SMS", 'SMS']], {include_blank: true}, {class: "ui dropdown" }
+        .field
+          = f.label :postal_code_start
+          = f.search_field :postal_code_start
+        .field
+          = f.label :primary_device_id_in
+          = f.select :primary_device_id_in, [[human_device_type_name(0),0],[ human_device_type_name(1),1], [human_device_type_name(2),2], [ human_device_type_name(3),  3]], {}, {multiple: true,  class: "ui search selection dropdown", size: '4' }
+        .field
+          = f.label :primary_connection_id_in
+          = f.select :primary_connection_id_in, [[human_connection_type_name(0),0],[ human_connection_type_name(1),1], [human_connection_type_name(4),4], [ human_connection_type_name(3),  3], [human_connection_type_name(2), 2]], {}, {multiple: true,  class: "ui search selection dropdown", size: '5' }
+      .divider-column
+        .ui.vertical.divider
+      .column
+        %h4.ui.green.header Filter by survey responses
+        .field
+          = f.label :questions_id_eq_any, 'Has answered any of'
+          = f.collection_select :questions_id_eq_any, @question_list, :id, :text, {}, { multiple: true, class: 'ui search selection dropdown', size: @question_list.count + 1 }
+        .field
+          = f.label :answers_value_cont
+          = f.search_field :answers_value_cont
+    .equal.width.row
+      .right.aligned.column
+        = f.submit 'Search', class: "ui green button"
+        = link_to 'Clear Search', request.path, class:"ui button"
+.ui.grid
+  .equal.width.row
+    .column
+      Search Parameters:
+      - if params[:q]
+        - params[:q].each do |param_key, param_value|
+          - if param_value.present? and param_value != [""]
+            = param_key
+            \: "#{param_value}"
+      - else
+        None
+    - if @results.any?
+      .right.aligned.column
+        Showing #{@results.size} #{'result'.pluralize(@results)} of #{@results.count} total
+  - if @results.any?
+    .equal.width.row
+      .column
+        %table.ui.striped.table
+          %tbody
+          - @results.each_with_index do |result, idx|
+            - person = Person.find_by(id: result.id)
+            - next unless person
+            %tr
+              %td.seven.wide
+                %strong= link_to "#{result.initials}", person_path(id: result.id), class: 'green mr'
+                = render partial: 'people/hidden_info_popup', locals: { title: 'full name', hidden_info: person.full_name }
+                .ui.green.labels#tag-list
+                  = render partial: 'taggings/tagging', collection: person.taggings, locals: { readonly: true }
+              %td.five.wide
+                .ui.list
+                  .item
+                    %i.marker.icon.tooltippy{ title: 'Address' }
+                    .content
+                      .description
+                        = render partial: 'people/hidden_info', locals: { title: 'address', hidden_info: address_fields_to_sentence(person)}
+                  .item
+                    %i.phone.icon.tooltippy{ title: 'Phone Number' }
+                    .content
+                      .description
+                        = render partial: 'people/hidden_info', locals: { title: 'phone number', hidden_info: person.phone_number}
+                  .item
+                    %i.mail.icon.tooltippy{ title: 'Email address' }
+                    .content
+                      .description
+                        = render partial: 'people/hidden_info', locals: { title: 'email address', hidden_info: person.email_address}
+                  .item
+                    %i.help.circle.icon.tooltippy{ title: 'Verified?' }
+                    .content
+                      .description= best_in_place person, :verified
+              %td.four.wide
+                .ui.list
+                  .item
+                    %i.desktop.icon.tooltippy{ title: 'Primary Device Description' }
+                    .content
+                      .description
+                        = best_in_place person,:primary_device_description
+                        %span.muted
+                          (#{best_in_place person, :primary_device_id, as: :select, collection:  Cohorts::Application.config.device_mappings.collect{|i| [i.last, i.first]}})
+                  .item
+                    %i.mobile.icon.tooltippy{ title: 'Secondary Device Description' }
+                    .content
+                      .description
+                        = best_in_place person,:secondary_device_description
+                        %span.muted
+                          (#{best_in_place person, :secondary_device_id, as: :select, collection:  Cohorts::Application.config.device_mappings.collect{|i| [i.last, i.first]}})
+                  .item
+                    %i.wifi.icon.tooltippy{ title: 'Primary Connection Description' }
+                    .content
+                      .description
+                        = best_in_place person,:primary_connection_description
+                        %span.muted
+                          (#{best_in_place person, :primary_connection_id , as: :select, collection: Cohorts::Application.config.connection_mappings.collect{|i| [i.last,i.first.to_s.humanize]}})
+                  .item
+                    %i.signal.icon.tooltippy{ title: 'Secondary Connection Description' }
+                    .content
+                      .description
+                        = best_in_place person,:secondary_connection_description
+                        %span.muted
+                          (#{best_in_place person, :secondary_connection_id , as: :select, collection: Cohorts::Application.config.connection_mappings.collect{|i| [i.last,i.first.to_s.humanize]}})
+                  .item
+                    %i.text.telephone.icon.tooltippy{ title: 'Preferred Contact Method' }
+                    .content
+                      .description= best_in_place person, :preferred_contact_method, as: :select, collection: [['SMS','SMS'], ['EMAIL','EMAIL']]
+    .equal.width.row
+      .center.aligned.column
+        = will_paginate @results, renderer: WillPaginateSemanticUi::ActionView::Renderer
+    .equal.width.row
+      .column
+        = form_tag search_index_path(params.merge(format: 'csv').symbolize_keys), class: "ui form" do
+          .field
+            = label_tag :submissions, "Submissions to include in CSV"
+            = select_tag :submissions, options_for_select(Submission.all.map(&:form_name).uniq), { include_blank: false, multiple: true, class: 'ui search selection dropdown' }
+          .field
+            = submit_tag 'Export list as CSV', class: 'ui button'
+            %span= link_to "Export this list to MailChimp", "#", class: "ui button", id: "export-to-mailchimp-form-toggle"
+            %span= link_to "Send text messages to this list", "#", class: "ui button", id: "export-to-twilio-form-toggle"
+    .row
+      .span12
+        #export-to-mailchimp-form{style: "display:none"}
+          = form_tag search_export_path, remote: true, class: "form-inline" do
+            = text_field_tag :segment_name, '', class: "input-xlarge", placeholder: "enter a name for this list (segment)"
+            - if params[:q]
+              - params[:q].each do |param_key, param_value|
+                = hidden_field_tag "q[#{param_key}]", param_value
+            = submit_tag "Export", class: "btn btn-primary", data: {disable_with: "Exporting ..."}
+      .span12
+        #export-to-twilio-form{style: "display:none"}
+          = form_tag search_exportTwilio_path, remote: true, class: "form-inline" do
+            - if params[:q]
+              - params[:q].each do |param_key, param_value|
+                = hidden_field_tag "q[#{param_key}]", param_value
+            = text_area_tag :message1, '', class: "input-xlarge", placeholder: "Enter a message to send (required)", required: true
+            %br/
+            = text_area_tag :message2, '', class: "input-xlarge", placeholder: "Enter a 2nd message to send. (Optional)"
+            %br/
+            Twilio-Wufoo Connection? #{select_tag :twiliowufoo_campaign, options_for_select([[nil, nil]] + TwilioWufoo.all.order(:name).collect{|twiliowufoo| [twiliowufoo.name, twiliowufoo.id]}, selected: params[:twiliowufoo_campaign]), class: "input"}
+            \#{submit_tag "Send messages through Twilio", class: "btn btn-primary", data: { confirm: 'These messages will be added to the queue and sent as soon as possible. Are you sure you want to send these?' }}
+  - else
+    .row
+      .span12{style: "margin-top: 30px;"}
+        %p There are no Cohorts members that match your search.

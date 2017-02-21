@@ -86,3 +86,13 @@
   color: gray;
   text-decoration: underline;
 }
+
+.divider-column {
+  position: relative;
+  padding: 0 !important;
+}
+
+.divider-column .ui.vertical.divider:before,
+.divider-column .ui.vertical.divider:after {
+  height: 100%;
+}
