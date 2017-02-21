@@ -77,7 +77,7 @@
               %td.seven.wide
                 %strong= link_to "#{result.initials}", person_path(id: result.id), class: 'green mr'
                 = render partial: 'people/hidden_info_popup', locals: { title: 'full name', hidden_info: person.full_name }
-                .ui.green.labels#tag-list
+                .ui.green.labels.tag-list
                   = render partial: 'taggings/tagging', collection: person.taggings, locals: { readonly: true }
               %td.five.wide
                 .ui.list
@@ -134,6 +134,18 @@
                     %i.text.telephone.icon.tooltippy{ title: 'Preferred Contact Method' }
                     .content
                       .description= best_in_place person, :preferred_contact_method, as: :select, collection: [['SMS','SMS'], ['EMAIL','EMAIL']]
+    .equal.width.row
+      .column
+        = form_for(Tagging.new, url: :taggings_bulk_create, remote: true, html: { class: "ui form" }) do |f|
+          = f.hidden_field :taggable_type, value: "Person"
+          - @results.each do |result|
+            = f.hidden_field :taggable_ids, multiple: true, value: result.id
+          .field
+            .ui.action.input
+              = f.select :name, Tag.order(:name).map { |t| [t.name, t.name] }, {include_blank: 'Add tag to all results'}, { class: 'ui fluid search selection dropdown allow-addition' }
+              .ui.green.submit.button{ type: 'submit' }
+                %i.tag.icon
+                Bulk Add
     .equal.width.row
       .center.aligned.column
         = will_paginate @results, renderer: WillPaginateSemanticUi::ActionView::Renderer

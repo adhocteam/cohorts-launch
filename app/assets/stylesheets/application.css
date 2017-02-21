@@ -38,6 +38,10 @@
    margin-top: 1em;
  }
 
+ .ui.labels.tag-list {
+   margin-top: 1em;
+ }
+
  .ui.label .tag-name.detail {
    margin-left: 0em;
  }

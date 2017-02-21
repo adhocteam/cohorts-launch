@@ -33,6 +33,7 @@ Cohorts::Application.routes.draw do
     # post "twil", to: 'twilio_messages/#newtwil'
 
     get 'taggings/create'
+    post 'taggings/bulk_create'
     get 'taggings/destroy'
     get 'taggings/search'
 

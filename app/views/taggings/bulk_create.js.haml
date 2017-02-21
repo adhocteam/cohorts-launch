@@ -1,0 +1,5 @@
+$(".tag-list").append("#{escape_javascript(render partial: 'taggings/tagging', locals: {tagging: @tagging, readonly: true})}")
+$("#tagging-#{@tagging.id}").hide().transition('scale');
+$("#tagging_name").siblings('.text').empty();
+$("#tagging_name").parent().dropdown('clear');
+$("#tagging_name").parent().find('.icon').removeClass('delete').addClass('dropdown');
