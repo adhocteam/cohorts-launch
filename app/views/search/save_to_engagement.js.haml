@@ -1,0 +1,16 @@
+- if @engagement.save
+  $('#save-to-engagement-form .dropdown').dropdown('clear');
+  $('#save-to-engagement-form .dropdown .icon').removeClass('delete').addClass('dropdown');
+  $('#save-to-engagement-form').append("<div class='save-success'><i class='green checkmark icon'></i> Saved</div>");
+  $('.save-success').hide();
+  $('.save-success').transition();
+  setTimeout(function(){$('.save-success').transition();},2000);
+  setTimeout(function(){$('.save-success').remove();},2250);
+- else
+  $('#save-to-engagement-form .dropdown').dropdown('clear');
+  $('#save-to-engagement-form .dropdown .icon').removeClass('delete').addClass('dropdown');
+  $('#save-to-engagement-form').append("<div class='save-error'><i class='red remove icon'></i> Error</div>");
+  $('.save-error').hide();
+  $('.save-error').transition();
+  setTimeout(function(){$('.save-error').transition();},2000);
+  setTimeout(function(){$('.save-error').remove();},2250);

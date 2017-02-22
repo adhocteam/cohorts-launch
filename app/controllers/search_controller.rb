@@ -88,6 +88,14 @@ class SearchController < ApplicationController
     end
   end
 
+  def save_to_engagement
+    @engagement = Engagement.find(engagement_params[:id])
+    @engagement.search_query = params[:engagement][:search_query]
+    respond_to do |format|
+      format.js {}
+    end
+  end
+
   # rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
   def export_ransack
@@ -180,8 +188,13 @@ class SearchController < ApplicationController
         :tags,
         :preferred_contact_method,
         :page,
+        :engagement_id,
         submissions: [])
     end
-  # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/MethodLength
+
+    def engagement_params
+      params.require(:engagement).permit(:id)
+    end
 end
 # rubocop:enable ClassLength

@@ -135,20 +135,30 @@
                     .content
                       .description= best_in_place person, :preferred_contact_method, as: :select, collection: [['SMS','SMS'], ['EMAIL','EMAIL']]
     .equal.width.row
+      .center.aligned.column
+        = will_paginate @results, renderer: WillPaginateSemanticUi::ActionView::Renderer
+    .equal.width.row
       .column
-        = form_for(Tagging.new, url: :taggings_bulk_create, remote: true, html: { class: "ui form" }) do |f|
+        = form_for(Tagging.new, url: :taggings_bulk_create, remote: true, html: { class: 'ui form' }) do |f|
           = f.hidden_field :taggable_type, value: "Person"
           - @results.each do |result|
             = f.hidden_field :taggable_ids, multiple: true, value: result.id
           .field
+            = f.label :name, 'Add tag to all results'
             .ui.action.input
-              = f.select :name, Tag.order(:name).map { |t| [t.name, t.name] }, {include_blank: 'Add tag to all results'}, { class: 'ui fluid search selection dropdown allow-addition' }
+              = f.select :name, Tag.order(:name).map { |t| [t.name, t.name] }, {include_blank: 'Tag name'}, { class: 'ui fluid search selection dropdown allow-addition' }
               .ui.green.submit.button{ type: 'submit' }
-                %i.tag.icon
                 Bulk Add
-    .equal.width.row
-      .center.aligned.column
-        = will_paginate @results, renderer: WillPaginateSemanticUi::ActionView::Renderer
+      .column
+        - unless params[:q].nil? || params[:q] == {"nav_bar_search_cont"=>""}
+          = form_tag search_save_to_engagement_path, method: :post, remote: true, class: 'ui form', id: 'save-to-engagement-form' do
+            - params[:q].each do |k,v|
+              = hidden_field_tag "engagement[search_query][#{k}]", v
+            .field
+              = label_tag 'engagement[id]', 'Save search query to engagement'
+              .ui.action.input
+                = select_tag 'engagement[id]', options_for_select(Engagement.order(:topic).map { |e| ["#{e.topic} (#{e.client.name})", e.id] }), include_blank: 'Engagement', class: 'ui fluid search selection dropdown'
+                .ui.green.submit.button{ type: 'submit' } Save
     .equal.width.row
       .column
         = form_tag search_index_path(params.merge(format: 'csv').symbolize_keys), class: "ui form" do

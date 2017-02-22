@@ -49,6 +49,7 @@ Cohorts::Application.routes.draw do
 
     get  'search/index'
     post 'search/index'
+    post 'search/save_to_engagement'
     post 'search/export_ransack'
     post 'search/export' # send search results elsewhere, i.e. Mailchimp
     post 'search/exportTwilio'
