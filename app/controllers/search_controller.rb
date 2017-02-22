@@ -90,7 +90,7 @@ class SearchController < ApplicationController
 
   def save_to_engagement
     @engagement = Engagement.find(engagement_params[:id])
-    @engagement.search_query = params[:engagement][:search_query]
+    @engagement.search_query = params[:engagement][:search_query].delete_if { |_, v| v.blank? }
     respond_to do |format|
       format.js {}
     end

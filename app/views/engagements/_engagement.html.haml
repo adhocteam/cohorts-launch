@@ -1,5 +1,7 @@
 %tr{ id: "engagement-#{engagement.id}" }
-  %td= engagement.topic
+  %td
+    %a.modal-show{ id: "show-engagement-#{engagement.id}-modal" }= engagement.topic
+    = render partial: 'modal', locals: { engagement: engagement, action: 'show' }
   %td= engagement.client.name
   %td= engagement.start_date
   %td= engagement.end_date

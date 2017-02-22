@@ -158,7 +158,7 @@ $(document).on('ready page:load',function() {
   });
 
   // Modals
-  $('.ui.modal-show.button').click(function() {
+  $('.modal-show').click(function() {
     modalId = $(this).attr('id');
     $('.ui.modal#' + modalId).modal('show');
   });

@@ -3,7 +3,26 @@
 .ui.modal{ id: modalId }
   .header= "#{action.capitalize} Engagement"
   .content
-    - if action == 'destroy'
+    - if action == 'show'
+      %h4.ui.header Sessions
+      %table.ui.sortable.striped.table
+        %thead
+          %tr
+            %th Date and Time
+            %th People
+        %tbody
+          - engagement.research_sessions.each do |session|
+            %tr
+              %td= session.datetime.strftime('%b %e, %Y at %l:%M %p')
+              %td= session.people.map(&:full_name).join(', ')
+      - unless engagement.search_query.blank?
+        %h4.ui.header Search query
+        .ui.grid
+          .equal.width.row
+            .column= engagement.search_query
+          .equal.width.row
+            .column= link_to 'Go to search', search_index_path(q: engagement.search_query), class: 'ui green button'
+    - elsif action == 'destroy'
       = form_for engagement, method: :delete, format: :js, remote: true, html: { class: 'ui form', id: formId } do |f|
         %p Are you sure? This will delete the engagement along with all sessions.
     - else
@@ -27,5 +46,6 @@
               %i.calendar.icon
               = f.text_field :end_date
   .actions
-    %input.ui.button{ class: action == 'destroy' ? 'negative' : 'positive', type: 'submit', value: action.capitalize, form: formId }
-    .ui.cancel.button Cancel
+    - unless action == 'show'
+      %input.ui.button{ class: action == 'destroy' ? 'negative' : 'positive', type: 'submit', value: action.capitalize, form: formId }
+    .ui.cancel.button Close
