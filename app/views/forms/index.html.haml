@@ -1,4 +1,13 @@
-%h1.ui.header.page-header Wufoo Forms
+.ui.grid
+  .equal.width.row
+    .column
+      %h1.ui.header.page-header Wufoo Forms
+    .right.aligned.column
+      .ui.icon.buttons
+        = link_to 'https://adhocteamus.wufoo.com/build/', class: 'ui tooltippy left attached icon button', title: 'New Wufoo Form' do
+          %i.add.icon
+        = link_to update_from_wufoo_forms_path, class: 'ui tooltippy right attached icon button', title: 'Pull updates from Wufoo' do
+          %i.download.icon
 
 %table.ui.sortable.striped.table
   %thead
@@ -22,5 +31,3 @@
               %i.hide.icon
             = link_to "https://adhocteamus.wufoo.com/build/#{form.url}", class: 'ui tooltippy right attached icon button', title: 'Edit' do
               %i.edit.icon
-
-= link_to 'New Wufoo Form', 'https://adhocteamus.wufoo.com/build/', class: 'ui green button'

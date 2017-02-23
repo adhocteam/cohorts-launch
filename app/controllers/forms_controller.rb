@@ -8,8 +8,11 @@ class FormsController < ApplicationController
     @forms = Form.where(hidden: false)
   end
 
-  # PATCH/PUT /forms/1
-  # PATCH/PUT /forms/1.json
+  def update_from_wufoo
+    Form.update_forms
+    redirect_to action: :index
+  end
+
   def update
     respond_to do |format|
       if @form.update(form_params)
