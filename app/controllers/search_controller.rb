@@ -13,7 +13,7 @@ class SearchController < ApplicationController
     @results = @q.result(distinct: true).includes(:tags, :questions, :answers).page(params[:page])
     @tags = params[:tags_id_eq_any].blank? ? '[]' : Tag.where(name: params[:tags_id_eq_any].split(',').map(&:strip)).to_json(methods: [:value, :label, :type])
     @tag_list = Tag.order(:name)
-    @question_list = Question.order(:text)
+    @question_list = Question.includes(:form).order('forms.last_update')
     @participation_list = Person.uniq.pluck(:participation_type) # Need to better define these
     @verified_list = Person.uniq.pluck(:verified)
     @mailchimp_result = 'Mailchimp export not attempted with this search'
