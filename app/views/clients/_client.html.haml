@@ -1,5 +1,9 @@
 %tr{ id: "client-#{client.id}" }
-  %td= client.name
+  %td
+    %a.modal-show{ id: "show-client-#{client.id}-modal" }= client.name
+    = render partial: 'modal', locals: { client: client, action: 'show' }
+  %td= client.engagements&.count || 0
+  %td= client.research_sessions&.count || 0
   %td.center.aligned.collapsing
     .ui.icon.buttons
       .ui.left.attached.icon.modal-show.button{ id: "update-client-#{client.id}-modal" }

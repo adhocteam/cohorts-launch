@@ -3,7 +3,23 @@
 .ui.modal{ id: modalId }
   .header= "#{action.capitalize} Client"
   .content
-    - if action == 'destroy'
+    - if action == 'show'
+      %h4.ui.header Engagements
+      %table.ui.sortable.striped.table
+        %thead
+          %tr
+            %th Topic
+            %th Sessions
+            %th Start date
+            %th End date
+        %tbody
+          - client.engagements.each do |engagement|
+            %tr
+              %td= engagement.topic
+              %td= engagement.research_sessions&.count || 0
+              %td= engagement.start_date
+              %td= engagement.end_date
+    - elsif action == 'destroy'
       = form_for client, method: :delete, format: :js, remote: true, html: { class: 'ui form', id: formId } do |f|
         %p Are you sure? This will delete the client along with all engagements.
     - else
@@ -11,5 +27,6 @@
         = f.label :name
         = f.text_field :name
   .actions
-    %input.ui.button{ class: action == 'destroy' ? 'negative' : 'positive', type: 'submit', value: action.capitalize, form: formId }
-    .ui.cancel.button Cancel
+    - unless action == 'show'
+      %input.ui.button{ class: action == 'destroy' ? 'negative' : 'positive', type: 'submit', value: action.capitalize, form: formId }
+    .ui.cancel.button Close
