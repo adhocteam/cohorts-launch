@@ -74,7 +74,7 @@ class SearchController < ApplicationController
                 else
                   person.tag_values.join('|')
                 end
-              elsif @questions&.map(&:text).include? f
+              elsif @questions && @questions.map(&:text).include?(f)
                 q = @questions.find { |question| question.text == f }
                 person.answers.find_by(question: q)&.value
               else
