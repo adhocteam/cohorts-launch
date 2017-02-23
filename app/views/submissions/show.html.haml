@@ -1,0 +1,28 @@
+%h1.ui.header.page-header
+  Viewing submission:
+  %strong= @submission.form_name
+  by
+  = @submission.person.initials
+.ui.grid
+  .equal.width.row
+    .column
+      %p
+        Submitted on
+        = @submission.created_at.strftime('%b %e, %Y at %l:%M %p')
+      %table.ui.striped.table
+        %thead
+          %tr
+            %th Question
+            %th Answer
+        %tbody
+          - for field_id,field_desc in @submission.fields do
+            %tr
+              %td= field_desc[:title]
+              %td= @submission.field_value(field_id)
+  .equal.width.row
+    .column
+      .ui.icon.buttons
+        = link_to submissions_path, class: 'ui tooltippy left attached icon button', title: 'Back' do
+          %i.left.arrow.icon
+        = link_to edit_submission_path(@submission), class: 'ui tooltippy attached icon button', title: 'Edit' do
+          %i.edit.icon

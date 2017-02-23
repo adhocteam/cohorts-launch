@@ -1,32 +1,21 @@
 # frozen_string_literal: true
 class SubmissionsController < ApplicationController
-
   skip_before_action :authenticate_user!, if: :should_skip_janky_auth?
   skip_before_action :verify_authenticity_token, only: [:create]
+  before_action :find_submission, only: [:show, :edit, :update]
+
+  # GET /submissions
+  def index
+    @submissions_unmatched = Submission.order('created_at DESC').where('person_id is ?', nil)
+    @submissions = Submission.paginate(page: params[:page]).order('created_at DESC').includes(:person)
+  end
+
+  # GET /submission/:id
+  def show; end
 
   # GET /submission/new
   def new
     @submission = Submission.new
-  end
-
-  # GET /submission/1/edit
-  def edit
-    @submission = Submission.find(params[:id])
-  end
-
-  # PATCH/PUT /submission/1
-  # PATCH/PUT /submission/1.json
-  def update
-    respond_to do |format|
-      @submission = Submission.find(params[:id])
-      if @submission.with_user(current_user).update(submission_params)
-        format.html { redirect_to submissions_path, notice: 'Submission was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @submission.errors, status: :unprocessable_entity }
-      end
-    end
   end
 
   # FIXME: Refactor and re-enable cop
@@ -114,12 +103,28 @@ class SubmissionsController < ApplicationController
   end
   # rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize
 
-  def index
-    @submissions_unmatched = Submission.order('created_at DESC').where('person_id is ?', nil)
-    @submissions = Submission.paginate(page: params[:page]).order('created_at DESC').includes(:person)
+  # GET /submission/1/edit
+  def edit; end
+
+  # PATCH/PUT /submission/1
+  # PATCH/PUT /submission/1.json
+  def update
+    respond_to do |format|
+      if @submission.with_user(current_user).update(submission_params)
+        format.html { redirect_to submissions_path, notice: 'Submission was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: 'edit' }
+        format.json { render json: @submission.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   private
+
+    def find_submission
+      @submission = Submission.find(params[:id])
+    end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def submission_params

@@ -13,11 +13,11 @@
               %th.center.aligned Action
           - for submission in @submissions_unmatched do
             %tr
-              %td= submission.form_name
+              %td= link_to submission.form_name, submission_path(submission), class: 'green'
               %td= submission.form_type
               %td
                 - if submission.person.present?
-                  = link_to submission.person.initials, person_path(submission.person, anchor: "submission-#{submission.id}"), class: 'green'
+                  = link_to submission.person.initials, person_path(submission.person), class: 'green'
                 - else
                   Unmatched
               %td= submission.created_at.to_s(:long)
@@ -38,11 +38,11 @@
               %th.center.aligned Action
           - for submission in @submissions do
             %tr
-              %td= submission.form_name
+              %td= link_to submission.form_name, submission_path(submission), class: 'green'
               %td= submission.form_type
               %td
                 - if submission.person.present?
-                  = link_to submission.person.full_name, person_path(submission.person, anchor: "submission-#{submission.id}"), class: 'green'
+                  = link_to submission.person.initials, person_path(submission.person), class: 'green'
                 - else
                   Unmatched
               %td= submission.created_at.to_s(:long)

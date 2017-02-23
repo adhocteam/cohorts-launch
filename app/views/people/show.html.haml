@@ -1,10 +1,24 @@
 - content_for :page_title, @person.initials
-.ui.equal.width.grid
-  .column
-    %h1.ui.header.page-header
-      %abbr= @person.initials
-      = render partial: 'people/hidden_info_popup', locals: { title: 'name', hidden_info: @person.full_name }
-  .right.aligned.column
+.ui.grid
+  .equal.width.row
+    .column
+      %h1.ui.header.page-header
+        %abbr= @person.initials
+        = render partial: 'people/hidden_info_popup', locals: { title: 'name', hidden_info: @person.full_name }
+    .right.aligned.column
+      .ui.icon.buttons
+        = link_to people_path, class: 'ui tooltippy left attached icon button', title: 'Back' do
+          %i.left.arrow.icon
+        = link_to edit_person_path(@person), class: 'ui tooltippy attached icon button', title: 'Edit' do
+          %i.edit.icon
+        = link_to deactivate_people_path(@person), method: :post,
+        data: { confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure?')) },
+        class: 'ui tooltippy attached icon button', title: 'Deactivate' do
+          %i.hide.icon
+        = link_to person_path(@person), method: 'delete',
+        data: { confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure?')) },
+        class: 'ui tooltippy right attached icon button', title: 'Delete' do
+          %i.delete.icon
 .ui.divider
 .ui.padded.grid
   .row
@@ -215,18 +229,3 @@
                 %td= answer.question.text
                 %td= answer.value
                 %td= answer.created_at.strftime('%b %e, %Y at %l:%M %p')
-  .equal.width.row
-    .column
-      .ui.icon.buttons
-        = link_to people_path, class: 'ui tooltippy left attached icon button', title: 'Back' do
-          %i.left.arrow.icon
-        = link_to edit_person_path(@person), class: 'ui tooltippy attached icon button', title: 'Edit' do
-          %i.edit.icon
-        = link_to deactivate_people_path(@person), method: :post,
-        data: { confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure?')) },
-        class: 'ui tooltippy attached icon button', title: 'Deactivate' do
-          %i.hide.icon
-        = link_to person_path(@person), method: 'delete',
-        data: { confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure?')) },
-        class: 'ui tooltippy right attached icon button', title: 'Delete' do
-          %i.delete.icon

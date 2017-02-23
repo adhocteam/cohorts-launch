@@ -4,22 +4,7 @@
 .ui.grid
   .equal.width.row
     .column
-      %p
-        Submitted on
-        = @submission.created_at.strftime('%b %e, %Y at %l:%M %p')
-      %table.ui.striped.table
-        %thead
-          %tr
-            %th Question
-            %th Answer
-        %tbody
-          - for field_id,field_desc in @submission.fields do
-            %tr
-              %td= field_desc[:title]
-              %td= @submission.field_value(field_id)
-  .equal.width.row
-    .column
-      .ui.message This form can be used to match a submission from Wufoo  with an existing Person.
+      .ui.message This form can be used to match a submission from Wufoo with an existing Person.
       .ui.segment
         = form_for @submission, html: { class: 'ui form' } do |f|
           - if @submission.errors.any?
