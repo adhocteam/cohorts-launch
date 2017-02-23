@@ -120,6 +120,13 @@ $(document).on('ready page:load',function() {
   $('.ui.calendar').calendar({
     type: 'date'
   });
+  $('.ui.calendar.range-end').each(function() {
+    rangeStart = $(this).parent().prev().find('.ui.calendar.range-start')
+    $(this).calendar({
+      type: 'date',
+      startCalendar: rangeStart
+    });
+  });
   $('.ui.datetime.calendar').calendar();
   $('.sortable.table').tablesort();
   $('.tooltippy').popup();
@@ -127,6 +134,13 @@ $(document).on('ready page:load',function() {
     initializeDropdowns();
     $('.ui.modal .ui.calendar').calendar({
       type: 'date'
+    });
+    $('.ui.calendar.range-end').each(function() {
+      rangeStart = $(this).parent().prev().find('.ui.calendar.range-start')
+      $(this).calendar({
+        type: 'date',
+        startCalendar: rangeStart
+      });
     });
     $('.ui.datetime.calendar').calendar();
   }});

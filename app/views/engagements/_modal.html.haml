@@ -33,18 +33,19 @@
         .field
           = f.label :topic
           = f.text_field :topic
-        .field
-          = f.label :start_date
-          .ui.calendar
-            .ui.left.icon.input
-              %i.calendar.icon
-              = f.text_field :start_date
-        .field
-          = f.label :end_date
-          .ui.calendar
-            .ui.left.icon.input
-              %i.calendar.icon
-              = f.text_field :end_date
+        .two.fields
+          .field
+            = f.label :start_date
+            .ui.calendar.range-start
+              .ui.left.icon.input
+                %i.calendar.icon
+                = f.text_field :start_date
+          .field
+            = f.label :end_date
+            .ui.calendar.range-end
+              .ui.left.icon.input
+                %i.calendar.icon
+                = f.text_field :end_date
   .actions
     - unless action == 'show'
       %input.ui.button{ class: action == 'destroy' ? 'negative' : 'positive', type: 'submit', value: action.capitalize, form: formId }
