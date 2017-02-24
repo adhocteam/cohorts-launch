@@ -40,6 +40,14 @@ class Form < ActiveRecord::Base
     wufoo_data.fields
   end
 
+  def wufoo_entries
+    wufoo_data.entries
+  end
+
+  def wufoo_entry(id)
+    wufoo_entries.find { |entry| entry['EntryId'] == id.to_s }.reject { |_, v| v.blank? }
+  end
+
   # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
   def create_question(field)
     return if IGNORED_FIELDS.include? field['Title'].downcase

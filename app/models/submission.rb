@@ -118,13 +118,16 @@ class Submission < ActiveRecord::Base
     def find_form_and_create_answers
       Form.update_forms
       update(form: Form.find_by(hash_id: form_hash))
+      entry = form.wufoo_entry(entry_id)
       form.questions.each do |question|
-        Answer.create(
-          value: field_value(question.field_id),
-          question: question,
-          person: person,
-          submission: self
-        )
+        answer = Answer.new(question: question, person: person, submission: self)
+        if question.subfields.any?
+          answer.subfields = question.subfields.map { |sf| entry[sf] }.compact
+          answer.value = answer.subfields.join(', ')
+        else
+          answer.value = entry[question.field_id]
+        end
+        answer.save
       end
     end
 end
