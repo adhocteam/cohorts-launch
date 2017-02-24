@@ -9,13 +9,13 @@
               - @submission.errors.full_messages.each do |msg|
                 %li= msg
         .field
-          = f.label "Person"
+          = f.label :person_id, 'Person'
           = f.select :person_id, Person.all.collect { |p| [ p.full_name, p.id ] }, {include_blank: true}, class: 'ui search selection dropdown'
         .field
-          = f.label 'Wufoo Form ID'
-          = f.select :form_id, TwilioWufoo.wufoo_form_ids, {include_blank: true}, class: 'ui dropdown'
+          = f.label :form_id, 'Wufoo Form'
+          = f.select :form_id, Form.where(hidden: false).map { |f| [f.name, f.hash_id]}, {include_blank: true}, class: 'ui dropdown'
         .field
-          = f.label 'Wufoo Form Entry ID Number'
+          = f.label :entry_id, 'Wufoo Form Entry ID'
           = f.text_field :entry_id
         .field
           = f.label :form_type

@@ -51,7 +51,6 @@ class Submission < ActiveRecord::Base
 
   def field_value(field_id)
     value = []
-
     if fields[field_id][:subfields].any?
       fields[field_id][:subfields].each do |sf|
         value << JSON.parse(raw_content)[sf]

@@ -10,6 +10,7 @@ class FormsController < ApplicationController
 
   def update_from_wufoo
     Form.update_forms
+    flash[:notice] = 'Forms updated successfully.'
     redirect_to action: :index
   end
 

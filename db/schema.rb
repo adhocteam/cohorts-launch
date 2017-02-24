@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170223211302) do
+ActiveRecord::Schema.define(version: 20170224165638) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,8 +21,9 @@ ActiveRecord::Schema.define(version: 20170223211302) do
     t.integer  "person_id"
     t.integer  "submission_id"
     t.string   "value",         limit: 510
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.string   "subfields",                 default: [],              array: true
   end
 
   add_index "answers", ["person_id"], name: "answers_person_id_idx", using: :btree
@@ -157,12 +158,14 @@ ActiveRecord::Schema.define(version: 20170223211302) do
   create_table "questions", force: :cascade do |t|
     t.text     "text"
     t.string   "short_text",   limit: 510
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
     t.integer  "form_id"
     t.string   "datatype",     limit: 510
     t.string   "field_id",     limit: 510
     t.datetime "version_date"
+    t.string   "choices",                  default: [],              array: true
+    t.string   "subfields",                default: [],              array: true
   end
 
   add_index "questions", ["form_id"], name: "questions_form_id_idx", using: :btree
