@@ -1,6 +1,4 @@
 # frozen_string_literal: true
-require 'faker'
-
 FactoryGirl.define do
   factory :form do
     hash_id '1hxw3af5'

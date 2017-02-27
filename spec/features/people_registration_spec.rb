@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 require 'rails_helper'
-require 'faker'
 
 feature 'People registration' do
   scenario 'with valid data' do

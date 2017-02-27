@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-require 'faker'
 FactoryGirl.define do
   factory :mailchimp_update do
     raw_content { Faker::Hipster.sentence }

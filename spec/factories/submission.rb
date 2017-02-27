@@ -1,6 +1,4 @@
 # frozen_string_literal: true
-require 'faker'
-
 FactoryGirl.define do
   factory :submission do
     raw_content { Faker::Hipster.paragraph }

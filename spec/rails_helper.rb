@@ -10,6 +10,7 @@ require 'support/helpers'
 require 'sms_spec'
 require 'timecop'
 require 'mock_redis'
+require 'faker'
 
 SmsSpec.driver = :'twilio-ruby'
 
@@ -19,6 +20,8 @@ require 'devise'
 require 'support/controller_macros'
 
 require 'capybara/rspec'
+require 'capybara/poltergeist'
+Capybara.javascript_driver = :poltergeist
 Capybara.configure do |config|
   config.server_port = 3001
 end

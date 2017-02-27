@@ -1,6 +1,4 @@
 # frozen_string_literal: true
-require 'faker'
-
 devices = Cohorts::Application.config.device_mappings
 connections = Cohorts::Application.config.connection_mappings
 

@@ -1,6 +1,4 @@
 # frozen_string_literal: true
-require 'faker'
-
 FactoryGirl.define do
   factory :tag, class: Tag do
     name Faker::Internet.domain_word
