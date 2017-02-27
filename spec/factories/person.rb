@@ -14,17 +14,15 @@ FactoryGirl.define do
     address_2         { Faker::Address.secondary_address }
     city              { Faker::Address.city }
     state             { Faker::Address.state }
-    postal_code       { 11222 }
+    postal_code       { Faker::Address.zip }
     signup_at         Time.current
     primary_device_id devices[:desktop]
-    primary_device_description 'crawling'
-
+    primary_device_description { Faker::Hipster.sentence }
     secondary_device_id devices[:tablet]
-    secondary_device_description 'nice'
-
+    secondary_device_description { Faker::Hipster.sentence }
     primary_connection_id connections[:phone]
-    primary_connection_description 'so so'
+    primary_connection_description { Faker::Hipster.sentence }
     secondary_connection_id connections[:public_wifi]
-    secondary_connection_description 'worse'
+    secondary_connection_description { Faker::Hipster.sentence }
   end
 end

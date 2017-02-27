@@ -2,7 +2,7 @@
 require 'faker'
 FactoryGirl.define do
   factory :mailchimp_update do
-    raw_content 'MyText'
+    raw_content { Faker::Hipster.sentence }
     email { Faker::Internet.email }
     update_type 'MyString'
     reason 'MyString'
