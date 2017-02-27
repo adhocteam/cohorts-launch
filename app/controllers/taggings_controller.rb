@@ -56,9 +56,6 @@ class TaggingsController < ApplicationController
   def search
     @tags = Tag.where('name like ?', "%#{params[:q]}%").
             order(taggings_count: :desc)
-
-    # the methods=> :value is needed for tokenfield.
-    # https://github.com/sliptree/bootstrap-tokenfield/issues/189
     render json: @tags.to_json(methods: [:value, :label, :type])
   end
 

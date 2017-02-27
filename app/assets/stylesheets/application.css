@@ -10,10 +10,6 @@
  *
  *= require_self
  *= require semantic_ui/semantic_ui
- *= require datepicker/bootstrap-datepicker
- *= require tokenfield/bootstrap-tokenfield
- *= require tokenfield/tokenfield-typeahead
- *= require fullcalendar/fullcalendar.min
  *= require_tree .
  *= stub signup
  *= stub vets_signup

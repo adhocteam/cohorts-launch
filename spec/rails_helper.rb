@@ -18,7 +18,7 @@ Redis.current = MockRedis.new # mocking out redis for our tests
 require 'devise'
 require 'support/controller_macros'
 
-require 'capybara'
+require 'capybara/rspec'
 Capybara.configure do |config|
   config.server_port = 3001
 end

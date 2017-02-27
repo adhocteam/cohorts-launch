@@ -14,15 +14,10 @@
 //= require jquery_ujs
 //= require fastclick/fastclick
 //= require best_in_place
-//= require twitter/bootstrap
-//= require twitter/typeahead.min
 //= require holder
-//= require datepicker/bootstrap-datepicker.min
-//= require tokenfield/bootstrap-tokenfield.js
 //= require jquery.validate
 //= require jquery.validate.additional-methods
 //= require moment/moment.min
-//= require fullcalendar/fullcalendar.min
 //= require jquery-touchswipe/jquery.touchSwipe.min
 //= require semantic_ui/semantic_ui
 //= require_tree .

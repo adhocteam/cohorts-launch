@@ -6,8 +6,6 @@ class Tag < ActiveRecord::Base
 
   has_many :taggings
 
-  # needed for tokenfield.
-  # https://github.com/sliptree/bootstrap-tokenfield/issues/189
   alias_attribute :value, :name
   alias_attribute :label, :name
 
