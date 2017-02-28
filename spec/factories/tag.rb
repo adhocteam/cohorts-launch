@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 FactoryGirl.define do
   factory :tag, class: Tag do
-    name Faker::Internet.domain_word
+    name { Faker::Hipster.word }
   end
 
   factory :tagging, class: Tagging do

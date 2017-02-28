@@ -20,7 +20,7 @@ class Submission < ActiveRecord::Base
     test: 4
   }
 
-  after_create :find_form_and_create_answers
+  after_create :find_form_and_create_answers, unless: -> { Rails.env.test? }
 
   self.per_page = 15
 

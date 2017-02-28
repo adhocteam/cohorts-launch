@@ -17,7 +17,9 @@ SmsSpec.driver = :'twilio-ruby'
 Redis.current = MockRedis.new # mocking out redis for our tests
 
 require 'devise'
-require 'support/controller_macros'
+
+require 'webmock/rspec'
+WebMock.disable_net_connect!(allow_localhost: true)
 
 require 'capybara/rspec'
 require 'capybara/poltergeist'
@@ -53,7 +55,6 @@ RSpec.configure do |config|
   config.fixture_path = "#{::Rails.root}/test/fixtures"
 
   config.include Devise::Test::ControllerHelpers, type: :controller
-  config.extend ControllerMacros, type: :controller
 
   config.use_transactional_fixtures = false
 
@@ -64,6 +65,9 @@ RSpec.configure do |config|
   config.example_status_persistence_file_path = "#{::Rails.root}/tmp/rspec.data"
 
   config.use_transactional_fixtures = false
+
+  config.include FactoryGirl::Syntax::Methods
+  config.include Warden::Test::Helpers
 
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)

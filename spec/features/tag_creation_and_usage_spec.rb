@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 require 'rails_helper'
-require 'support/poltergeist_js_hack_for_login'
 require 'capybara/email/rspec'
 
 feature 'tag person'  do

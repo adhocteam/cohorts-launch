@@ -49,7 +49,7 @@
             .ui.transparent.icon.input
               = f.search_field :nav_bar_search_cont, placeholder: "Search..."
               %i.search.link.icon
-        .ui.dropdown.item
+        .ui.dropdown.item#account-link
           = current_user&.email
           %i.dropdown.icon
           .menu

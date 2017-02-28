@@ -7,5 +7,5 @@ require File.expand_path('../config/application', __FILE__)
 Cohorts::Application.load_tasks
 
 if (Rails.env != 'production') && (Rails.env != 'staging')
-  task default: [:rubocop, :test, :spec]
+  task default: [:rubocop, :spec]
 end

@@ -13,7 +13,8 @@ FactoryGirl.define do
     city              { Faker::Address.city }
     state             { Faker::Address.state }
     postal_code       { Faker::Address.zip }
-    signup_at         Time.current
+    signup_at         { 1.day.ago }
+    active            true
     primary_device_id devices[:desktop]
     primary_device_description { Faker::Hipster.sentence }
     secondary_device_id devices[:tablet]

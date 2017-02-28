@@ -8,6 +8,5 @@ FactoryGirl.define do
     field_structure { Faker::Hipster.paragraph }
     form_type 'screening'
     person
-    form
   end
 end

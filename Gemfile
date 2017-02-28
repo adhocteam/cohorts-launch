@@ -180,6 +180,8 @@ group :test do
 
   # in memory redis for testing only
   gem 'mock_redis'
+
+  gem 'webmock'
 end
 
 group :development, :test do
