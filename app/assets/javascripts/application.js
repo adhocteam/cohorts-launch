@@ -98,13 +98,18 @@ $(document).on('ready page:load',function() {
       fullTextSearch: true,
       allowAdditions: true,
       hideAdditions: false,
-      onChange: function(value) {
+      onChange: function(value, text, $choice) {
         var target = $(this);
         if(value) {
           target.find('.dropdown.icon').removeClass('dropdown').addClass('delete').on('click', function() {
             target.dropdown('clear');
             $(this).removeClass('delete').addClass('dropdown');
           });
+
+          // Automatically submit new tags
+          if($choice.hasClass('addition')) {
+            $(this).submit();
+          }
         }
       }
     });
