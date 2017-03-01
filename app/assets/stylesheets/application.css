@@ -96,3 +96,7 @@
 .divider-column .ui.vertical.divider:after {
   height: 100%;
 }
+
+.green.link.modal-show {
+  cursor: pointer;
+}
