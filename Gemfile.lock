@@ -73,6 +73,7 @@ GEM
       capybara (>= 1.0, < 3)
       launchy
     chronic (0.10.2)
+    clipboard (1.1.1)
     cliver (0.3.2)
     coderay (1.1.1)
     coffee-rails (4.2.1)
@@ -423,6 +424,7 @@ DEPENDENCIES
   capybara
   capybara-email
   capybara-screenshot
+  clipboard
   coffee-rails
   composite_primary_keys
   daemons
@@ -433,6 +435,7 @@ DEPENDENCIES
   factory_girl_rails
   faker
   fast_blank
+  ffi
   flamegraph
   gibbon (~> 2.2.3)
   gsm_encoder

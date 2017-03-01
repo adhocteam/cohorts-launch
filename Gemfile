@@ -133,6 +133,9 @@ group :development do
 
   # for generating favicons
   gem 'rails_real_favicon'
+
+  gem 'clipboard'
+  gem 'ffi', platforms: [:mswin, :mingw]
 end
 
 # Use rails 12factor for staging and production

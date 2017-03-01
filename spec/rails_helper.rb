@@ -7,6 +7,7 @@ require 'spec_helper'
 require 'shoulda/matchers'
 require 'database_cleaner'
 require 'support/helpers'
+require 'support/wufoo_helpers'
 require 'sms_spec'
 require 'timecop'
 require 'mock_redis'
@@ -68,6 +69,11 @@ RSpec.configure do |config|
 
   config.include FactoryGirl::Syntax::Methods
   config.include Warden::Test::Helpers
+  config.include Rails.application.routes.url_helpers
+
+  config.before(:each) do
+    stub_wufoo
+  end
 
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)

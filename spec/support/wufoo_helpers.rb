@@ -1,0 +1,23 @@
+# frozen_string_literal: true
+def stub_wufoo
+  allow(Form).to receive(:update_forms)
+  allow_any_instance_of(Form).to receive_messages(
+    wufoo_data: nil,
+    wufoo_last_updated: 1.day.ago,
+    wufoo_fields: stub_wufoo_fields,
+    wufoo_entries: stub_wufoo_entries,
+    wufoo_entry: stub_wufoo_entry
+  )
+end
+
+def stub_wufoo_fields
+  [{ 'Title'=>'Entry Id', 'Type'=>'text', 'ID'=>'EntryId' }, { 'Title'=>'Name', 'Instructions'=>'', 'IsRequired'=>'1', 'ClassNames'=>'', 'DefaultVal'=>'', 'Page'=>'1', 'SubFields'=>[{ 'DefaultVal'=>'', 'ID'=>'Field1', 'Label'=>'First' }, { 'DefaultVal'=>'', 'ID'=>'Field2', 'Label'=>'Last' }], 'Type'=>'shortname', 'ID'=>'Field1' }, { 'Title'=>'Address', 'Instructions'=>'', 'IsRequired'=>'1', 'ClassNames'=>'', 'DefaultVal'=>'', 'Page'=>'1', 'SubFields'=>[{ 'DefaultVal'=>'', 'ID'=>'Field4', 'Label'=>'Street Address' }, { 'DefaultVal'=>'', 'ID'=>'Field5', 'Label'=>'Address Line 2' }, { 'DefaultVal'=>'', 'ID'=>'Field6', 'Label'=>'City' }, { 'DefaultVal'=>'', 'ID'=>'Field7', 'Label'=>'State / Province / Region' }, { 'DefaultVal'=>'', 'ID'=>'Field8', 'Label'=>'Postal / Zip Code' }, { 'DefaultVal'=>'United States', 'ID'=>'Field9', 'Label'=>'Country' }], 'Type'=>'address', 'ID'=>'Field4' }, { 'Title'=>'Email', 'Instructions'=>'', 'IsRequired'=>'1', 'ClassNames'=>'', 'DefaultVal'=>'', 'Page'=>'1', 'Type'=>'email', 'ID'=>'Field10' }, { 'Title'=>'Phone Number', 'Instructions'=>'', 'IsRequired'=>'0', 'ClassNames'=>'', 'DefaultVal'=>'', 'Page'=>'1', 'Type'=>'phone', 'ID'=>'Field11' }, { 'Title'=>'How would you like to participate in our sessions?', 'Instructions'=>'', 'IsRequired'=>'1', 'ClassNames'=>'', 'DefaultVal'=>'', 'Page'=>'1', 'Choices'=>[{ 'Label'=>'In-person group' }, { 'Label'=>'Remote observation' }], 'Type'=>'radio', 'ID'=>'Field12', 'HasOtherField'=>false }, { 'Title'=>'Did you vote in the last election?', 'Instructions'=>'', 'IsRequired'=>'0', 'ClassNames'=>'', 'DefaultVal'=>'', 'Page'=>'1', 'Choices'=>[{ 'Label'=>'Yes' }, { 'Label'=>'No' }], 'Type'=>'radio', 'ID'=>'Field16', 'HasOtherField'=>false }, { 'Title'=>'Have you ever contacted one of your political representatives?', 'Instructions'=>'', 'IsRequired'=>'0', 'ClassNames'=>'', 'DefaultVal'=>'', 'Page'=>'1', 'Choices'=>[{ 'Label'=>'Yes' }, { 'Label'=>'No' }], 'Type'=>'radio', 'ID'=>'Field18', 'HasOtherField'=>false }, { 'Title'=>'What device do you use most often to connect to the Internet?', 'Instructions'=>'', 'IsRequired'=>'1', 'ClassNames'=>'', 'DefaultVal'=>'', 'Page'=>'1', 'Choices'=>[{ 'Label'=>'Tablet (e.g. iPad)' }, { 'Label'=>'Smartphone (e.g. iPhone or Android phone)' }, { 'Label'=>'Laptop Computer' }, { 'Label'=>'Desktop Computer' }], 'Type'=>'radio', 'ID'=>'Field22', 'HasOtherField'=>false }, { 'Title'=>'What is the make and model of your primary device?', 'Instructions'=>'', 'IsRequired'=>'1', 'ClassNames'=>'', 'DefaultVal'=>'', 'Page'=>'1', 'Type'=>'text', 'ID'=>'Field24' }, { 'Title'=>'What type of Internet connection to you use most often?', 'Instructions'=>'', 'IsRequired'=>'0', 'ClassNames'=>'', 'DefaultVal'=>'', 'Page'=>'1', 'Choices'=>[{ 'Label'=>'Home broadband (cable, DSL)' }, { 'Label'=>'Phone with data plan' }, { 'Label'=>'Public Wi-Fi' }, { 'Label'=>'Public computer' }, { 'Label'=>'Other' }], 'Type'=>'radio', 'ID'=>'Field26', 'HasOtherField'=>false }, { 'Title'=>'Date Created', 'Type'=>'date', 'ID'=>'DateCreated' }, { 'Title'=>'Created By', 'Type'=>'text', 'ID'=>'CreatedBy' }, { 'Title'=>'Last Updated', 'Type'=>'date', 'ID'=>'LastUpdated' }, { 'Title'=>'Updated By', 'Type'=>'text', 'ID'=>'UpdatedBy' }]
+end
+
+def stub_wufoo_entries
+  [{ 'EntryId'=>'9', 'Field1'=>'Steven', 'Field2'=>'Spielberg', 'Field4'=>'1234 Some Rd', 'Field5'=>'', 'Field6'=>'Hollywood', 'Field7'=>'CA', 'Field8'=>'90210', 'Field9'=>'United States', 'Field10'=>'fake@stevenspielberg.biz', 'Field11'=>'5555555555', 'Field12'=>'In-person group', 'Field16'=>'Yes', 'Field18'=>'Yes', 'Field22'=>'Smartphone (e.g. iPhone or Android phone)', 'Field24'=>'Apple iPhone', 'Field26'=>'Phone with data plan', 'DateCreated'=>'2017-01-17 11:56:09', 'CreatedBy'=>'public', 'DateUpdated'=>'', 'UpdatedBy'=>nil }]
+end
+
+def stub_wufoo_entry
+  { 'EntryId'=>'9', 'Field1'=>'Steven', 'Field2'=>'Spielberg', 'Field4'=>'1234 Some Rd', 'Field6'=>'Hollywood', 'Field7'=>'CA', 'Field8'=>'90210', 'Field9'=>'United States', 'Field10'=>'fake@stevenspielberg.biz', 'Field11'=>'5555555555', 'Field12'=>'In-person group', 'Field16'=>'Yes', 'Field18'=>'Yes', 'Field22'=>'Smartphone (e.g. iPhone or Android phone)', 'Field24'=>'Apple iPhone', 'Field26'=>'Phone with data plan', 'DateCreated'=>'2017-01-17 11:56:09', 'CreatedBy'=>'public' }
+end
