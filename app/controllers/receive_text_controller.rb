@@ -43,7 +43,7 @@ class ReceiveTextController < ApplicationController
       this_person = Person.find_by(phone_number: from_number)
       this_person.verified = 'Removal Request by Text Message'
       this_person.save
-      message = "We are sorry for bothering you. You have been removed from the #{ENV['GROUP_NAME']}"
+      message = "We are sorry for bothering you. You have been removed from #{ENV['GROUP_NAME']}"
     end
     @twilio_message.save
     twiml = Twilio::TwiML::Response.new do |r|
