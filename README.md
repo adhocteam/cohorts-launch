@@ -78,8 +78,13 @@ If a variable isn't defined in your local_env.yml, we use the default value from
   * Use Mandrill, which is built into Mailchimp.
   * [Credentials](https://mandrill.zendesk.com/hc/en-us/articles/205582197-Where-do-I-find-my-SMTP-credentials-)
 
-TODO
+Product Roadmap
 ----
+* In general
+- more knowledge about members, including social exhaust
+- better support for UX researchers
+- better admin view of the entire system
+
 * Events
   * Invite
   * RSVP
