@@ -30,12 +30,17 @@ $(document).on('ready page:load',function() {
 
 
   var show_ajax_message = function(msg, type) {
-    var cssClass = type === 'error' ? 'alert-error' : 'alert-success'
-    var html ='<div class="alert ' + cssClass + '">';
-    html +='<button type="button" class="close" data-dismiss="alert">&times;</button>';
+    var cssClass = type === 'error' ? 'negative' : 'positive'
+    var html ='<div class="ui message ' + cssClass + '">';
+    html +='<i class="close icon"></i>';
     html += msg +'</div>';
     //fade_flash();
     $("#notifications").html(html);
+    $('.ui.message .close').click(function() {
+      $(this)
+        .closest('.message')
+        .transition('slide down');
+    });
   };
 
   $(document).ajaxComplete(function(event, request) {

@@ -6,12 +6,13 @@ require 'rspec/rails'
 require 'spec_helper'
 require 'shoulda/matchers'
 require 'database_cleaner'
-require 'support/helpers'
-require 'support/wufoo_helpers'
 require 'sms_spec'
 require 'timecop'
 require 'mock_redis'
 require 'faker'
+require 'factory_girl_rails'
+
+Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 SmsSpec.driver = :'twilio-ruby'
 
@@ -23,11 +24,17 @@ require 'webmock/rspec'
 WebMock.disable_net_connect!(allow_localhost: true)
 
 require 'capybara/rspec'
+require 'capybara-screenshot/rspec'
 require 'capybara/poltergeist'
-Capybara.javascript_driver = :poltergeist
+Capybara.register_driver :poltergeist do |app|
+  options = { window_size: [1920, 1080] }
+  Capybara::Poltergeist::Driver.new(app, options)
+end
 Capybara.configure do |config|
+  config.javascript_driver = :poltergeist
   config.server_port = 3001
 end
+Capybara::Screenshot.prune_strategy = :keep_last_run
 
 ActiveRecord::Migration.maintain_test_schema!
 
@@ -52,12 +59,7 @@ RSpec.configure do |config|
   config.include Helpers
   config.include SmsSpec::Helpers
   config.include SmsSpec::Matchers
-
-  config.fixture_path = "#{::Rails.root}/test/fixtures"
-
   config.include Devise::Test::ControllerHelpers, type: :controller
-
-  config.use_transactional_fixtures = false
 
   config.infer_spec_type_from_file_location!
 
@@ -65,30 +67,13 @@ RSpec.configure do |config|
 
   config.example_status_persistence_file_path = "#{::Rails.root}/tmp/rspec.data"
 
-  config.use_transactional_fixtures = false
-
   config.include FactoryGirl::Syntax::Methods
   config.include Warden::Test::Helpers
   config.include Rails.application.routes.url_helpers
+  config.include AlertConfirmer, type: :feature
 
   config.before(:each) do
     stub_wufoo
-  end
-
-  config.before(:suite) do
-    DatabaseCleaner.clean_with(:truncation)
-  end
-
-  config.before(:each) do
-    DatabaseCleaner.strategy = :transaction
     Redis.current.flushdb
-  end
-
-  config.before(:each) do
-    DatabaseCleaner.start
-  end
-
-  config.append_after(:each) do
-    DatabaseCleaner.clean
   end
 end

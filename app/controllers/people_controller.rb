@@ -208,9 +208,10 @@ class PeopleController < ApplicationController
   # DELETE /people/1.json
   def destroy
     @person.destroy
+    flash[:notice] = "#{@person.full_name} deleted"
     respond_to do |format|
-      format.html { redirect_to people_url }
-      format.json { head :no_content }
+      format.js { render text: "$('#person-#{@person.id}').remove()" }
+      format.html { redirect_to people_path }
     end
   end
 

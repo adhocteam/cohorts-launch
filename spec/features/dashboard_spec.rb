@@ -9,7 +9,7 @@ describe 'Dashboard' do
     end
   end
 
-  context 'with an admin signed in' do
+  context 'with an admin logged in' do
     let!(:people) { create_list(:person, 6) }
     let!(:submission) { create(:submission, person: nil) }
     let!(:popular_tag) { create(:tag, name: 'suave') }
@@ -32,7 +32,9 @@ describe 'Dashboard' do
 
     it 'should show the five most recently created people' do
       expect(page).to have_content people.last.initials
-      expect(page).to_not have_content people.first.initials
+      unless (people - [people.first]).map(&:initials).include? people.first.initials
+        expect(page).to_not have_content people.first.initials
+      end
       expect(page).to have_content '9 signups'
     end
 

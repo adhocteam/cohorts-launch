@@ -1,10 +1,7 @@
 # frozen_string_literal: true
 require 'simplecov'
-
 require 'devise'
-require 'factory_girl_rails'
-# spec/spec_helper.rb
-# require 'rspec/retry'
+require 'rspec/retry'
 
 RSpec.configure do |config|
   config.filter_run_including focus: true
@@ -16,5 +13,9 @@ RSpec.configure do |config|
 
   config.mock_with :rspec do |mocks|
     mocks.verify_partial_doubles = true
+  end
+
+  config.around :each, :js do |ex|
+    ex.run_with_retry retry: 3
   end
 end
