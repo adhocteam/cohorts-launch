@@ -46,11 +46,11 @@ class Person < ActiveRecord::Base
 
   validates :phone_number, presence: true, length: { in: 9..15 },
     unless: proc { |person| person.email_address.present? }
-  validates :phone_number, uniqueness: true
+  validates :phone_number, uniqueness: true, unless: -> { phone_number.nil? }
 
   validates :email_address, presence: true,
     unless: proc { |person| person.phone_number.present? }
-  validates :email_address, uniqueness: true
+  validates :email_address, uniqueness: true, unless: -> { email_address.nil? }
 
   scope :no_signup_card, -> { where('id NOT IN (SELECT DISTINCT(person_id) FROM gift_cards where gift_cards.reason = 1)') }
   scope :signup_card_needed, -> { joins(:gift_cards).where('gift_cards.reason !=1') }
