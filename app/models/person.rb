@@ -97,7 +97,7 @@ class Person < ActiveRecord::Base
   VETS_SIGNUP_FIELD_MAPPING = {
     'Field1': :first_name,
     'Field2': :last_name,
-    'Field3': :phone_number,
+    'Field1418': :phone_number,
     'Field4': :email_address,
     'Field212': :preferred_contact_method
   }.freeze
