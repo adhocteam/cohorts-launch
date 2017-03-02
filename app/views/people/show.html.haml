@@ -116,9 +116,11 @@
             .description= best_in_place @person, :participation_type, as: :select, collection: %w(in-person remote)
     .eight.wide.column
       %h3.ui.header Location
-      %a{href: "https://maps.google.com?q=#{CGI.escape(address_fields_to_sentence(@person)).html_safe}", target: "_blank", title: "View in Google Maps"}
-        %img{src: "https://maps.googleapis.com/maps/api/staticmap?markers=|#{CGI.escape(address_fields_to_sentence(@person)).html_safe}&zoom=14&size=540x270&sensor=false&key=#{ENV["GOOGLE_API_KEY"]}".html_safe}/
-      / <img src="https://maps.googleapis.com/maps/api/streetview?size=570x200&amp;amp;location=<haml:loud> CGI.escape(address_fields_to_sentence(@person)).html_safe </haml:loud>&amp;amp;sensor=false">
+      - if @person.address?
+        %a{href: "https://maps.google.com?q=#{CGI.escape(address_fields_to_sentence(@person)).html_safe}", target: "_blank", title: "View in Google Maps"}
+          %img{src: "https://maps.googleapis.com/maps/api/staticmap?markers=|#{CGI.escape(address_fields_to_sentence(@person)).html_safe}&zoom=14&size=540x270&sensor=false&key=#{ENV["GOOGLE_API_KEY"]}".html_safe}/
+      - else
+        %img{src: "https://maps.googleapis.com/maps/api/staticmap?zoom=1&size=540x270&sensor=false&key=#{ENV["GOOGLE_API_KEY"]}".html_safe}/
   .equal.width.row
     .column
       %h3.ui.header Statistics

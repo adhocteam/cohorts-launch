@@ -2,8 +2,7 @@
 module PeopleHelper
 
   def address_fields_to_sentence(person)
-    str = [person.address_1, person.address_2, person.city, person.state, person.postal_code].reject(&:blank?).join(', ')
-    str.empty? ? 'No address' : str
+    person.address? ? person.address_fields_to_sentence : 'No address'
   end
 
   def city_state_to_sentence(person)

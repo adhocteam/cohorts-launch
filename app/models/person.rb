@@ -278,6 +278,10 @@ class Person < ActiveRecord::Base
     [city, state].reject(&:blank?).join(', ')
   end
 
+  def address?
+    address_fields_to_sentence.present?
+  end
+
   def deactivate!(method = nil)
     self.active = false
     self.deactivated_at = Time.current
