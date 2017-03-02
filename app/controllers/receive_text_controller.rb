@@ -37,7 +37,7 @@ class ReceiveTextController < ApplicationController
       this_person.verified = 'Verified by Text Message'
       this_person.save
       # Trigger add to Mailchimp list
-      # mailChimpSend = Person.sendToMailChimp(this_person)
+      # mailChimpSend = Person.send_to_mailchimp(this_person)
     elsif params['Body'].downcase.include?('remove me')
       @twilio_message.signup_verify = 'Cancelled'
       this_person = Person.find_by(phone_number: from_number)

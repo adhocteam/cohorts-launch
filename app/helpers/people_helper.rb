@@ -28,9 +28,9 @@ module PeopleHelper
   end
 
   # FIXME: Refactor and re-enable cop
-  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Style/MethodName
+  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
   #
-  def sendToMailChimp(person)
+  def send_to_mailchimp(person)
     if person.email_address.present? && person.verified.start_with?('Verified')
       begin
         gibbon = Gibbon::Request.new
@@ -52,7 +52,7 @@ module PeopleHelper
         )
 
       rescue Gibbon::MailChimpError => e
-        Rails.logger.fatal("[People_Helper->sendToMailChimp] fatal error sending #{person.id} to Mailchimp: #{e.message}")
+        Rails.logger.fatal("[People_Helper->send_to_mailchimp] fatal error sending #{person.id} to Mailchimp: #{e.message}")
       end
     end
   end

@@ -16,14 +16,14 @@
               Filter
         -# = submit_tag "Search", name: nil, class: "ui small green button"
     .four.wide.column
-      = form_tag({action: :import_csv}, multipart: true, class: 'ui form') do
+      = form_tag({action: :import_csv}, multipart: true, class: 'ui form', id: 'import-csv-form') do
         .ui.buttons
           .ui.left.attached.button.fake-file-field
             %i.table.icon
             %span.button-text Import CSV file
           .hidden-file-field
             = file_field_tag "file", accept: 'text/csv'
-          = button_tag type: 'submit', class: 'right attached ui icon button', id: "submitData", data: { confirm: 'These people will be uploaded to Cohorts. Are you sure you want to continue?' } do
+          = button_tag type: 'submit', class: 'right attached ui icon button', id: "import-csv-submit", data: { confirm: 'These people will be uploaded to Cohorts. Are you sure you want to continue?' } do
             %i.upload.icon
     .two.wide.column
       .ui.mini.green.statistic

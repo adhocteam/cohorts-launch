@@ -128,9 +128,6 @@ group :development do
   # silences logging of requests for assets
   gem 'quiet_assets'
 
-  # for debugging in dev
-  gem 'byebug'
-
   # for generating favicons
   gem 'rails_real_favicon'
 
@@ -193,6 +190,7 @@ group :development, :test do
   gem 'capybara-email'
   gem 'factory_girl_rails'
   gem 'pry'
+  gem 'byebug'
   gem 'shoulda-matchers', '~> 3.1.1', require: false
   gem 'database_cleaner'
   gem 'poltergeist'

@@ -25,8 +25,7 @@ class Person < ActiveRecord::Base
 
   has_secure_token :token
 
-  after_update  :sendToMailChimp
-  after_create  :sendToMailChimp
+  after_save :send_to_mailchimp, unless: -> { Rails.env.test? }
 
   validates :first_name, presence: true
   validates :last_name, presence: true
@@ -170,9 +169,9 @@ class Person < ActiveRecord::Base
   # rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity, Rails/TimeZone
 
   # FIXME: Refactor and re-enable cop
-  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Style/MethodName, Metrics/BlockNesting, Style/VariableName, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/BlockNesting, Style/VariableName, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   #
-  def sendToMailChimp
+  def send_to_mailchimp
     if email_address.present?
       if verified.present?
         if verified.start_with?('Verified')
@@ -196,9 +195,9 @@ class Person < ActiveRecord::Base
                                       MMERGE14: preferred_contact_method || '' } }
             )
 
-            Rails.logger.info("[People->sendToMailChimp] Sent #{id} to Mailchimp: #{mailchimpSend}")
+            Rails.logger.info("[People->send_to_mailchimp] Sent #{id} to Mailchimp: #{mailchimpSend}")
           rescue Gibbon::MailChimpError => e
-            Rails.logger.fatal("[People->sendToMailChimp] fatal error sending #{id} to Mailchimp: #{e.message}")
+            Rails.logger.fatal("[People->send_to_mailchimp] fatal error sending #{id} to Mailchimp: #{e.message}")
           end
         end
       end

@@ -6,6 +6,7 @@ describe 'People' do
     let!(:people) { create_list(:person, 5) }
     let!(:tag) { create(:tag, name: 'suave') }
     let!(:tagging) { create(:tagging, tag_id: tag.id, taggable_id: people.first.id) }
+    let!(:question) { create(:question, text: 'Do you have a cat?') }
     context 'with no user logged in' do
       it 'should redirect to the login page' do
         visit people_path
@@ -36,6 +37,15 @@ describe 'People' do
         unless people.last.initials == people.first.initials
           expect(page).to_not have_content people.last.initials
         end
+      end
+
+      it 'should allow importing a CSV list of people', js: true do
+        page.execute_script("$('.hidden-file-field').show()")
+        attach_file 'file', 'spec/support/test_import.csv'
+        page.execute_script("$('form#import-csv-form').submit()")
+        expect(page).to have_content 'CSV imported successfully'
+        expect(page).to have_content 'BB'
+        expect(Answer.last.person).to eq Person.find_by(first_name: 'Bob', last_name: 'Bill')
       end
 
       it 'should allow visiting a persons show page' do

@@ -40,4 +40,10 @@ Cohorts::Application.configure do
   config.active_support.test_order = :random
 
   PaperTrail.enabled = false # no audits needed in tests. yet.
+
+  # Enable stdout logger
+  # config.logger = Logger.new(STDOUT)
+  
+  # Set log level
+  # config.log_level = :debug
 end
