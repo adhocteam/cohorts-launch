@@ -26,10 +26,6 @@ WebMock.disable_net_connect!(allow_localhost: true)
 require 'capybara/rspec'
 require 'capybara-screenshot/rspec'
 require 'capybara/poltergeist'
-Capybara.register_driver :poltergeist do |app|
-  options = { window_size: [1920, 1080] }
-  Capybara::Poltergeist::Driver.new(app, options)
-end
 Capybara.configure do |config|
   config.javascript_driver = :poltergeist
   config.server_port = 3001
@@ -71,6 +67,10 @@ RSpec.configure do |config|
   config.include Warden::Test::Helpers
   config.include Rails.application.routes.url_helpers
   config.include AlertConfirmer, type: :feature
+
+  config.before(:suite) do
+    `bundle exec rake assets:precompile`
+  end
 
   config.before(:each) do
     stub_wufoo

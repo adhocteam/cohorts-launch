@@ -118,9 +118,9 @@
       %h3.ui.header Location
       - if @person.address?
         %a{href: "https://maps.google.com?q=#{CGI.escape(address_fields_to_sentence(@person)).html_safe}", target: "_blank", title: "View in Google Maps"}
-          %img{src: "https://maps.googleapis.com/maps/api/staticmap?markers=|#{CGI.escape(address_fields_to_sentence(@person)).html_safe}&zoom=14&size=540x270&sensor=false&key=#{ENV["GOOGLE_API_KEY"]}".html_safe}/
+          %img.google-map{src: "https://maps.googleapis.com/maps/api/staticmap?markers=|#{CGI.escape(address_fields_to_sentence(@person)).html_safe}&zoom=14&size=540x270&sensor=false&key=#{ENV["GOOGLE_API_KEY"]}".html_safe}/
       - else
-        %img{src: "https://maps.googleapis.com/maps/api/staticmap?zoom=1&size=540x270&sensor=false&key=#{ENV["GOOGLE_API_KEY"]}".html_safe}/
+        %img.google-map{src: "https://maps.googleapis.com/maps/api/staticmap?zoom=1&size=540x270&sensor=false&key=#{ENV["GOOGLE_API_KEY"]}".html_safe}/
   .equal.width.row
     .column
       %h3.ui.header Statistics
@@ -136,9 +136,9 @@
         = f.hidden_field :taggable_type, value: "Person"
         = f.hidden_field :taggable_id, value: @person.id
         .field
-          .ui.action.input
+          .ui.action.input#add-tag-field
             = f.select :name, Tag.order(:name).map { |t| [t.name, t.name] }, {include_blank: 'New tag'}, { class: 'ui fluid search selection dropdown allow-addition' }
-            .ui.green.submit.button{ type: 'submit' }
+            .ui.green.submit.button#add-tag-button{ type: 'submit' }
               %i.tag.icon
               Add
       .ui.green.labels#tag-list
@@ -149,7 +149,7 @@
         = form.hidden_field :commentable_type, value: 'Person'
         = form.hidden_field :commentable_id, value: @person.id
         .field
-          .ui.fluid.action.input
+          .ui.fluid.action.input#add-note-field
             = form.text_field :content, placeholder: 'New note'
             .ui.green.submit.button{ type: 'submit' }
               %i.edit.icon
@@ -182,7 +182,7 @@
               - gift_card.errors.full_messages.each do |msg|
                 %li= msg
         = form.hidden_field :person_id, value: @person.id
-        = form.hidden_field :reason, value: "signup"
+        = form.hidden_field :reason, value: "unknown"
         .six.fields
           .field{id: "new-batchid-#{@person.id}"}
             .ui.mini.input

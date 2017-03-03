@@ -43,7 +43,7 @@ Cohorts::Application.configure do
 
   # Enable stdout logger
   # config.logger = Logger.new(STDOUT)
-  
+
   # Set log level
   # config.log_level = :debug
 end
