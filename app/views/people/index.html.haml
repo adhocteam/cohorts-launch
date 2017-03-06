@@ -48,16 +48,19 @@
                 .ui.list
                   .item
                     %i.user.icon
-                    .content= link_to "#{person.initials}", person_path(person), class: 'strong green'
+                    .content= link_to private_information(person, name: true), person, class: 'strong green'
                   .item
                     %i.marker.icon
-                    .content= city_state_to_sentence(person)
+                    .content{ class: session[:privacy_mode] ? 'private-information' : '' }
+                      = private_information address_fields_to_sentence(person)
                   .item
                     %i.mail.icon
-                    .content= best_in_place person, :email_address
+                    .content{ class: session[:privacy_mode] ? 'private-information' : '' }
+                      = private_information person.email_address
                   .item
                     %i.phone.icon
-                    .content= best_in_place person, :phone_number
+                    .content{ class: session[:privacy_mode] ? 'private-information' : '' }
+                      = private_information best_in_place(person, :phone_number)
               %td= best_in_place person, :verified, as: :select, collection: @verified_types.map{|p| [p,p]}
               %td= person.created_at.to_s(:short)
               %td

@@ -71,6 +71,7 @@ Cohorts::Application.routes.draw do
     end
     # post "people/create_sms"
 
+    get 'privacy_mode', to: 'application#privacy_mode', as: :privacy_mode
     root to: 'dashboard#index', as: :admin_root
   end
 

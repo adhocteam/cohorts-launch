@@ -173,7 +173,11 @@ $(document).on('ready page:load',function() {
     $(this).parents('form').submit();
   });
   $('.search.link.icon').click(function() {
-    $(this).parents('form').submit();
+    if ($(this).prev().val() === '') {
+      window.location.pathname = '/admin/search/index'
+    } else {
+      $(this).parents('form').submit();
+    }
   });
 
   // Modals
@@ -182,15 +186,11 @@ $(document).on('ready page:load',function() {
     $('.ui.modal#' + modalId).modal('show');
   });
 
-  // Hidden information
-  $('.hidden-info').hide();
-  $('.hide-text').hide();
-  $('.hidden-info-container').has('.hidden-info').click(function () {
-    $(this).find('.view-text').toggle();
-    $(this).find('.hide-text').toggle();
-    $(this).find('.hidden-info').transition('slide down');
+  // Privacy mode toggle
+  $('#privacy-mode-toggle').checkbox({
+    onChange: function() {
+      window.location.pathname = '/admin/privacy_mode'
+    }
   });
-  $('.hidden-info-link').popup({
-    on: 'click'
-  });
+  $('.checked#privacy-mode-toggle').checkbox('set checked');
 });

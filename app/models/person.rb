@@ -16,7 +16,7 @@ class Person < ActiveRecord::Base
   has_many :session_invites
   has_many :research_sessions, through: :session_invites
 
-  has_many :gift_cards
+  has_many :gift_cards, dependent: :destroy
   accepts_nested_attributes_for :gift_cards, reject_if: :all_blank
   attr_accessor :gift_cards_attributes
 

@@ -68,10 +68,6 @@ RSpec.configure do |config|
   config.include Rails.application.routes.url_helpers
   config.include AlertConfirmer, type: :feature
 
-  config.before(:suite) do
-    `bundle exec rake assets:precompile`
-  end
-
   config.before(:each) do
     stub_wufoo
     Redis.current.flushdb

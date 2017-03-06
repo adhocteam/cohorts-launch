@@ -31,9 +31,9 @@ describe 'Dashboard' do
     end
 
     it 'should show the five most recently created people' do
-      expect(page).to have_content people.last.initials
-      unless (people - [people.first]).map(&:initials).include? people.first.initials
-        expect(page).to_not have_content people.first.initials
+      expect(page).to have_content people.last.full_name
+      unless (people - [people.first]).map(&:full_name).include? people.first.full_name
+        expect(page).to_not have_content people.first.full_name
       end
       expect(page).to have_content '9 signups'
     end

@@ -22,7 +22,7 @@ describe 'People' do
 
       it 'should show a list of people' do
         people.each do |person|
-          expect(page).to have_content(person.initials)
+          expect(page).to have_content(person.full_name)
           expect(page).to have_content(person.city_state_to_sentence)
           expect(page).to have_content(person.created_at.to_s(:short))
         end
@@ -33,9 +33,9 @@ describe 'People' do
         expect(page).to have_content 'suave'
         find('.item', text: 'suave').click
         page.execute_script("$('form#tag-filter-form').submit()")
-        expect(page).to have_content people.first.initials
-        unless people.last.initials == people.first.initials
-          expect(page).to_not have_content people.last.initials
+        expect(page).to have_content people.first.full_name
+        unless people.last.full_name == people.first.full_name
+          expect(page).to_not have_content people.last.full_name
         end
       end
 
@@ -44,13 +44,13 @@ describe 'People' do
         attach_file 'file', 'spec/support/test_import.csv'
         page.execute_script("$('form#import-csv-form').submit()")
         expect(page).to have_content 'CSV imported successfully'
-        expect(page).to have_content 'BB'
+        expect(page).to have_content 'Bob Bill'
         expect(Answer.last.person).to eq Person.find_by(first_name: 'Bob', last_name: 'Bill')
       end
 
       it 'should allow visiting a persons show page' do
-        expect(page).to have_link people.first.initials
-        find("#person-#{people.first.id}").first(:link, people.first.initials).click
+        expect(page).to have_link people.first.full_name
+        find("#person-#{people.first.id}").first(:link, people.first.full_name).click
         expect(page).to have_current_path person_path(people.first)
       end
 
@@ -103,7 +103,7 @@ describe 'People' do
       end
 
       it 'should display the persons details' do
-        expect(page).to have_content person.initials
+        expect(page).to have_content person.full_name
         expect(page).to have_content person.verified
         expect(page).to have_content 'suave'
       end

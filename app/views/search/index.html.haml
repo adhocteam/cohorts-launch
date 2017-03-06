@@ -75,27 +75,23 @@
             - next unless person
             %tr
               %td.seven.wide
-                %strong= link_to "#{result.initials}", person_path(id: result.id), class: 'green mr'
-                = render partial: 'people/hidden_info_popup', locals: { title: 'full name', hidden_info: person.full_name }
+                %strong= link_to private_information(person, name: true), person, class: 'green'
                 .ui.green.labels.tag-list
                   = render partial: 'taggings/tagging', collection: person.taggings, locals: { readonly: true }
               %td.five.wide
                 .ui.list
                   .item
                     %i.marker.icon.tooltippy{ title: 'Address' }
-                    .content
-                      .description
-                        = render partial: 'people/hidden_info', locals: { title: 'address', hidden_info: address_fields_to_sentence(person)}
-                  .item
-                    %i.phone.icon.tooltippy{ title: 'Phone Number' }
-                    .content
-                      .description
-                        = render partial: 'people/hidden_info', locals: { title: 'phone number', hidden_info: person.phone_number}
+                    .content{ class: session[:privacy_mode] ? 'private-information' : '' }
+                      = private_information address_fields_to_sentence(person)
                   .item
                     %i.mail.icon.tooltippy{ title: 'Email address' }
-                    .content
-                      .description
-                        = render partial: 'people/hidden_info', locals: { title: 'email address', hidden_info: person.email_address}
+                    .content{ class: session[:privacy_mode] ? 'private-information' : '' }
+                      = private_information person.email_address
+                  .item
+                    %i.phone.icon.tooltippy{ title: 'Phone Number' }
+                    .content{ class: session[:privacy_mode] ? 'private-information' : '' }
+                      = private_information best_in_place(person, :phone_number)
                   .item
                     %i.help.circle.icon.tooltippy{ title: 'Verified?' }
                     .content

@@ -1,12 +1,11 @@
 .recent-signup.ui.list
   .item
     .header.name
-      %abbr= link_to "#{person.initials}", person
-      = render partial: 'people/hidden_info_popup', locals: { title: 'name', hidden_info: person.full_name }
+      %abbr= link_to private_information(person, name: true), person, class: 'green'
   .item
     %i.marker.icon
-    - address = city_state_to_sentence(person)
-    .content.address= address
+    .content.address{ class: session[:privacy_mode] ? 'private-information' : '' }
+      = private_information address_fields_to_sentence(person)
   .item
     %i.payment.icon
     .content.signup-gift-card

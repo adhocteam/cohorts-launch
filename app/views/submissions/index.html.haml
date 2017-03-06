@@ -17,7 +17,7 @@
               %td= submission.form_type
               %td
                 - if submission.person.present?
-                  = link_to submission.person.initials, person_path(submission.person), class: 'green'
+                  = link_to private_information(person, name: true), person, class: 'green'
                 - else
                   Unmatched
               %td= submission.created_at.to_s(:long)

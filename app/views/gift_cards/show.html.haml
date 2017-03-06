@@ -11,7 +11,7 @@
     = @gift_card.expiration_date
   .item
     .header Person
-    = @gift_card.person&.full_name
+    = link_to private_information(@gift_card.person, name: true), @gift_card.person, class: 'green'
   .item
     .header Created by
     = @gift_card.created_by

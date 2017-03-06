@@ -3,8 +3,7 @@
   .equal.width.row
     .column
       %h1.ui.header.page-header
-        %abbr= @person.initials
-        = render partial: 'people/hidden_info_popup', locals: { title: 'name', hidden_info: @person.full_name }
+        %abbr= private_information @person, name: true
     .right.aligned.column
       .ui.icon.buttons
         = link_to people_path, class: 'ui tooltippy left attached icon button', title: 'Back' do
@@ -29,20 +28,20 @@
           %i.marker.icon
           .content
             .header Address
-            .description
-              = render partial: 'hidden_info', locals: { title: 'address', hidden_info: address_fields_to_sentence(@person)}
+            .description{ class: session[:privacy_mode] ? 'private-information' : '' }
+              = private_information address_fields_to_sentence(@person)
         .item
           %i.phone.icon
           .content
             .header Phone
-            .description
-              = render partial: 'hidden_info', locals: { title: 'phone number', hidden_info: @person.phone_number}
+            .description{ class: session[:privacy_mode] ? 'private-information' : '' }
+              = private_information @person.phone_number
         .item
           %i.mail.icon
           .content
             .header Email
-            .description
-              = render partial: 'hidden_info', locals: { title: 'email address', hidden_info: @person.email_address}
+            .description{ class: session[:privacy_mode] ? 'private-information' : '' }
+              = private_information @person.email_address
         .item
           %i.text.telephone.icon
           .content
@@ -116,11 +115,17 @@
             .description= best_in_place @person, :participation_type, as: :select, collection: %w(in-person remote)
     .eight.wide.column
       %h3.ui.header Location
-      - if @person.address?
-        %a{href: "https://maps.google.com?q=#{CGI.escape(address_fields_to_sentence(@person)).html_safe}", target: "_blank", title: "View in Google Maps"}
-          %img.google-map{src: "https://maps.googleapis.com/maps/api/staticmap?markers=|#{CGI.escape(address_fields_to_sentence(@person)).html_safe}&zoom=14&size=540x270&sensor=false&key=#{ENV["GOOGLE_API_KEY"]}".html_safe}/
-      - else
-        %img.google-map{src: "https://maps.googleapis.com/maps/api/staticmap?zoom=1&size=540x270&sensor=false&key=#{ENV["GOOGLE_API_KEY"]}".html_safe}/
+      .ui.grid
+        .equal.width.row
+          .center.aligned.column
+            - if session[:privacy_mode]
+              %i.massive.protect.icon
+            -else
+              - if @person.address?
+                %a{href: "https://maps.google.com?q=#{CGI.escape(address_fields_to_sentence(@person)).html_safe}", target: "_blank", title: "View in Google Maps"}
+                  %img.google-map{src: "https://maps.googleapis.com/maps/api/staticmap?markers=|#{CGI.escape(address_fields_to_sentence(@person)).html_safe}&zoom=14&size=540x270&sensor=false&key=#{ENV["GOOGLE_API_KEY"]}".html_safe}/
+              - else
+                %img.google-map{src: "https://maps.googleapis.com/maps/api/staticmap?zoom=1&size=540x270&sensor=false&key=#{ENV["GOOGLE_API_KEY"]}".html_safe}/
   .equal.width.row
     .column
       %h3.ui.header Statistics

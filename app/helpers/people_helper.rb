@@ -1,5 +1,12 @@
 # frozen_string_literal: true
 module PeopleHelper
+  def private_information(info, name: false)
+    if name
+      session[:privacy_mode] ? info.initials : info.full_name
+    else
+      session[:privacy_mode] ? 'hidden' : info
+    end
+  end
 
   def address_fields_to_sentence(person)
     person.address? ? person.address_fields_to_sentence : 'No address'

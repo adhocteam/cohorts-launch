@@ -16,6 +16,11 @@ class ApplicationController < ActionController::Base
   before_action :set_paper_trail_whodunnit
   before_action :set_global_search_variable
 
+  def privacy_mode
+    session[:privacy_mode] = !session[:privacy_mode]
+    redirect_to :back
+  end
+
   def set_global_search_variable
     @q = Person.ransack(params[:q])
   end

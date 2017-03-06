@@ -49,6 +49,10 @@
             .ui.transparent.icon.input
               = f.search_field :nav_bar_search_cont, placeholder: "Search..."
               %i.search.link.icon
+        .item
+          .ui.green.toggle.checkbox#privacy-mode-toggle{ class: session[:privacy_mode] ? 'checked' : '' }
+            %input{ type: 'checkbox' }
+            %label Privacy Mode
         .ui.dropdown.item#account-link
           = current_user&.email
           %i.dropdown.icon

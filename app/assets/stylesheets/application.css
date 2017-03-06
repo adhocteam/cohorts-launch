@@ -80,13 +80,6 @@
   width: 100%;
 }
 
-.hidden-info-link {
-  font-size: 8pt;
-  font-weight: normal;
-  color: gray;
-  text-decoration: underline;
-}
-
 .divider-column {
   position: relative;
   padding: 0 !important;
@@ -99,4 +92,8 @@
 
 .green.link.modal-show {
   cursor: pointer;
+}
+
+.private-information {
+  font-style: italic;
 }

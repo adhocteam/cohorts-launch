@@ -19,11 +19,11 @@
           .ui.large.list
             .item
               %i.user.icon
-              .strong.content= @recent_signups[index].initials
+              .strong.content= link_to private_information(@recent_signups[index], name: true), @recent_signups[index], class: 'green'
             .item
               %i.marker.icon
-              - address = city_state_to_sentence(@recent_signups[index])
-              .content= address.blank? ? 'No address' : address
+              .content{ class: session[:privacy_mode] ? 'private-information' : '' }
+                = private_information address_fields_to_sentence(@recent_signups[index])
             .item
               %i.comments.icon
               .content= @recent_signups[index].verified || 'Not verified'
