@@ -15,13 +15,14 @@ FactoryGirl.define do
     postal_code       { Faker::Address.zip }
     signup_at         { 1.day.ago }
     active            true
-    primary_device_id devices[:desktop]
+    preferred_contact_method { %w(EMAIL SMS).sample }
+    primary_device_id devices[devices.keys.sample]
     primary_device_description { Faker::Hipster.sentence }
-    secondary_device_id devices[:tablet]
+    secondary_device_id devices[devices.keys.sample]
     secondary_device_description { Faker::Hipster.sentence }
-    primary_connection_id connections[:phone]
+    primary_connection_id connections[connections.keys.sample]
     primary_connection_description { Faker::Hipster.sentence }
-    secondary_connection_id connections[:public_wifi]
+    secondary_connection_id connections[connections.keys.sample]
     secondary_connection_description { Faker::Hipster.sentence }
   end
 end

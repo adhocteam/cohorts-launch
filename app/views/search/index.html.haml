@@ -1,7 +1,7 @@
 %p#notice= @success
 %p#error= @error
 %h1.ui.dividing.header.page-header= t '.title', default: "Search"
-= search_form_for @q, url: 'index', method: :get, class: 'ui form' do |f|
+= search_form_for @q, url: 'index', method: :get, class: 'ui main-search form' do |f|
   .ui.vertically.divided.grid
     .equal.width.row
       .column
@@ -23,8 +23,8 @@
       .column
         %h4.ui.green.header Filter by tags and attributes
         .field
-          = f.label :tags_id_eq_all, 'Has tags'
-          = f.collection_select :tags_id_eq_all, @tag_list, :id, :name, {}, { multiple: true, class: 'ui search selection dropdown', size: @tag_list.count + 1 }
+          = f.label :tags_id_eq_any, 'Has tags'
+          = f.collection_select :tags_id_eq_any, @tag_list, :id, :name, {}, { multiple: true, class: 'ui search selection dropdown', size: @tag_list.count + 1 }
         .field
           = f.label :preferred_contact_method_cont, 'Preferred contact method'
           = f.select :preferred_contact_method_cont, [["Email", 'EMAIL'], ["SMS", 'SMS']], {include_blank: true}, {class: "ui dropdown" }
@@ -32,10 +32,10 @@
           = f.label :postal_code_start
           = f.search_field :postal_code_start
         .field
-          = f.label :primary_device_id_in
+          = f.label :primary_device_id_in, 'Primary device'
           = f.select :primary_device_id_in, [[human_device_type_name(0),0],[ human_device_type_name(1),1], [human_device_type_name(2),2], [ human_device_type_name(3),  3]], {}, {multiple: true,  class: "ui search selection dropdown", size: '4' }
         .field
-          = f.label :primary_connection_id_in
+          = f.label :primary_connection_id_in, 'Primary connection'
           = f.select :primary_connection_id_in, [[human_connection_type_name(0),0],[ human_connection_type_name(1),1], [human_connection_type_name(4),4], [ human_connection_type_name(3),  3], [human_connection_type_name(2), 2]], {}, {multiple: true,  class: "ui search selection dropdown", size: '5' }
       .divider-column
         .ui.vertical.divider
@@ -135,13 +135,13 @@
         = will_paginate @results, renderer: WillPaginateSemanticUi::ActionView::Renderer
     .equal.width.row
       .column
-        = form_for(Tagging.new, url: :taggings_bulk_create, remote: true, html: { class: 'ui form' }) do |f|
+        = form_for(Tagging.new, url: :taggings_bulk_create, remote: true, html: { class: 'ui form', id: '#bulk-tagging' }) do |f|
           = f.hidden_field :taggable_type, value: "Person"
           - @results.each do |result|
             = f.hidden_field :taggable_ids, multiple: true, value: result.id
           .field
             = f.label :name, 'Add tag to all results'
-            .ui.action.input
+            .ui.action.input#bulk-tagging-field
               = f.select :name, Tag.order(:name).map { |t| [t.name, t.name] }, {include_blank: 'Tag name'}, { class: 'ui fluid search selection dropdown allow-addition' }
               .ui.green.submit.button{ type: 'submit' }
                 Bulk Add
@@ -152,7 +152,7 @@
               = hidden_field_tag "engagement[search_query][#{k}]", v
             .field
               = label_tag 'engagement[id]', 'Save search query to engagement'
-              .ui.action.input
+              .ui.action.input#save-to-engagement-field
                 = select_tag 'engagement[id]', options_for_select(Engagement.order(:topic).map { |e| ["#{e.topic} (#{e.client.name})", e.id] }), include_blank: 'Engagement', class: 'ui fluid search selection dropdown'
                 .ui.green.submit.button{ type: 'submit' } Save
     .equal.width.row
