@@ -2,15 +2,13 @@
 class TaggingsController < ApplicationController
 
   def create
-    unless (@tag = Tag.where('lower(name) = ?', tagging_params[:name].downcase).first)
+    unless (@tag = Tag.find_by('lower(name) = ?', tagging_params[:name].downcase))
       @tag = Tag.create(name: tagging_params[:name])
       @tag.created_by ||= current_user.id
     end
-    if @tag.name != ''
-      @tagging = Tagging.new(taggable_type: params[:tagging][:taggable_type],
-                             taggable_id: params[:tagging][:taggable_id],
-                             tag: @tag)
-    end
+    @tagging = Tagging.new(taggable_type: params[:tagging][:taggable_type],
+                           taggable_id: params[:tagging][:taggable_id],
+                           tag: @tag)
     if @tagging.with_user(current_user).save
       respond_to do |format|
         format.js {}
