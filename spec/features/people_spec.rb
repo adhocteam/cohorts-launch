@@ -168,4 +168,32 @@ describe 'People' do
       end
     end
   end
+  describe 'edit' do
+    let!(:person) { create(:person) }
+    context 'with no user logged in' do
+      it 'should redirect to the login page' do
+        visit edit_person_path(person)
+        expect(page).to have_current_path new_user_session_path
+      end
+    end
+
+    context 'with an admin logged in' do
+      before do
+        login_as(create(:user))
+        visit edit_person_path(person)
+      end
+
+      it 'should allow editing a person' do
+        expect(find_field('First name').value).to eq person.first_name
+        expect(find_field('Last name').value).to eq person.last_name
+        expect(find_field('Phone number').value).to eq person.phone_number
+        fill_in 'Phone number', with: '+13216549870'
+        fill_in 'Postal code', with: '87614'
+        click_on 'Update Person'
+        expect(page).to have_content 'Person was successfully updated'
+        expect(page).to have_content '+13216549870'
+        expect(page).to have_content '87614'
+      end
+    end
+  end
 end
