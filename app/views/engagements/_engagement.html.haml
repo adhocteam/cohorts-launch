@@ -5,6 +5,7 @@
   %td= engagement.client.name
   %td= engagement.start_date
   %td= engagement.end_date
+  %td= engagement.research_sessions.count
   %td.center.aligned.collapsing
     .ui.icon.buttons
       .ui.left.attached.icon.modal-show.button{ id: "update-engagement-#{engagement.id}-modal" }
