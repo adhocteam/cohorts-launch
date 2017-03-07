@@ -3,15 +3,19 @@
 
 $(document).ready(function () {
   // Map image
-  $.getJSON("https://freegeoip.net/json/", function (data) {
-    var $hero = $(".hero"),
-        $heroBg = $hero.find('.hero-background'),
-        customImg = $hero.data("image"),
-        staticMap = "https://maps.googleapis.com/maps/api/staticmap?zoom=8&size=640x480&key=<%= ENV['GOOGLE_API_KEY'] %>&center=" + data.latitude + "," + data.long,
-        heroImg = customImg || staticMap;
+  var $hero = $(".hero"),
+      $heroBg = $hero.find('.hero-background'),
+      customImg = $hero.data("image"),
+      staticMap = "https://maps.googleapis.com/maps/api/staticmap?zoom=8&size=640x480&key=<%= ENV['GOOGLE_API_KEY'] %>&center=";
 
-    $heroBg.css("background-image", "url(" + heroImg + ")");
-  });
+  if(customImg) {
+    $heroBg.css("background-image", "url(" + customImg + ")");
+  } else {
+    $.getJSON("https://freegeoip.net/json/", function (data) {
+      var mapImg = staticMap + data.latitude + "," + data.long;
+      $heroBg.css("background-image", "url(" + mapImg + ")");
+    });
+  }
 
   // Scroll
   $("a[href='#signup']").click(function (e) {
