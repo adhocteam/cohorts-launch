@@ -242,14 +242,14 @@ describe 'Search' do
       end
 
       it 'should allow bulk tagging with an existing tag', js: true do
-        tag = tags[rand(5)]
+        bulk_tag = tags[0]
         find('#bulk-tagging-field .dropdown.icon').trigger('click')
-        expect(page).to have_content tag.name
+        expect(page).to have_content bulk_tag.name
         within '#bulk-tagging-field' do
-          select_from_dropdown tag.name, from: 'tagging[name]'
+          find('.menu .item', text: bulk_tag.name).trigger('click')
           find('.submit.button').trigger('click')
         end
-        expect(page).to have_selector('.tag-name.detail', text: tag.name, count: Person.count)
+        expect(page).to have_selector('.tag-name.detail', text: bulk_tag.name, count: Person.count)
       end
 
       it 'should allow saving a search to an engagement', js: true do

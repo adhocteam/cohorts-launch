@@ -25,12 +25,10 @@ class TaggingsController < ApplicationController
       @tag = Tag.create(name: tagging_params[:name])
       @tag.created_by ||= current_user.id
     end
-    if @tag.name != ''
-      tagging_params[:taggable_ids].each do |id|
-        @tagging = Tagging.where(taggable_type: tagging_params[:taggable_type],
-                               taggable_id: id,
-                               tag: @tag).first_or_create
-      end
+    tagging_params[:taggable_ids].each do |id|
+      @tagging = Tagging.where(taggable_type: tagging_params[:taggable_type],
+                             taggable_id: id,
+                             tag: @tag).first_or_create
     end
     respond_to do |format|
       format.js {}
