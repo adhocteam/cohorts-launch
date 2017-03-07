@@ -49,3 +49,4 @@ screenshot*
 dump.rdb
 coverage
 public/assets/*
+public/system/*

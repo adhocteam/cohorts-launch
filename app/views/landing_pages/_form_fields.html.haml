@@ -1,0 +1,13 @@
+.field
+  = f.fields_for :tag_attributes do |t|
+    = t.label :tag
+    = t.collection_select :name, @unused_tags, :name, :name, { include_blank: true, selected: @landing_page.tag.name },
+      class: 'ui fluid search dropdown allow-addition',
+      multiple: false,
+      prompt: 'Tag'
+.field
+  = f.label :lede
+  = f.text_field :lede
+.field
+  = f.label :image
+  = f.file_field :image

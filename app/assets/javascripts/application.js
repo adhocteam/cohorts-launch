@@ -112,7 +112,7 @@ $(document).on('ready page:load',function() {
           });
 
           // Automatically submit new tags
-          if($choice.hasClass('addition')) {
+          if($(this).hasClass("auto-add") && $choice.hasClass('addition')) {
             $(this).submit();
           }
         }

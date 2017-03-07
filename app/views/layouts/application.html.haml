@@ -44,6 +44,7 @@
             = link_to "Add Submission", new_submission_path, class: 'item'
             = link_to "MailChimp Updates", mailchimp_updates_path, class: 'item'
             = link_to "Text Message Log", twilio_messages_path, class: 'item'
+            = link_to "Landing Pages", landing_pages_path, class: 'item'
         .right.menu
           .item
             = search_form_for @q, url: search_index_path, method: :get do |f|

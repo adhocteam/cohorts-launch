@@ -1,120 +1,115 @@
 // Static pages
 
-
 // Variables
 
 $color-primary: #2a9e6a;
-$color-secondary: #112e51;
-$color-tertiary: #444444;
+$color-secondary: #31B67B;
 $color-white: #fff;
 $color-content: #444;
 
-// Header
-
-header {
-  padding: 1em 0 0 0;
-}
-
-
-// Logo
-
-h1 {
-  white-space: nowrap;
-  overflow: hidden;
-  font-size: 1px;
-  text-indent: -350%;
-  display: block;
-  background: image-url('banner.svg') top center no-repeat;
-  width: 220px;
-  height: 50px;
-  background-size: contain;
-  margin: 2em 0 0 0;
-  padding: 0;
-}
-
-
-
-// Grid
-
-.row {
-  margin: 0 auto;
-  max-width: 48em;
-  padding: 0 1em;
-}
-
+$font-family: "proxima-nova", sans-serif;
 
 // Globals
 
-html, body {
+body {
+  font-family: $font-family;
   font-size: 16px;
   padding: 0;
   margin: 0;
   line-height: 1.5em;
 }
 
-@font-sans: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-@font-serif: "Bitter", Georgia, "Times New Roman", Times, serif;
-@font-weight-bold: font-weight: bold;
-
-@font-body: @font-sans;
-@font-display: @font-serif;
-@display-type: @font-display; // cmsgov-style variable
-
-
-html {
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+a {
+  color: inherit;
+  font-weight: bold;
+  text-decoration: underline;
 }
-
 
 // Headings
 
 h1, h2, h3, h4, h5, h6 {
+  margin: 0.5em 0;
   color: $color-primary;
   font-weight: 700;
-  margin: 0;
-  padding: .5em 0;
-  line-height: 1.5em;
-}
-
-h2 {
-
+  line-height: 1.2em;
 }
 
 h3 {
   font-size: 1.75em;
-  padding-top: 2em;
 }
 
 h4 {
   font-size: 1.75em;
 }
 
-h5 {
-
+// Header
+header {
+  padding: 1em 0 0 0;
 }
 
-h6 {
 
+// Logo
+h1 {
+  display: block;
+  padding: 0 0 .25em;
+  width: 220px;
+  height: 50px;
+  text-indent: -350%;
+  background: image-url('banner.svg') top center no-repeat;
+  background-size: contain;
 }
 
+// Grid
+
+.row {
+  margin: 0 auto;
+  max-width: 48rem;
+  padding: 0 1em;
+}
 
 // Hero
-
 .hero {
-  background: $color-secondary;
-  color: $color-white;
-  padding: 3em 0em;
-  height: 67vh;
-  margin: 0 0 2em 0;
-  display: -ms-flexbox;
-	display: -webkit-flex;
-	display: flex;
-	-ms-flex-align: center;
-	-webkit-align-items: center;
-	-webkit-box-align: center;
-	align-items: center;
-  h1, h2, h3, h4, h5, h6 {color: $color-white; font-size: 2.6em;}
+  position: relative;
+  padding: 2em 0em;
+  overflow: hidden;
+  background: #063346;
 
+
+  .hero-background {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 0;
+    opacity: 0.3;
+    background: center center no-repeat;
+    background-size: cover;
+  }
+
+  .row {
+    position: relative;
+    z-index: 1;
+  }
+
+  h2 {
+    font-size: 3em;
+    font-weight: 800;
+    color: $color-secondary;
+
+    span {
+      display: inline;
+      line-height: 1.15em;
+      -webkit-box-decoration-break: clone;
+      box-decoration-break: clone;
+      padding: 0 10px;
+      background: $color-white;
+    }
+  }
+
+  .btn {
+    font-size: 1.125em;
+  }
 }
 
 .container {
@@ -122,41 +117,58 @@ h6 {
 }
 
 .main {
-  padding-bottom: 2em;
-  &:before {
-  content: ' ';
-  position: absolute;
-  width: 0;
-  height: 0;
-  left: 47%;
-  top: -2em;
-  border-color: $color-secondary transparent transparent $color-secondary;
-  }
+  font-size: 20px;
+  line-height: 1.5em;
+  padding: 2em 0;
 
+  &:before {
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: 47%;
+    top: -2em;
+    border-color: $color-secondary transparent transparent $color-secondary;
+  }
+}
+
+// Buttons
+.btn {
+  display: inline-block;
+  padding: .75em 2.5em;
+  margin-bottom: 2em;
+  background: #E15A38;
+  border: none;
+  font-size: 1em;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-appearance: none;
+
+  &:hover {
+    background: #DE4822;
+  }
 }
 
 // Form
 
 .form {
-
-  &:before {
-  content: ' ';
-  position: absolute;
-  width: 0;
-  height: 0;
-  left: 47%;
-  top: -1.8em;
-  border: 16px solid;
-  border-color: transparent $color-primary $color-primary transparent;
-  }
-
-
-
   background: $color-primary;
   padding: 3em 0;
   color: #fff;
-  margin: 2em 0 0 0;
+  margin: 2em 0 0;
 
+  &:before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: 47%;
+    top: -1.8em;
+    border: 16px solid;
+    border-color: transparent $color-primary $color-primary transparent;
+  }
 }
 
 // Footer

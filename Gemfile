@@ -105,6 +105,9 @@ gem "non-stupid-digest-assets"
 # Allow composite primary keys for join tables
 gem 'composite_primary_keys'
 
+# File attachments
+gem "paperclip", "~> 5.0.0"
+
 group :development do
   # this whole group makes finding performance issues much friendlier
   gem 'rack-mini-profiler'

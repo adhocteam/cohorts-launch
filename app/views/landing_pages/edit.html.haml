@@ -1,0 +1,5 @@
+%h1.ui.header.page-header Edit Landing Page
+
+= form_for @landing_page, url: landing_page_path(@landing_page), html: {class: 'ui form'} do |f|
+  = render 'form_fields', f: f
+  %button.ui.green.button Edit Landing Page

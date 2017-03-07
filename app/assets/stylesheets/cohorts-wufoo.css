@@ -1,4 +1,3 @@
-
 #container,
 html.embed, * {
 	background-color: none;
@@ -8,45 +7,111 @@ html.embed, * {
 	transition: all 0.25s ease-in-out;
 }
 
-
 #container *{
 	 -webkit-box-sizing: border-box;
 	 -moz-box-sizing: border-box;
 	 box-sizing: border-box;
 }
+/* Typography */
 
+.wufoo {
+	color: white;
+	font-size: 16px;
+	font-family: "proxima nova", sans-serif;
+}
+
+.wufoo .info h2 {
+	font-weight: bold;
+	font-size: 2.1875em;
+}
+
+.wufoo li span label {
+	margin-top: 5px;
+	font-size: 0.9em;
+}
+
+.wufoo span.req {
+	color: #E15A38 !important;
+}
+
+/* Button */
+input#saveForm {
+  display: inline-block;
+  padding: .75em 2.5em;
+  margin-bottom: 2em;
+  background: #E15A38 !important;
+  border: none;
+  font-size: 1.2em;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-appearance: none;
+}
+
+input#saveForm:hover {
+  background: #DE4822 !important;
+}
 
 /* Logo */
-#logo {display: none;}
+#logo {
+	display: none;
+	background-image: none;
+	background-color: none;
+}
 
 /* Backgrounds */
-#logo{background-image:none;background-color:none;}
-#container{background-color: transparent;}
-.wufoo .focused{background:#FFF7C0}
-.wufoo .instruct{background-color:#F5F5F5}
+#container{
+	background-color: transparent;
+}
+
+.wufoo .focused{	
+	background: #FFF7C0;
+}
+
+.wufoo .instruct{
+	background-color: #F5F5F5;
+}
 
 .wufoo header.info {
 	margin: 0 0 2em 0;
 	padding: 0;
 }
 
-.wufoo .info div {
-	color: #fff;
+/* Radio Buttons */
+input[type='radio'] {
+  width: 16px;
+  height: 16px;
+  border: 2px solid white;
+  border-radius:50%;
+  outline:none;
+  -webkit-appearance:none;
 }
 
-.wufoo header.info h2 {
-	font-size: 2em;
-	font-weight: bold;
+input[type='radio']:hover {
+  cursor: pointer;
+}
+
+input[type='radio']:before {
+  content: '';
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 100%; 
+  border: 2px solid #2a9e6a;   
+}
+input[type='radio']:checked:before {
+  background: white;
+}
+
+.safari label.choice {
+	margin-top: -18px;
 }
 
 /* Borders */
 #container{border: none}
 .wufoo .info{border-bottom: none;}
 .wufoo .instruct{border:1px solid #e6e6e6}
-
-/* Typography */
-.wufoo .info h2{font-size:160%;font-family:inherit;color:#fff;}
-
 
 .wufoo select.select {
 	background: #fff !important;
@@ -75,8 +140,6 @@ html.embed, * {
 	font-family:inherit;
 	color:#fff;
 }
-
-.wufoo li div, .wufoo li div label, .wufoo li span label{font-family:inherit;color:#444}
 
 .wufoo li {
 	width: 100%;
@@ -164,20 +227,6 @@ input.btTxt {
 	font-weight: bold;
 	border-radius: 0;
 	padding: 1em;
-}
-
-input#saveForm {
-	background: #163e83 !important;
-	color: #fff !important;
-	width: 100% !important;
-	display: block;
-	border: none !important;
-	opacity: .9;
-}
-
-input#saveForm:hover {
-	opacity: 1;
-	cursor: pointer;
 }
 
 form li {

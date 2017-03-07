@@ -142,6 +142,9 @@ class PeopleController < ApplicationController
       if params['HandshakeKey'].end_with? 'vets-signup'
         va_tag = Tag.where(name: 'VA USE ONLY').first_or_create
         Tagging.create(tag: va_tag, taggable: @person)
+      elsif params['Field28'].present?
+        tag = Tag.where(name: params['Field28']).first_or_create
+        Tagging.create(tag: tag, taggable: @person)
       end
       begin
         @client = Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN'])

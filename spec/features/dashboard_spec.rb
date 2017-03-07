@@ -27,7 +27,7 @@ describe 'Dashboard' do
       expect(page).to have_content 'Sign out'
       find('#account-link').click
       click_on 'Sign out'
-      expect(page).to have_current_path root_path
+      expect(page).to have_current_path new_user_session_path
     end
 
     it 'should show the five most recently created people' do

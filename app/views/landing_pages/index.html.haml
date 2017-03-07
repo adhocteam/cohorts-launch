@@ -1,0 +1,28 @@
+= link_to "New Landing Page", new_landing_page_path, class: "ui green button right floated"
+%h1.ui.header.page-header Landing Pages
+
+- if @landing_pages.any?
+  %table.ui.sortable.striped.table
+    %thead
+      %tr
+        %th Tag Name
+        %th Lede
+        %th Image
+        %th.center.aligned Actions
+
+    %tbody#landing_page-table
+      - @landing_pages.each do |landing_page|
+        %tr{ id: "landing_page-#{landing_page.id}" }
+          %td= landing_page.tag.name
+          %td= landing_page.lede
+          %td= image_tag landing_page.image.url(:thumb) if landing_page.image.present?
+          %td.center.aligned.collapsing
+            .ui.icon.basic.buttons
+              = link_to landing_signup_path(landing_page.tag.name), class: "ui icon button", target: "_blank" do
+                %i.linkify.icon
+              = link_to edit_landing_page_path(landing_page), class: "ui icon button" do
+                %i.edit.icon
+              = link_to landing_page_path(landing_page), class: "ui icon button", data: {method: :delete, confirm: 'Remove this landing page?'} do
+                %i.delete.icon
+- else
+  %p No landing pages exist.

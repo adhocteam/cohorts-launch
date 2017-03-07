@@ -142,7 +142,7 @@
         = f.hidden_field :taggable_id, value: @person.id
         .field
           .ui.action.input#add-tag-field
-            = f.select :name, Tag.order(:name).map { |t| [t.name, t.name] }, {include_blank: 'New tag'}, { class: 'ui fluid search selection dropdown allow-addition' }
+            = f.select :name, Tag.order(:name).map { |t| [t.name, t.name] }, {include_blank: 'New tag'}, { class: 'ui fluid search selection dropdown allow-addition auto-add' }
             .ui.green.submit.button#add-tag-button{ type: 'submit' }
               %i.tag.icon
               Add

@@ -1,42 +1,26 @@
-<header>
+<div class="hero" data-image="<%= signup_image %>">
   <div class="row">
-    <h1 role="banner">Cohorts</h1>
-    <h2></h2>
-</h1>
+    <h2><span><%= signup_lede %></span></h2>
+    <a class="btn" href="#signup">Join Now</a>
   </div>
-</header>
 
-<div class="hero">
-  <div class="row">
-    <h2>Earn money, give feedback, make government websites better.</h2>
-  </div>
+  <div class="hero-background"></div>
 </div>
 
 <div class="container">
-
   <div class="main" role="main">
     <div class="row">
-      <h3>Cohorts is a group of people who earn money while providing feedback on websites.</h3>
+      <h3>Earn money, give feedback.<br>Make government better.</h3>
 
-      <p>Applying for benefits or finding information on a government website often leads to nothing but confusion and frustration.</p>
-      
-      <p>That’s where you come in. Share your experiences with government services with us so we can build better software for government.</p>
+      <p>Using government websites can be frustrating. Your feedback will make these online tools better for millions of people.</p>
 
-      <h4>Get started</h4>
-
-      <p>Sign up and we will immediately send you a $5 VISA gift card.</p>
-
-      <p>Next, we’ll contact you when there are new feedback sessions and you can let us know if you want to be included.</p>
-
-      <p>We won’t sell or use your information for any other purpose.</p>
-
-
+      <p>Sign up and we'll immediately send you a <strong>$5 VISA gift card</strong>. After you participate in any feedback sessions (usually 30 minutes), we'll send you a <strong>$25 VISA gift card</strong>.</p>
     </div>
   </div>
 </div>
 
 <div class="container">
-  <div class="form">
+  <div id="signup" class="form">
     <div class="row">
 
       <div id="wufoo-z15g6mjw0nvi2vu">
@@ -51,28 +35,14 @@
       'async':true,
       'host':'wufoo.com',
       'header':'show',
-      'ssl':true};
+      'ssl':true,
+      'defaultValues':"Field28=<%= @tag_name %>"};
       s.src = ('https:' == d.location.protocol ? 'https://' : 'http://') + 'www.wufoo.com/scripts/embed/form.js';
       s.onload = s.onreadystatechange = function() {
       var rs = this.readyState; if (rs) if (rs != 'complete') if (rs != 'loaded') return;
       try { z15g6mjw0nvi2vu = new WufooForm();z15g6mjw0nvi2vu.initialize(options);z15g6mjw0nvi2vu.display(); } catch (e) {}};
       var scr = d.getElementsByTagName(t)[0], par = scr.parentNode; par.insertBefore(s, scr);
       })(document, 'script');</script>
-
-
     </div>
   </div>
 </div>
-
-
-<footer>
-  <div class="container">
-    <div class="row">
-      <p>Powered by <a href="https://adhocteam.us/">Ad Hoc</a></p>
-    </div>
-  </div>
-</footer>
-
-
-
-<!-- / Wufoo form -->

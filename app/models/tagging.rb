@@ -25,5 +25,4 @@ class Tagging < ActiveRecord::Base
     def decrement_counter
       taggable_type.constantize.decrement_counter('tag_count_cache', taggable_id)
     end
-
 end
