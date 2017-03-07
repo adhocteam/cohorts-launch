@@ -19,47 +19,48 @@
         ga('create', '#{ENV['GOOGLE_ANALYTICS_ID']}',ga_options);
         ga('send', 'pageview');
   %body
-    .ui.top.fixed.menu
-      = link_to admin_root_path, class: 'logo item' do
-        = image_tag 'banner.svg', class: 'ui small centered image'
-      = link_to people_path, class: 'item' do
-        People
-        .ui.label= Person.where(active: true).count
-      = link_to "Gift Cards", gift_cards_path, class: 'item'
-      = link_to "Forms", forms_path, class: 'item'
-      = link_to submissions_path, class: 'item' do
-        Submissions
-        - unmatched_count = Submission.where('person_id is ?', nil).count
-        - if unmatched_count.positive?
-          .ui.label= unmatched_count
-      = link_to 'Clients', clients_path, class: 'item'
-      = link_to 'Engagements', engagements_path, class: 'item'
-      = link_to 'Sessions', research_sessions_path, class: 'item'
-      .ui.dropdown.item
-        More
-        %i.dropdown.icon
-        .menu
-          = link_to "Import Phone Numbers", '/twilio_messages/sendmessages', class: 'item'
-          = link_to "Add Submission", new_submission_path, class: 'item'
-          = link_to "MailChimp Updates", mailchimp_updates_path, class: 'item'
-          = link_to "Text Message Log", twilio_messages_path, class: 'item'
-      .right.menu
-        .item
-          = search_form_for @q, url: search_index_path, method: :get do |f|
-            .ui.transparent.icon.input
-              = f.search_field :nav_bar_search_cont, placeholder: "Search..."
-              %i.search.link.icon
-        .item
-          .ui.green.toggle.checkbox#privacy-mode-toggle{ class: session[:privacy_mode] ? 'checked' : '' }
-            %input{ type: 'checkbox' }
-            %label Privacy Mode
-        .ui.dropdown.item#account-link
-          = current_user&.email
+    - if current_user
+      .ui.top.fixed.menu
+        = link_to admin_root_path, class: 'logo item' do
+          = image_tag 'banner.svg', class: 'ui small centered image'
+        = link_to people_path, class: 'item' do
+          People
+          .ui.label= Person.where(active: true).count
+        = link_to "Gift Cards", gift_cards_path, class: 'item'
+        = link_to "Forms", forms_path, class: 'item'
+        = link_to submissions_path, class: 'item' do
+          Submissions
+          - unmatched_count = Submission.where('person_id is ?', nil).count
+          - if unmatched_count.positive?
+            .ui.label= unmatched_count
+        = link_to 'Clients', clients_path, class: 'item'
+        = link_to 'Engagements', engagements_path, class: 'item'
+        = link_to 'Sessions', research_sessions_path, class: 'item'
+        .ui.dropdown.item
+          More
           %i.dropdown.icon
           .menu
-            = link_to 'Settings', edit_user_registration_path, class: 'item'
-            = link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'item'
-    .ui.page.padded.container.segment
+            = link_to "Import Phone Numbers", '/twilio_messages/sendmessages', class: 'item'
+            = link_to "Add Submission", new_submission_path, class: 'item'
+            = link_to "MailChimp Updates", mailchimp_updates_path, class: 'item'
+            = link_to "Text Message Log", twilio_messages_path, class: 'item'
+        .right.menu
+          .item
+            = search_form_for @q, url: search_index_path, method: :get do |f|
+              .ui.transparent.icon.input
+                = f.search_field :nav_bar_search_cont, placeholder: "Search..."
+                %i.search.link.icon
+          .item
+            .ui.green.toggle.checkbox#privacy-mode-toggle{ class: session[:privacy_mode] ? 'checked' : '' }
+              %input{ type: 'checkbox' }
+              %label Privacy Mode
+          .ui.dropdown.item#account-link
+            = current_user&.email
+            %i.dropdown.icon
+            .menu
+              = link_to 'Settings', edit_user_registration_path, class: 'item'
+              = link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'item'
+    .ui.page.padded.container.segment{ class: current_user ? '' : 'signed-out' }
       #notifications
         - if flash[:notice] || flash[:alert] || flash[:error] || flash[:success]
           %div{class: "ui message #{flash[:notice].present? || flash[:success].present? ? "positive" : "negative"}"}

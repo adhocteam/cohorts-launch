@@ -26,6 +26,11 @@
    padding-top: 5em;
  }
 
+ .ui.page.container.segment.signed-out {
+   min-height: initial;
+   padding-top: 1em;
+ }
+
  .ui.page-header {
    margin-top: 0em !important;
  }
