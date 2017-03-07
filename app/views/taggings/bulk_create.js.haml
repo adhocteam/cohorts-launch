@@ -1,4 +1,9 @@
-$(".tag-list").append("#{escape_javascript(render partial: 'taggings/tagging', locals: {tagging: @tagging, readonly: true})}")
+$(".tag-list").each(function() {
+if ($(this).find(".tag-name:contains('#{@tagging.tag.name}')").filter(function() {
+return $.trim($(this).text()) === '#{@tagging.tag.name}';
+}).length === 0) {
+$(this).append("#{escape_javascript(render partial: 'taggings/tagging', locals: {tagging: @tagging, readonly: true})}")
+}});
 $("#tagging-#{@tagging.id}").hide().transition('scale');
 $("#tagging_name").siblings('.text').empty();
 $("#tagging_name").parent().dropdown('clear');

@@ -254,8 +254,8 @@ describe 'Search' do
 
       it 'should allow saving a search to an engagement', js: true do
         engagement = create(:engagement)
-        tag = Tagging.first.tag
-        select_from_dropdown tag.name, from: 'q_tags_id_eq_any'
+        person = people[rand(4)]
+        fill_in 'Full name contains', with: person.full_name
         within 'form.main-search#person_search' do
           find('.ui.green.button').trigger('click')
         end
@@ -268,7 +268,7 @@ describe 'Search' do
         visit engagements_path
         find('.modal-show', text: engagement.topic).click
         click_on 'Go to search'
-        expect(page).to have_content 'Search Parameters: tags_id_eq_any'
+        expect(page).to have_content 'Search Parameters: full_name_cont'
       end
 
       it 'should allow exporting a CSV of results' do
