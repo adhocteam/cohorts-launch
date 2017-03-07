@@ -1,8 +1,9 @@
 %h1.ui.header.page-header
   Viewing submission:
   %strong= @submission.form_name
-  by
-  = @submission.person.initials
+  - if @submission.person
+    by
+    = private_information @submission.person, name: true
 .ui.grid
   .equal.width.row
     .column
