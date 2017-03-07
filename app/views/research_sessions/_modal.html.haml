@@ -3,7 +3,24 @@
 .ui.modal{ id: modalId }
   .header= "#{action.capitalize} Session"
   .content
-    - if action == 'destroy'
+    - if action == 'show'
+      .ui.list
+        .item
+          .header Session Date and Time
+          .description= research_session.datetime.strftime('%b %e, %Y at %l:%M %p')
+        .item
+          .header Client
+          .description= research_session.client.name
+        .item
+          .header Engagement
+          .description= research_session.engagement.topic
+        .item
+          .header Participant(s)
+          .description= research_session.people.map(&:full_name).join(', ')
+        .item
+          .header Notes
+          .description= research_session.notes
+    - elsif action == 'destroy'
       = form_for research_session, method: :delete, format: :js, remote: true, html: { class: 'ui form', id: formId } do |f|
         %p Are you sure? This will delete the session along with its notes.
     - else
