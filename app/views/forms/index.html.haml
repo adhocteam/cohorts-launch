@@ -20,7 +20,7 @@
 
   %tbody
     - @forms.each do |form|
-      %tr
+      %tr{ id: "form-#{form.id}"}
         %td= link_to form.name, "https://adhocteamus.wufoo.com/forms/#{form.url}"
         %td= form.description
         %td= form.created_on.strftime('%b %e, %Y at %l:%M %p')
