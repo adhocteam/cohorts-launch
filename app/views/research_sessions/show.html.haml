@@ -11,13 +11,16 @@
   .ui.list
     .item
       .header Client
-      .description= @research_session.client.name
+      .description
+        = link_to @research_session.client.name, client_path(@research_session.client)
     .item
       .header Engagement
-      .description= @research_session.engagement.topic
+      .description
+        = link_to @research_session.engagement.topic, engagement_path(@research_session.engagement)
     .item
       .header Participant(s)
-      .description= @research_session.people.map(&:full_name).join(', ')
+      .description
+        = raw @research_session.people.collect { |person| link_to person.full_name, person }.join(", ")
     .item
       .header Notes
       .description= @research_session.notes
