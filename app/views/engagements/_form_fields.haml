@@ -1,0 +1,19 @@
+.field
+  = f.label :client_id, 'Client'
+  = f.select :client_id, Client.all.collect { |p| [ p.name, p.id ] }, {include_blank: true}, class: 'ui search selection dropdown'
+.field
+  = f.label :topic
+  = f.text_field :topic
+.two.fields
+  .field
+    = f.label :start_date
+    .ui.calendar.range-start
+      .ui.left.icon.input
+        %i.calendar.icon
+        = f.text_field :start_date
+  .field
+    = f.label :end_date
+    .ui.calendar.range-end
+      .ui.left.icon.input
+        %i.calendar.icon
+        = f.text_field :end_date

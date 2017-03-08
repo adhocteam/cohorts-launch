@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class ClientsController < ApplicationController
-  before_action :find_client, only: [:update, :destroy]
+  before_action :find_client, only: [:show, :edit, :update, :destroy]
 
   def index
     @clients = Client.order(:name)
@@ -8,31 +8,31 @@ class ClientsController < ApplicationController
 
   def create
     @client = Client.new(client_params)
-    respond_to do |format|
-      if @client.save
-        format.js {}
-      else
-        format.js { "console.log('Error saving client: #{@client.errors}');" }
-      end
+    if @client.save
+      redirect_to clients_path, notice: 'Client was created.'
+    else
+      flash[:error] = @client.errors.full_messages.to_sentence
+      render :new
     end
   end
 
   def update
-    @client.assign_attributes(client_params)
-    respond_to do |format|
-      if @client.save
-        format.js {}
-      else
-        format.js { "console.log('Error saving client: #{@client.errors}');" }
-      end
+    if @client.update_attributes(client_params)
+      redirect_to clients_path, notice: 'Client was updated.'
+    else
+      flash[:error] = @client.errors.full_messages.to_sentence
+      render :edit
     end
   end
 
   def destroy
-    @client.destroy
-    respond_to do |format|
-      format.js {}
+    if @client.destroy
+      flash[:notice] = 'Client was deleted.'
+    else
+      flash[:error] = 'Problem deleting client.'
     end
+
+    redirect_to clients_path
   end
 
   private

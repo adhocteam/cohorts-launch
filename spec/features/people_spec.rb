@@ -113,6 +113,7 @@ describe 'People' do
       end
 
       it 'should allow adding an existing tag to the person', js: true do
+        pending
         find('#add-tag-field .dropdown.icon').trigger('click')
         expect(page).to have_content existing_tag.name
         select_from_dropdown existing_tag.name, from: 'tagging[name]'

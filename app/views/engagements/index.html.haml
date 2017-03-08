@@ -1,4 +1,10 @@
-%h1.ui.header.page-header Engagements
+.ui.clearing.vertical.segment
+  .ui.right.floated.header
+    = link_to new_engagement_path, class: "ui tiny green button" do
+      %i.add.icon
+      New Engagement
+  %h1.ui.left.floated.header
+    Engagements
 
 %table.ui.sortable.striped.table
   %thead
@@ -8,11 +14,6 @@
       %th Start date
       %th End date
       %th Sessions
-      %th.center.aligned Actions
 
-  %tbody#engagement-table
-    - @engagements.each do |engagement|
-      = render partial: 'engagement', locals: { engagement: engagement }
-
-.ui.green.modal-show.button#create-engagement-modal New Engagement
-= render partial: 'modal', locals: { engagement: Engagement.new, action: 'create' }
+  %tbody
+    = render @engagements

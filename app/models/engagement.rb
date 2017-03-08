@@ -4,4 +4,6 @@ class Engagement < ActiveRecord::Base
   has_many :research_sessions
   has_many :people, through: :research_sessions
   serialize :search_query, Hash
+
+  scope :upcoming, -> { where('end_date > ?', Time.zone.now) }
 end

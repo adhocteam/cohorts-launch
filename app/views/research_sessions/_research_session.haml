@@ -1,0 +1,3 @@
+%tr
+  %td= link_to research_session.datetime.strftime('%b %e, %Y at %l:%M %p'), engagement_research_session_path(@engagement, research_session)
+  %td= raw research_session.people.collect { |person| link_to person.full_name, person }.join(", ")

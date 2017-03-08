@@ -1,0 +1,12 @@
+.ui.clearing.vertical.segment
+  .ui.right.floated.header
+    = link_to engagement_research_session_path(@engagement, @research_session), class: "ui tiny red button", data: {method: :delete, confirm: 'Are you sure? This will permanently delete the session.'} do
+      %i.warning.sign.icon
+      Delete Session
+  %h1.ui.left.floated.header
+    Edit Session
+
+.ui.vertical.segment
+  = form_for @research_session, url: engagement_research_session_path(@engagement, @research_session), html: {class: 'ui form'} do |f|
+    = render 'form_fields', f: f
+    %button.ui.green.button Edit Session

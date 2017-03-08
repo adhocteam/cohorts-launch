@@ -28,4 +28,9 @@ module ApplicationHelper
     direction = column == sort_column && sort_direction == 'asc' ? 'desc' : 'asc'
     link_to title, { sort: column, direction: direction }, { class: css_class }
   end
+
+  def date_range(start_date, end_date)
+    date_format = '%b %-d, %Y'
+    "#{start_date.strftime(date_format)}–#{end_date.strftime(date_format)}"
+  end
 end

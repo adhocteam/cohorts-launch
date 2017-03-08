@@ -1,0 +1,33 @@
+.ui.clearing.vertical.segment
+  .ui.right.floated.header
+    = link_to edit_engagement_path(@engagement), class: "ui tiny basic button" do
+      %i.edit.icon
+      Edit Engagement
+    = link_to new_engagement_research_session_path(@engagement), class: "ui tiny green button" do
+      %i.add.icon
+      New Session
+  %h1.ui.left.floated.header
+    Engagement:
+    = @engagement.topic
+
+- unless @engagement.search_query.blank?
+  .ui.vertical.segment
+    %h4.ui.header Search query
+    .ui.grid
+      .equal.width.row
+        .column= @engagement.search_query
+      .equal.width.row
+        .column= link_to 'Go to search', search_index_path(q: @engagement.search_query), class: 'ui green button'
+
+.ui.vertical.segment
+  - if @engagement.research_sessions.any?
+    .ui.vertical.segment
+      %table.ui.sortable.striped.table
+        %thead
+          %tr
+            %th Sessions
+            %th People
+        %tbody
+          = render @engagement.research_sessions
+  - else
+    %p No sessions exist.

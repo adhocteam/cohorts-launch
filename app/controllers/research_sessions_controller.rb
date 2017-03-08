@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 class ResearchSessionsController < ApplicationController
-  before_action :find_research_session, only: [:update, :destroy]
+  before_action :find_engagement
+  before_action :find_research_session, only: [:show, :edit, :update, :destroy]
   before_action :parse_dates, only: [:create, :update]
 
   def index
@@ -9,39 +10,41 @@ class ResearchSessionsController < ApplicationController
 
   def create
     @research_session = ResearchSession.new(research_session_params)
-    respond_to do |format|
-      if @research_session.save
-        # update_invites
-        format.js {}
-      else
-        format.js { "console.log('Error saving research_session: #{@research_session.errors}');" }
-      end
+    if @research_session.save
+      redirect_to @engagement, notice: 'Session was created.'
+    else
+      flash[:error] = @research_session.errors.full_messages.to_sentence
+      render :new
     end
   end
 
   def update
-    @research_session.assign_attributes(research_session_params)
-    respond_to do |format|
-      if @research_session.save
-        # update_invites
-        format.js {}
-      else
-        format.js { "console.log('Error saving research_session: #{@research_session.errors}');" }
-      end
+    if @research_session.update_attributes(research_session_params)
+      redirect_to @engagement, notice: 'Session was updated.'
+    else
+      flash[:error] = @research_session.errors.full_messages.to_sentence
+      render :edit
     end
   end
 
   def destroy
-    @research_session.destroy
-    respond_to do |format|
-      format.js {}
+    if @research_session.destroy
+      flash[:notice] = 'Session was deleted.'
+    else
+      flash[:error] = 'Problem deleting session.'
     end
+
+    redirect_to @engagement
   end
 
   private
 
+    def find_engagement
+      @engagement = Engagement.find(params[:engagement_id])
+    end
+
     def find_research_session
-      @research_session = ResearchSession.find(params[:id])
+      @research_session = @engagement.research_sessions.find(params[:id])
     end
 
     def parse_dates

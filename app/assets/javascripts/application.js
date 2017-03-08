@@ -54,7 +54,7 @@ $(document).on('ready page:load',function() {
 
   // Add active class to active menu items
   $('.ui.top.menu > a.item').each( function(index) {
-    if ($(this).attr('href') == location.pathname && !$(this).hasClass('logo')) {
+    if (location.pathname.indexOf($(this).attr('href')) >= 0 && !$(this).hasClass('logo')) {
       $(this).addClass('active green');
       $(this).find('.label').addClass('green');
     }
@@ -122,7 +122,7 @@ $(document).on('ready page:load',function() {
   initializeDropdowns();
   $('.ui.menu .ui.dropdown').dropdown();
   $('.ui.checkbox').checkbox();
-  $('.ui.calendar').calendar({
+  $('.ui.calendar:not(.datetime)').calendar({
     type: 'date'
   });
   $('.ui.calendar.range-end').each(function() {

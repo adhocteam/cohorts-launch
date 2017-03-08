@@ -1,0 +1,12 @@
+.ui.clearing.vertical.segment
+  .ui.right.floated.header
+    = link_to @client, class: "ui tiny red button", data: {method: :delete, confirm: 'Are you sure? This will remove the client, and all of their associated data.'} do
+      %i.warning.sign.icon
+      Delete Client
+  %h1.ui.left.floated.header
+    Edit Client
+
+.ui.vertical.segment
+  = form_for @client, url: @client, html: {class: 'ui form'} do |f|
+    = render 'form_fields', f: f
+    %button.ui.green.button Edit Client

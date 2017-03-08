@@ -1,7 +1,0 @@
-$('#client-table').append("#{escape_javascript(render partial: 'clients/client', locals: { client: @client } )}");
-$('.ui.modal#create-client-modal').replaceWith("#{escape_javascript(render partial: 'clients/modal', locals: { client: Client.new, action: 'create' } )}");
-$('.ui.modal').modal();
-$('.ui.modal-show.button').click(function() {
-modalId = $(this).attr('id');
-$('.ui.modal#' + modalId).modal('show');
-});

@@ -1,16 +1,7 @@
-%tr{ id: "engagement-#{engagement.id}" }
-  %td
-    %a.green.link.modal-show{ id: "show-engagement-#{engagement.id}-modal" }= engagement.topic
-    = render partial: 'modal', locals: { engagement: engagement, action: 'show' }
-  %td= engagement.client.name
-  %td= engagement.start_date
-  %td= engagement.end_date
+%tr
+  %td= link_to engagement.topic, engagement
+  - unless local_assigns.fetch(:hide_client, false)
+    %td= link_to engagement.client.name, engagement.client
+  %td= engagement.start_date.strftime('%m/%d/%Y')
+  %td= engagement.end_date.strftime('%m/%d/%Y')
   %td= engagement.research_sessions.count
-  %td.center.aligned.collapsing
-    .ui.icon.buttons
-      .ui.left.attached.icon.modal-show.button{ id: "update-engagement-#{engagement.id}-modal" }
-        %i.edit.icon
-      = render partial: 'modal', locals: { engagement: engagement, action: 'update' }
-      .ui.right.attached.icon.modal-show.button{ id: "destroy-engagement-#{engagement.id}-modal" }
-        %i.delete.icon
-      = render partial: 'modal', locals: { engagement: engagement, action: 'destroy' }

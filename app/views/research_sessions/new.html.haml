@@ -1,0 +1,8 @@
+.ui.clearing.vertical.segment
+  %h1.ui.left.floated.header
+    New Session
+
+.ui.vertical.segment
+  = form_for :research_session, url: engagement_research_sessions_path(@engagement), html: {class: 'ui form'} do |f|
+    = render 'form_fields', f: f
+    %button.ui.green.button Create Session

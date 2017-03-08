@@ -1,16 +1,28 @@
-%h1.ui.header.page-header Clients
+.ui.clearing.vertical.segment
+  .ui.right.floated.header
+    = link_to new_client_path, class: "ui tiny green button" do
+      %i.add.icon
+      New Client
+  %h1.ui.left.floated.header
+    Clients
 
-%table.ui.sortable.striped.table
-  %thead
-    %tr
-      %th Name
-      %th Engagements
-      %th Sessions
-      %th.center.aligned Actions
+.ui.vertical.segment
+  %table.ui.sortable.striped.table.very.padded
+    %thead
+      %tr
+        %th Name
+        %th Active and Upcoming Engagements
 
-  %tbody#client-table
-    - @clients.each do |client|
-      = render partial: 'client', locals: { client: client }
-
-.ui.green.modal-show.button#create-client-modal New Client
-= render partial: 'modal', locals: { client: Client.new, action: 'create' }
+    %tbody#client-table
+      - @clients.each do |client|
+        %tr{ id: "client-#{client.id}" }
+          %td
+            %h3
+              = link_to client.name, client_path(client), class: "green"
+          %td 
+            .ui.list
+              - client.engagements.upcoming.each do |engagement|
+                .item
+                  = link_to engagement_path(engagement), class: "green" do
+                    %strong= engagement.topic
+                    %em= ", #{date_range(engagement.start_date, engagement.end_date)}"

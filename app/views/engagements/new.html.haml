@@ -1,0 +1,8 @@
+.ui.clearing.vertical.segment
+  %h1.ui.left.floated.header
+    New Engagement
+
+.ui.vertical.segment
+  = form_for :engagement, url: engagements_path, html: {class: 'ui form'} do |f|
+    = render 'form_fields', f: f
+    %button.ui.green.button Create Engagement

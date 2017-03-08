@@ -1,39 +1,39 @@
 # frozen_string_literal: true
 class EngagementsController < ApplicationController
-  before_action :find_engagement, only: [:update, :destroy]
+  before_action :find_engagement, only: [:show, :edit, :update, :destroy]
   before_action :parse_dates, only: [:create, :update]
 
   def index
-    @engagements = Engagement.order(:created_at)
+    @engagements = Engagement.order('end_date DESC')
   end
 
   def create
     @engagement = Engagement.new(engagement_params)
-    respond_to do |format|
-      if @engagement.save
-        format.js {}
-      else
-        format.js { "console.log('Error saving engagement: #{@engagement.errors}');" }
-      end
+    if @engagement.save
+      redirect_to engagements_path, notice: 'Engagement was created.'
+    else
+      flash[:error] = @engagement.errors.full_messages.to_sentence
+      render :new
     end
   end
 
   def update
-    @engagement.assign_attributes(engagement_params)
-    respond_to do |format|
-      if @engagement.save
-        format.js {}
-      else
-        format.js { "console.log('Error saving engagement: #{@engagement.errors}');" }
-      end
+    if @engagement.update_attributes(engagement_params)
+      redirect_to engagements_path, notice: 'Engagement was updated.'
+    else
+      flash[:error] = @engagement.errors.full_messages.to_sentence
+      render :edit
     end
   end
 
   def destroy
-    @engagement.destroy
-    respond_to do |format|
-      format.js {}
+    if @engagement.destroy
+      flash[:notice] = 'Engagement was deleted.'
+    else
+      flash[:error] = 'Problem deleting engagment.'
     end
+
+    redirect_to engagements_path
   end
 
   private

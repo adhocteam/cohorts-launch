@@ -20,7 +20,7 @@ describe 'Dashboard' do
     end
 
     it 'should show the navbar' do
-      expect(page).to have_content 'People 9 Gift Cards Forms Submissions 1 Clients Engagements Sessions'
+      expect(page).to have_content 'People 9 Gift Cards Forms Submissions 1 Clients Engagements'
     end
 
     it 'should allow logging out' do

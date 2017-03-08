@@ -1,8 +1,9 @@
 Cohorts::Application.routes.draw do
   scope '/admin' do
-    resources :clients, except: [:show, :new, :edit]
-    resources :engagements, except: [:show, :new, :edit]
-    resources :research_sessions, except: [:show, :new, :edit]
+    resources :clients
+    resources :engagements do
+      resources :research_sessions
+    end
     resources :landing_pages
     resources :forms, only: [:index, :update] do
       collection do

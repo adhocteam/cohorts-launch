@@ -1,0 +1,12 @@
+.ui.clearing.vertical.segment
+  .ui.right.floated.header
+    = link_to @engagement, class: "ui tiny red button", data: {method: :delete, confirm: 'Are you sure? This will remove the engagement, and all of its associated sessions.'} do
+      %i.warning.sign.icon
+      Delete Engagement
+  %h1.ui.left.floated.header
+    Edit Engagement
+
+.ui.vertical.segment
+  = form_for @engagement, url: @engagement, html: {class: 'ui form'} do |f|
+    = render 'form_fields', f: f
+    %button.ui.green.button Edit Engagement
