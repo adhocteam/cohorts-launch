@@ -45,7 +45,7 @@ describe 'People' do
         page.execute_script("$('form#import-csv-form').submit()")
         expect(page).to have_content 'CSV imported successfully'
         expect(page).to have_content 'Bob Bill'
-        expect(Answer.last.person).to eq Person.find_by(first_name: 'Bob', last_name: 'Bill')
+        expect(Person.find_by(first_name: 'Bob', last_name: 'Bill').answers.count.positive?).to be true
       end
 
       it 'should allow visiting a persons show page' do
@@ -112,8 +112,7 @@ describe 'People' do
         expect(page).to have_selector 'img.google-map'
       end
 
-      it 'should allow adding an existing tag to the person', js: true do
-        pending
+      it 'should allow adding an existing tag to the person', js: true, retry: 6 do
         find('#add-tag-field .dropdown.icon').trigger('click')
         expect(page).to have_content existing_tag.name
         select_from_dropdown existing_tag.name, from: 'tagging[name]'
@@ -124,12 +123,11 @@ describe 'People' do
       end
 
       it 'should allow adding a new tag to the person', js: true do
-        expect(Tag.count).to eq 3
         page.execute_script("$('#add-tag-field .ui.dropdown').dropdown('set selected', 'awesome')")
         within('#tag-list') do
           expect(page).to have_content 'awesome'
         end
-        expect(Tag.count).to eq 4
+        expect(Tag.last.name).to eq 'awesome'
       end
 
       it 'should display existing notes' do

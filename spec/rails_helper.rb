@@ -68,6 +68,13 @@ RSpec.configure do |config|
   config.include Rails.application.routes.url_helpers
   config.include AlertConfirmer, type: :feature
 
+  # show retry status in spec process
+  config.verbose_retry = false
+
+  config.around :each, :js do |ex|
+    ex.run_with_retry retry: ex.metadata[:retry] || 3
+  end
+
   config.before(:each) do
     stub_wufoo
     Redis.current.flushdb

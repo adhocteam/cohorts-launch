@@ -241,7 +241,7 @@ describe 'Search' do
         end
       end
 
-      it 'should allow bulk tagging with an existing tag', js: true do
+      it 'should allow bulk tagging with an existing tag', js: true, retry: 6 do
         bulk_tag = tags[0]
         find('#bulk-tagging-field .dropdown.icon').trigger('click')
         expect(page).to have_content bulk_tag.name
@@ -253,7 +253,6 @@ describe 'Search' do
       end
 
       it 'should allow saving a search to an engagement', js: true do
-        pending('needs to be rewritten for a non-modal case')
         engagement = create(:engagement)
         person = people[rand(4)]
         fill_in 'Full name contains', with: person.full_name
@@ -266,8 +265,7 @@ describe 'Search' do
           find('.submit.button').trigger('click')
         end
         expect(page).to have_content 'Saved'
-        visit engagements_path
-        find('.modal-show', text: engagement.topic).click
+        visit engagement_path(engagement)
         click_on 'Go to search'
         expect(page).to have_content 'Search Parameters: full_name_cont'
       end
