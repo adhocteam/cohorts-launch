@@ -100,4 +100,14 @@ Cohorts::Application.configure do
   config.action_mailer.default charset: 'utf-8'
 
   config.middleware.use Rack::TwilioWebhookAuthentication, ENV['TWILIO_AUTH_TOKEN'], '/receive_text/index'
+
+  config.paperclip_defaults = {
+    storage: :s3,
+    bucket: ENV['PAPERCLIP_S3_BUCKET'],
+    path: '/cohorts/paperclip/production/:id/:filename',
+    s3_credentials: {
+      access_key_id: ENV['AWS_ACCESS_KEY'],
+      secret_access_key: ENV['AWS_SECRET_ACCESS_KEY']
+    }
+  }
 end
