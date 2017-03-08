@@ -5,5 +5,5 @@ class Engagement < ActiveRecord::Base
   has_many :people, through: :research_sessions
   serialize :search_query, Hash
 
-  scope :upcoming, -> { where('end_date > ?', Time.zone.now) }
+  scope :recent, -> { where('end_date > ?', Time.zone.now - 2.weeks) }
 end

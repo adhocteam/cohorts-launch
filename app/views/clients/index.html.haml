@@ -11,7 +11,7 @@
     %thead
       %tr
         %th Name
-        %th Active and Upcoming Engagements
+        %th Recent Engagements
 
     %tbody#client-table
       - @clients.each do |client|
@@ -21,7 +21,7 @@
               = link_to client.name, client_path(client), class: "green"
           %td 
             .ui.list
-              - client.engagements.upcoming.each do |engagement|
+              - client.engagements.recent.each do |engagement|
                 .item
                   = link_to engagement_path(engagement), class: "green" do
                     %strong= engagement.topic
