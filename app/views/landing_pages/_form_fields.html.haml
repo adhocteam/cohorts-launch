@@ -9,5 +9,8 @@
   = f.label :lede
   = f.text_field :lede
 .field
-  = f.label :image
-  = f.file_field :image
+  .ui.button.fake-file-field
+    %i.image.icon
+    %span.button-text Choose image file
+  .hidden-file-field
+    = f.file_field :image
