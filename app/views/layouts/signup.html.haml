@@ -32,4 +32,7 @@
           %p 
             Powered by
             = link_to "Ad Hoc", "https://adhocteam.us/"
+    - if Cohorts::Application.config.google_analytics_enabled
+      = render "google_analytics"
+      = render "facebook_pixel"
     = javascript_include_tag "signup"
