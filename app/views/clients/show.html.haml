@@ -3,7 +3,7 @@
     = link_to edit_client_path(@client), class: "ui tiny basic button" do
       %i.edit.icon
       Edit Client
-    = link_to new_engagement_path, class: "ui tiny green button" do
+    = link_to new_client_engagement_path(@client), class: "ui tiny green button" do
       %i.add.icon
       New Engagement
   %h1.ui.left.floated.header

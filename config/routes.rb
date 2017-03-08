@@ -1,6 +1,8 @@
 Cohorts::Application.routes.draw do
   scope '/admin' do
-    resources :clients
+    resources :clients do
+      resources :engagements, only: [:new]
+    end
     resources :engagements do
       resources :research_sessions
     end

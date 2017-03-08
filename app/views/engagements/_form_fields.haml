@@ -1,6 +1,6 @@
 .field
   = f.label :client_id, 'Client'
-  = f.select :client_id, Client.all.collect { |p| [ p.name, p.id ] }, {include_blank: true}, class: 'ui search selection dropdown'
+  = f.select :client_id, Client.all.collect { |p| [ p.name, p.id ] }, {include_blank: true, selected: @client && @client.id}, class: 'ui search selection dropdown'
 .field
   = f.label :topic
   = f.text_field :topic

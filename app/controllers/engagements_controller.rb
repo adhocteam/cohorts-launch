@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 class EngagementsController < ApplicationController
+  before_action :find_client
   before_action :find_engagement, only: [:show, :edit, :update, :destroy]
   before_action :parse_dates, only: [:create, :update]
 
@@ -37,6 +38,9 @@ class EngagementsController < ApplicationController
   end
 
   private
+    def find_client
+      @client = Client.find(params[:client_id]) if params[:client_id]
+    end
 
     def find_engagement
       @engagement = Engagement.find(params[:id])
