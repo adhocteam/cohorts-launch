@@ -20,7 +20,7 @@
     .item
       .header Participant(s)
       .description
-        = raw @research_session.people.collect { |person| link_to person.full_name, person }.join(", ")
+        = raw @research_session.people.collect { |person| link_to person.full_name, person }.join("<br/>")
     .item
       .header Notes
       .description= @research_session.notes
