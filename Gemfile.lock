@@ -121,11 +121,11 @@ GEM
       railties (>= 3.0.0)
     faker (1.7.2)
       i18n (~> 0.5)
-    faraday (0.10.1)
+    faraday (0.11.0)
       multipart-post (>= 1.2, < 3)
     fast_blank (1.0.0)
     flamegraph (0.9.5)
-    gibbon (2.2.5)
+    gibbon (3.0.1)
       faraday (>= 0.9.1)
       multi_json (>= 1.11.0)
     globalid (0.3.7)
@@ -447,7 +447,7 @@ DEPENDENCIES
   fast_blank
   ffi
   flamegraph
-  gibbon (~> 2.2.3)
+  gibbon
   gsm_encoder
   haml-rails
   has_secure_token
@@ -511,4 +511,4 @@ RUBY VERSION
    ruby 2.3.1p112
 
 BUNDLED WITH
-   1.14.5
+   1.14.6

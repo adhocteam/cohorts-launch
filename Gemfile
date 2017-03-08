@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 source 'https://rubygems.org'
 ruby '2.3.1'
 gem 'rails', '~> 4.2.0'
@@ -17,7 +18,7 @@ gem 'less-rails-semantic_ui'
 gem 'autoprefixer-rails'
 
 # Use old Sprockets to avoid deprecation warnings
-gem "sprockets", '3.6.3'
+gem 'sprockets', '3.6.3'
 
 gem 'jquery-rails'
 
@@ -47,7 +48,7 @@ gem 'holder_rails'
 gem 'devise', '~>4.2.0'
 
 # use gibbon for easy Mailchimp API access
-gem 'gibbon', '~> 2.2.3'
+gem 'gibbon'
 
 # use twilio-ruby for twilio
 gem 'twilio-ruby'
@@ -91,7 +92,7 @@ gem 'paper_trail'
 gem 'paper_trail-globalid'
 
 gem 'fast_blank' # blank? rewritten in c
-#gem 'faster_path' # soon! path, rewitted in rust. requires rust compiler
+# gem 'faster_path' # soon! path, rewitted in rust. requires rust compiler
 
 # storing money with money-rails
 gem 'money-rails'
@@ -100,13 +101,13 @@ gem 'money-rails'
 gem 'maskedinput-rails'
 
 # Need a non-digested asset for Wufoo CSS
-gem "non-stupid-digest-assets"
+gem 'non-stupid-digest-assets'
 
 # Allow composite primary keys for join tables
 gem 'composite_primary_keys'
 
 # File attachments
-gem "paperclip", "~> 5.0.0"
+gem 'paperclip', '~> 5.0.0'
 
 group :development do
   # this whole group makes finding performance issues much friendlier

@@ -5,7 +5,9 @@ Cohorts::Application.configure do
   Bullet.alert = false
   Bullet.bullet_logger = true
   # base url for emails
-  config.action_mailer.default_url_options = { host: 'localhost:8080' }
+  config.action_mailer.default_url_options = { host: 'localhost:3000' }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = { address: "localhost", port: 1025 }
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development

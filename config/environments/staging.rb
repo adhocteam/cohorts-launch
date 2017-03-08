@@ -1,6 +1,6 @@
+# frozen_string_literal: true
 Cohorts::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-
 
   # base url for emails
   config.action_mailer.default_url_options = { host: ENV['STAGING_SERVER'] }
@@ -38,7 +38,6 @@ Cohorts::Application.configure do
 
   # Version of your assets, change this if you want to expire all your assets.
   config.assets.version = '1.0'
-
 
   # Specifies the header that your server uses for sending files.
   # config.action_dispatch.x_sendfile_header = "X-Sendfile" # for apache
@@ -86,11 +85,27 @@ Cohorts::Application.configure do
   # Analytics
   config.google_analytics_enabled = true
 
+  config.action_mailer.smtp_settings = {
+    address: 'smtp.mandrillapp.com',
+    port: 25,
+    enable_starttls_auto: true,
+    user_name: ENV['MANDRILL_USERNAME'],
+    password: ENV['MANDRILL_API_KEY'],
+    authentication: 'login',
+    domain: 'cohortsfeedback.com'
+  }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.default charset: 'utf-8'
+
   config.before_configuration do
     env_file = File.join(Rails.root, 'config', 'local_env.yml')
-    YAML.load(File.open(env_file)).each do |key, value|
-      ENV[key.to_s] = value
-    end if File.exist?(env_file)
+    if File.exist?(env_file)
+      YAML.safe_load(File.open(env_file)).each do |key, value|
+        ENV[key.to_s] = value
+      end
+    end
   end
   config.middleware.use Rack::TwilioWebhookAuthentication, ENV['TWILIO_AUTH_TOKEN'], '/receive_text/index'
 end
