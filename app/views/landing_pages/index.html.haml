@@ -5,17 +5,17 @@
   %table.ui.sortable.striped.table
     %thead
       %tr
-        %th Tag Name
-        %th Lede
-        %th Image
-        %th.center.aligned Actions
+        %th.two.wide Tag Name
+        %th.eight.wide Lede
+        %th.three.wide Image
+        %th.three.wide.center.aligned Actions
 
     %tbody#landing_page-table
       - @landing_pages.each do |landing_page|
         %tr{ id: "landing_page-#{landing_page.id}" }
           %td= landing_page.tag.name
           %td= landing_page.lede
-          %td= image_tag landing_page.image.url(:thumb) if landing_page.image.present?
+          %td.table-image.center.aligned= image_tag landing_page.image.url(:thumb) if landing_page.image.present?
           %td.center.aligned.collapsing
             .ui.icon.basic.buttons
               = link_to landing_signup_path(landing_page.tag.name), class: "ui icon button", target: "_blank" do
