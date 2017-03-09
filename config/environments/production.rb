@@ -103,7 +103,7 @@ Cohorts::Application.configure do
 
   config.paperclip_defaults = {
     storage: :s3,
-    path: '/cohorts/paperclip/production/:id/:filename',
+    path: '/cohorts/paperclip/production/:class/:attachment/:id_partition/:style/:filename',
     s3_credentials: {
       bucket: ENV['PAPERCLIP_S3_BUCKET'],
       access_key_id: ENV['AWS_ACCESS_KEY'],
