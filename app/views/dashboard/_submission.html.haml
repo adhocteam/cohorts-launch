@@ -1,4 +1,3 @@
-.recent-submission-unmatched
-  %span.name
-    Submission #{submission.id}
-  %br/
+.recent-submission-unmatched.item
+  %i.help.icon
+  .content= link_to "Submission #{submission.id}", edit_submission_path(submission)

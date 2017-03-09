@@ -4,7 +4,8 @@
     = render partial: 'person', collection: @people
   .column
     %h3.ui.header Recent unmatched submissions
-    = render partial: 'submission', collection: @submissions
+    .ui.list
+      = render partial: 'submission', collection: @submissions
   .column
     .ui.raised.padded.text.segment
       %h3.ui.header

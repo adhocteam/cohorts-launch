@@ -14,10 +14,10 @@ class PeopleController < ApplicationController
   def index
     @verified_types = Person.uniq.pluck(:verified).select(&:present?)
     @people = if params[:tags].blank? || params[:tags] == ''
-                Person.paginate(page: params[:page]).order(sort_column + ' ' + sort_direction).where(active: true)
+                Person.paginate(page: params[:page]).order(created_at: :desc)
               else
                 tags = Tag.where(name: params[:tags])
-                Person.paginate(page: params[:page]).order(sort_column + ' ' + sort_direction).where(active: true).includes(:tags).where(tags: { id: tags.pluck(:id) })
+                Person.paginate(page: params[:page]).order(created_at: :desc).includes(:tags).where(tags: { id: tags.pluck(:id) })
               end
     @tags = params[:tags].blank? ? '[]' : Tag.where(name: params[:tags].map(&:strip)).to_json(methods: [:value, :label, :type])
   end
