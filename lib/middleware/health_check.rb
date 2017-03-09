@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Middleware
   class HealthCheck
     def initialize(app)
@@ -5,9 +6,7 @@ module Middleware
     end
 
     def call(env)
-      if env["PATH_INFO"] == "/healthcheck"
-        return [200, {}, []]
-      end
+      return [200, {}, []] if env['PATH_INFO'] == '/healthcheck'
 
       @app.call(env)
     end
