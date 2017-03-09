@@ -1,37 +1,51 @@
 #container,
 html.embed, * {
-	background-color: none;
-	background-color: transparent !important;
-	-webkit-transition: all 0.25s ease-in-out;
-	-moz-transition: all 0.25s ease-in-out;
-	transition: all 0.25s ease-in-out;
+  background-color: none;
+  background-color: transparent; !important;
 }
 
 #container *{
-	 -webkit-box-sizing: border-box;
-	 -moz-box-sizing: border-box;
-	 box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
-/* Typography */
 
+/* Typography */
 .wufoo {
-	color: white;
-	font-size: 16px;
-	font-family: "proxima nova", sans-serif;
+  font-size: 12px;
 }
 
 .wufoo .info h2 {
-	font-weight: bold;
-	font-size: 2.1875em;
+  font-size: 2.1875em;
+  font-weight: bold;
+  color: black !important;
+}
+
+.wufoo label.desc {
+  font-size: 1.1em;
+  font-weight: bold;
+  color: black !important;
 }
 
 .wufoo li span label {
-	margin-top: 5px;
-	font-size: 0.9em;
+  margin-top: 5px;
+  font-size: 0.9em;
+  color: #222 !important;
+}
+
+.wufoo .info div {
+  font-size: 100%;
+  color: #222 !important;
+}
+
+/* Header */
+.wufoo header.info {
+  margin: 0 0 2em 0;
+  padding: 0;
 }
 
 .wufoo span.req {
-	color: #E15A38 !important;
+  color: #222 !important;
 }
 
 /* Button */
@@ -43,7 +57,7 @@ input#saveForm {
   border: none;
   font-size: 1.2em;
   font-weight: 700;
-  color: #fff;
+  color: white;
   text-decoration: none;
   cursor: pointer;
   -webkit-appearance: none;
@@ -53,29 +67,23 @@ input#saveForm:hover {
   background: #DE4822 !important;
 }
 
-/* Logo */
-#logo {
-	display: none;
-	background-image: none;
-	background-color: none;
+/* Form */
+.wufoo select.select {
+  height: 2.85em;
+  color: #222 !important;
+  background: #fff !important;
 }
 
-/* Backgrounds */
-#container{
-	background-color: transparent;
+.wufoo input.field.text,
+.wufoo textarea.field.textarea {
+  background: #fff !important;
+  padding: .75em;
+  width: 100%;
+  color: #222 !important;
 }
 
-.wufoo .focused{	
-	background: #FFF7C0;
-}
-
-.wufoo .instruct{
-	background-color: #F5F5F5;
-}
-
-.wufoo header.info {
-	margin: 0 0 2em 0;
-	padding: 0;
+.wufoo textarea.field.textarea {
+  width: 50%;
 }
 
 /* Radio Buttons */
@@ -98,139 +106,102 @@ input[type='radio']:before {
   width: 8px;
   height: 8px;
   border-radius: 100%; 
-  border: 2px solid #2a9e6a;   
+  border: 2px solid #31B67B;   
 }
+
 input[type='radio']:checked:before {
   background: white;
 }
 
 .safari label.choice {
-	margin-top: -18px;
+  margin-top: -18px;
 }
 
-/* Borders */
-#container{border: none}
-.wufoo .info{border-bottom: none;}
-.wufoo .instruct{border:1px solid #e6e6e6}
-
-.wufoo select.select {
-	background: #fff !important;
-	height: 2.85em;
-	color: #444 !important;
-}
-
-.wufoo section div,
-.wufoo div {
-	color: #fff;
-}
-
+/* Layout */
 .wufoo section {
-	padding: 0;
-	margin: 0 0 1em 0;
-}
-
-.wufoo .info div{font-size:95%;font-family:inherit;color:#444}
-
-.wufoo .section h3{font-size:110%;font-family:inherit;background: none; color:#fff}
-.wufoo .section div{font-size:85%;font-family:inherit;color:#444}
-
-.wufoo label.desc, .wufoo legend.desc {
-	font-size: 1.1em;
-	padding: 0 0 .2em 0;
-	font-family:inherit;
-	color:#fff;
+  padding: 0;
+  margin: 0 0 1em 0;
 }
 
 .wufoo li {
-	width: 100%;
-	display: block;
-	clear: both;
-	margin: 0 0 2.5em 0 !important;
-	padding: 0 !important;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
+  width: 100%;
+  display: block;
+  clear: both;
+  margin: 0 0 2.5em 0 !important;
+  padding: 0 !important;
+}
+
+/* First and Last Names */
+.wufoo li#fo10li1 span {
+  display: inline-lock;
+  width: 49%;
+  margin: 0;
+  padding: 0;
+}
+.wufoo li#fo10li1 span:last-of-type {
+  float: right;
 }
 
 .wufoo li#fo10li1 span {
-	display: inline-lock;
-	width: 49%;
-	margin: 0;
-	padding: 0;
+  display: inline-lock;
+  width: 49%;
+  margin: 0;
+  padding: 0;
 }
 .wufoo li#fo10li1 span:last-of-type {
-	float: right;
+  float: right;
 }
 
-.wufoo li#fo10li1 span {
-	display: inline-lock;
-	width: 49%;
-	margin: 0;
-	padding: 0;
-}
-.wufoo li#fo10li1 span:last-of-type {
-	float: right;
+/* Errors */
+.wufoo li.error {
+  background-color: transparent !important;
 }
 
-
-
-.wufoo input.text,
-.wufoo textarea.textarea,
-.wufoo select.select,
-.wufoo label.choice {
-	font-size:100%;
-	font-family:inherit;
+.wufoo li.error p.error {
+  display: inline-block;
+  padding: .5em !important;
+  background: white;
+  margin: 1em 0 2em !important;
 }
 
-
-
-.wufoo input.field.text,
-.wufoo textarea.field.textarea {
-	background: #fff !important;
-	padding: .75em;
-	width: 100%;
-	color: #444 !important;
-	opacity: .9;
+.wufoo li.error p.error:before {
+  content: '▲';
+  font-size: 110%;
+  margin-right: .5em;
 }
 
-.wufoo input.field.text:hover,
-.wufoo input.field.text:active,
-.wufoo input.field.text:focus,
-.wufoo textarea.field.textarea:hover,
-.wufoo textarea.field.textarea:active,
-.wufoo textarea.field.textarea:focus {
-	opacity: 1;
+.wufoo li.error .desc {
+  color: black !important;
 }
 
-.wufoo textarea.field.textarea {
-	width: 50%;
+.wufoo #errorLi, 
+.error-container {
+  font-family: "proxima-nova";
+  text-align: left;
+  border: none;
+  border-radius: 0;
+  padding: 0.5em 1em !important;
 }
 
-.wufoo label {
-	color: #fff !important;
-	font-size: 1.1em;
-	padding: 0 0 .25em 0;
+.wufoo #errorMsgLbl,
+.wufoo li.error p.error {
+  color: #E15A38 !important;
 }
 
-.wufoo textarea.textarea
-
-.wufoo label.choice{color:#fff}
-.wufoo .instruct{
-	font-size:80%;
-	font-family:inherit;
-	color:#fff;
-	background: rgba(0,0,0,.25);
+.wufoo #errorMsg b {
+  color: black !important;
 }
 
-input.btTxt {
-	display: block;
-	font-weight: bold;
-	border-radius: 0;
-	padding: 1em;
+.wufoo li.error input.field.text,
+.wufoo li.error select.select,
+.wufoo #errorMsg b,
+.wufoo li.error p.error {
+  background-color: #FFF3D1 !important;
 }
 
-form li {
-	clear: both;
-	display: block;
-	margin: 0 0 2em 0 !important;
+/* Responsive */
+@media only screen and (min-width : 768px) {
+  .wufoo {
+    font-size: 16px;
+  }
 }
