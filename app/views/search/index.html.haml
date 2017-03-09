@@ -73,7 +73,7 @@
           - @results.each_with_index do |result, idx|
             - person = Person.find_by(id: result.id)
             - next unless person
-            %tr
+            %tr.person-result{ id: "person-#{person.id}"}
               %td.seven.wide
                 %strong= link_to private_information(person, name: true), person, class: 'green'
                 .ui.green.labels.tag-list

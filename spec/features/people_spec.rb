@@ -115,8 +115,10 @@ describe 'People' do
       it 'should allow adding an existing tag to the person', js: true, retry: 6 do
         find('#add-tag-field .dropdown.icon').trigger('click')
         expect(page).to have_content existing_tag.name
-        select_from_dropdown existing_tag.name, from: 'tagging[name]'
-        page.execute_script("$('form#new_tagging').submit()")
+        within '#add-tag-field' do
+          find('.menu .item', text: existing_tag.name).trigger('click')
+          find('.submit.button').trigger('click')
+        end
         within('#tag-list') do
           expect(page).to have_content existing_tag.name
         end
