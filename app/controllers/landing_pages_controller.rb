@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 class LandingPagesController < ApplicationController
   before_action :find_landing_page, only: [:edit, :update, :destroy]
-  before_action :find_unused_tags, only: [:new, :create, :edit]
+  before_action :find_unused_tags, except: [:index, :destroy]
 
   def index
     @landing_pages = LandingPage.joins(:tag).order('tags.name ASC')
