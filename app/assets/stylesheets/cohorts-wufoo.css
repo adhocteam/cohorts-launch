@@ -1,7 +1,7 @@
 #container,
 html.embed, * {
   background-color: none;
-  background-color: transparent; !important;
+  background-color: transparent !important;
 }
 
 #container *{
