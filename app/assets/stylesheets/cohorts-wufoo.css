@@ -199,6 +199,19 @@ input[type='radio']:checked:before {
   background-color: #FFF3D1 !important;
 }
 
+/* CSS Text Replacement */
+.zip > label {
+  visibility: hidden;
+  position: relative;
+}
+
+.zip > label:after {
+  position: absolute;
+  left: 0;
+  visibility: visible;
+  content: 'ZIP Code';
+}
+
 /* Responsive */
 @media only screen and (min-width : 768px) {
   .wufoo {
