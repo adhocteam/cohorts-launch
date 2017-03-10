@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170306165022) do
+ActiveRecord::Schema.define(version: 20170309223430) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,26 +20,26 @@ ActiveRecord::Schema.define(version: 20170306165022) do
     t.integer  "question_id"
     t.integer  "person_id"
     t.integer  "submission_id"
-    t.string   "value"
+    t.text     "value"
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
     t.string   "subfields",     default: [],              array: true
   end
 
-  add_index "answers", ["person_id"], name: "index_answers_on_person_id", using: :btree
-  add_index "answers", ["question_id"], name: "index_answers_on_question_id", using: :btree
-  add_index "answers", ["submission_id"], name: "index_answers_on_submission_id", using: :btree
+  add_index "answers", ["person_id"], name: "answers_person_id_idx", using: :btree
+  add_index "answers", ["question_id"], name: "answers_question_id_idx", using: :btree
+  add_index "answers", ["submission_id"], name: "answers_submission_id_idx", using: :btree
 
   create_table "clients", force: :cascade do |t|
-    t.string   "name",       null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "name",       limit: 510, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "comments", force: :cascade do |t|
     t.text     "content"
     t.integer  "user_id"
-    t.string   "commentable_type"
+    t.string   "commentable_type", limit: 510
     t.integer  "commentable_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -47,69 +47,62 @@ ActiveRecord::Schema.define(version: 20170306165022) do
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
-    t.integer  "priority",               default: 0, null: false
-    t.integer  "attempts",               default: 0, null: false
-    t.text     "handler",                            null: false
+    t.integer  "priority",                           default: 0, null: false
+    t.integer  "attempts",                           default: 0, null: false
+    t.text     "handler",                                        null: false
     t.text     "last_error"
     t.datetime "run_at"
     t.datetime "locked_at"
     t.datetime "failed_at"
-    t.string   "locked_by"
-    t.string   "queue"
+    t.string   "locked_by",              limit: 510
+    t.string   "queue",                  limit: 510
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "delayed_reference_id"
-    t.string   "delayed_reference_type"
+    t.string   "delayed_reference_type", limit: 510
   end
-
-  add_index "delayed_jobs", ["delayed_reference_type"], name: "delayed_jobs_delayed_reference_type", using: :btree
-  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
-  add_index "delayed_jobs", ["queue"], name: "delayed_jobs_queue", using: :btree
 
   create_table "engagements", force: :cascade do |t|
     t.integer  "client_id"
-    t.string   "topic",        null: false
+    t.string   "topic",        limit: 510, null: false
     t.date     "start_date"
     t.date     "end_date"
     t.text     "notes"
     t.text     "search_query"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
-  add_index "engagements", ["client_id"], name: "index_engagements_on_client_id", using: :btree
+  add_index "engagements", ["client_id"], name: "engagements_client_id_idx", using: :btree
 
   create_table "forms", force: :cascade do |t|
-    t.string   "hash_id"
-    t.string   "name"
+    t.string   "hash_id",     limit: 510
+    t.string   "name",        limit: 510
     t.text     "description"
-    t.string   "url"
-    t.boolean  "hidden",      default: false
+    t.string   "url",         limit: 510
+    t.boolean  "hidden",                  default: false
     t.datetime "created_on"
     t.datetime "last_update"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
   end
 
   create_table "gift_cards", force: :cascade do |t|
-    t.string   "gift_card_number"
-    t.string   "expiration_date"
+    t.string   "gift_card_number", limit: 510
+    t.string   "expiration_date",  limit: 510
     t.integer  "person_id"
-    t.string   "notes"
+    t.string   "notes",            limit: 510
     t.integer  "created_by"
     t.integer  "reason"
-    t.integer  "amount_cents",     default: 0,     null: false
-    t.string   "amount_currency",  default: "USD", null: false
+    t.integer  "amount_cents",                 default: 0,     null: false
+    t.string   "amount_currency",  limit: 510, default: "USD", null: false
     t.integer  "giftable_id"
-    t.string   "giftable_type"
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
-    t.string   "batch_id"
+    t.string   "giftable_type",    limit: 510
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
+    t.string   "batch_id",         limit: 510
     t.integer  "proxy_id"
   end
-
-  add_index "gift_cards", ["giftable_type", "giftable_id"], name: "index_gift_cards_on_giftable_type_and_giftable_id", using: :btree
-  add_index "gift_cards", ["reason"], name: "gift_reason_index", using: :btree
 
   create_table "landing_pages", force: :cascade do |t|
     t.string   "lede"
@@ -125,7 +118,7 @@ ActiveRecord::Schema.define(version: 20170306165022) do
   add_index "landing_pages", ["tag_id"], name: "index_landing_pages_on_tag_id", using: :btree
 
   create_table "mailchimp_exports", force: :cascade do |t|
-    t.string   "name"
+    t.string   "name",       limit: 510
     t.text     "body"
     t.integer  "created_by"
     t.datetime "created_at"
@@ -134,59 +127,61 @@ ActiveRecord::Schema.define(version: 20170306165022) do
 
   create_table "mailchimp_updates", force: :cascade do |t|
     t.text     "raw_content"
-    t.string   "email"
-    t.string   "update_type"
-    t.string   "reason"
+    t.string   "email",       limit: 510
+    t.string   "update_type", limit: 510
+    t.string   "reason",      limit: 510
     t.datetime "fired_at"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   create_table "people", force: :cascade do |t|
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "email_address"
-    t.string   "address_1"
-    t.string   "address_2"
-    t.string   "city"
-    t.string   "state"
-    t.string   "postal_code"
+    t.string   "first_name",                       limit: 510
+    t.string   "last_name",                        limit: 510
+    t.string   "email_address",                    limit: 510
+    t.string   "address_1",                        limit: 510
+    t.string   "address_2",                        limit: 510
+    t.string   "city",                             limit: 510
+    t.string   "state",                            limit: 510
+    t.string   "postal_code",                      limit: 510
     t.integer  "geography_id"
     t.integer  "primary_device_id"
-    t.string   "primary_device_description"
+    t.string   "primary_device_description",       limit: 510
     t.integer  "secondary_device_id"
-    t.string   "secondary_device_description"
+    t.string   "secondary_device_description",     limit: 510
     t.integer  "primary_connection_id"
-    t.string   "primary_connection_description"
-    t.string   "phone_number"
-    t.string   "participation_type"
+    t.string   "primary_connection_description",   limit: 510
+    t.string   "phone_number",                     limit: 510
+    t.string   "participation_type",               limit: 510
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "signup_ip"
+    t.string   "signup_ip",                        limit: 510
     t.datetime "signup_at"
     t.integer  "secondary_connection_id"
-    t.string   "secondary_connection_description"
-    t.string   "verified"
-    t.string   "preferred_contact_method"
-    t.string   "token"
-    t.boolean  "active",                           default: true
+    t.string   "secondary_connection_description", limit: 510
+    t.string   "verified",                         limit: 510
+    t.string   "preferred_contact_method",         limit: 510
+    t.string   "token",                            limit: 510
+    t.boolean  "active"
     t.datetime "deactivated_at"
-    t.string   "deactivated_method"
-    t.integer  "tag_count_cache",                  default: 0
+    t.string   "deactivated_method",               limit: 510
+    t.integer  "tag_count_cache",                              default: 0
   end
 
   create_table "questions", force: :cascade do |t|
     t.text     "text"
-    t.string   "short_text"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.string   "short_text",   limit: 510
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
     t.integer  "form_id"
-    t.string   "datatype"
-    t.string   "field_id"
+    t.string   "datatype",     limit: 510
+    t.string   "field_id",     limit: 510
     t.datetime "version_date"
-    t.string   "choices",      default: [],              array: true
-    t.string   "subfields",    default: [],              array: true
+    t.string   "choices",                  default: [],              array: true
+    t.string   "subfields",                default: [],              array: true
   end
+
+  add_index "questions", ["form_id"], name: "questions_form_id_idx", using: :btree
 
   create_table "research_sessions", force: :cascade do |t|
     t.integer  "engagement_id"
@@ -196,7 +191,7 @@ ActiveRecord::Schema.define(version: 20170306165022) do
     t.datetime "updated_at",    null: false
   end
 
-  add_index "research_sessions", ["engagement_id"], name: "index_research_sessions_on_engagement_id", using: :btree
+  add_index "research_sessions", ["engagement_id"], name: "research_sessions_engagement_id_idx", using: :btree
 
   create_table "session_invites", id: false, force: :cascade do |t|
     t.integer  "research_session_id", null: false
@@ -206,24 +201,23 @@ ActiveRecord::Schema.define(version: 20170306165022) do
     t.datetime "updated_at",          null: false
   end
 
-  add_index "session_invites", ["person_id"], name: "index_session_invites_on_person_id", using: :btree
-  add_index "session_invites", ["research_session_id"], name: "index_session_invites_on_research_session_id", using: :btree
-
   create_table "submissions", force: :cascade do |t|
     t.text     "raw_content"
     t.integer  "person_id"
-    t.string   "ip_addr"
-    t.string   "entry_id"
+    t.string   "ip_addr",         limit: 510
+    t.string   "entry_id",        limit: 510
     t.text     "form_structure"
     t.text     "field_structure"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "form_type",       default: 0
+    t.integer  "form_type",                   default: 0
     t.integer  "form_id"
   end
 
+  add_index "submissions", ["form_id"], name: "submissions_form_id_idx", using: :btree
+
   create_table "taggings", force: :cascade do |t|
-    t.string   "taggable_type"
+    t.string   "taggable_type", limit: 510
     t.integer  "taggable_id"
     t.integer  "created_by"
     t.datetime "created_at"
@@ -232,94 +226,92 @@ ActiveRecord::Schema.define(version: 20170306165022) do
   end
 
   create_table "tags", force: :cascade do |t|
-    t.string   "name"
+    t.string   "name",           limit: 510
     t.integer  "created_by"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "taggings_count", default: 0, null: false
+    t.integer  "taggings_count",             default: 0, null: false
   end
 
   create_table "twilio_messages", force: :cascade do |t|
-    t.string   "message_sid"
+    t.string   "message_sid",        limit: 510
     t.datetime "date_created"
     t.datetime "date_updated"
     t.datetime "date_sent"
-    t.string   "account_sid"
-    t.string   "from"
-    t.string   "to"
-    t.string   "body"
-    t.string   "status"
-    t.string   "error_code"
-    t.string   "error_message"
-    t.string   "direction"
-    t.string   "from_city"
-    t.string   "from_state"
-    t.string   "from_zip"
-    t.string   "wufoo_formid"
+    t.string   "account_sid",        limit: 510
+    t.string   "from",               limit: 510
+    t.string   "to",                 limit: 510
+    t.string   "body",               limit: 510
+    t.string   "status",             limit: 510
+    t.string   "error_code",         limit: 510
+    t.string   "error_message",      limit: 510
+    t.string   "direction",          limit: 510
+    t.string   "from_city",          limit: 510
+    t.string   "from_state",         limit: 510
+    t.string   "from_zip",           limit: 510
+    t.string   "wufoo_formid",       limit: 510
     t.integer  "conversation_count"
-    t.string   "signup_verify"
+    t.string   "signup_verify",      limit: 510
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "twilio_wufoos", force: :cascade do |t|
-    t.string   "name"
-    t.string   "wufoo_formid"
-    t.string   "twilio_keyword"
+    t.string   "name",           limit: 510
+    t.string   "wufoo_formid",   limit: 510
+    t.string   "twilio_keyword", limit: 510
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "status",         default: false, null: false
-    t.string   "end_message"
-    t.string   "form_type"
+    t.boolean  "status",                     null: false
+    t.string   "end_message",    limit: 510
+    t.string   "form_type",      limit: 510
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                  default: "",    null: false
-    t.string   "encrypted_password",     default: "",    null: false
-    t.string   "reset_password_token"
+    t.string   "email",                  limit: 510, default: "", null: false
+    t.string   "encrypted_password",     limit: 510, default: "", null: false
+    t.string   "reset_password_token",   limit: 510
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0
+    t.integer  "sign_in_count",                      default: 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.string   "password_salt"
-    t.string   "invitation_token"
+    t.string   "current_sign_in_ip",     limit: 510
+    t.string   "last_sign_in_ip",        limit: 510
+    t.string   "password_salt",          limit: 510
+    t.string   "invitation_token",       limit: 510
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "approved",               default: false, null: false
-    t.string   "name"
-    t.string   "token"
-    t.string   "phone_number"
+    t.boolean  "approved",                                        null: false
+    t.string   "name",                   limit: 510
+    t.string   "token",                  limit: 510
+    t.string   "phone_number",           limit: 510
   end
 
   create_table "v2_event_invitations", force: :cascade do |t|
     t.integer  "v2_event_id"
-    t.string   "people_ids"
-    t.string   "description"
-    t.string   "slot_length"
-    t.string   "date"
-    t.string   "start_time"
-    t.string   "end_time"
-    t.integer  "buffer",      default: 0, null: false
+    t.string   "people_ids",  limit: 510
+    t.string   "description", limit: 510
+    t.string   "slot_length", limit: 510
+    t.string   "date",        limit: 510
+    t.string   "start_time",  limit: 510
+    t.string   "end_time",    limit: 510
+    t.integer  "buffer",                  default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
-    t.string   "title"
+    t.string   "title",       limit: 510
   end
 
   create_table "versions", force: :cascade do |t|
-    t.string   "item_type",      null: false
-    t.integer  "item_id",        null: false
-    t.string   "event",          null: false
-    t.string   "whodunnit"
+    t.string   "item_type",      limit: 382, null: false
+    t.integer  "item_id",                    null: false
+    t.string   "event",          limit: 510, null: false
+    t.string   "whodunnit",      limit: 510
     t.text     "object"
     t.datetime "created_at"
     t.text     "object_changes"
   end
-
-  add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
 
   add_foreign_key "answers", "people"
   add_foreign_key "answers", "questions"

@@ -221,10 +221,11 @@ class PeopleController < ApplicationController
   # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def import_csv
     csv = CSV.new(params[:file].read, headers: true).read
-    headers = csv.headers
+    headers = csv.headers.compact
     main_attributes = Person.column_names - %w(id created_at updated_at)
     person_attributes = headers.select { |h| main_attributes.include? h.parameterize('_') }
-    extra_headers = headers - person_attributes - ['Tags']
+    extra_headers = headers - person_attributes - ['Tags', 'Screening Date']
+    questions = extra_headers.map { |header| Question.find_by(text: header) }.compact
     csv.each do |row|
       # Create person
       person_hash = {}
@@ -234,15 +235,31 @@ class PeopleController < ApplicationController
       person = Person.create(person_hash)
       Rails.logger.warn person.errors if person.errors.any?
       # Create tags
-      row['Tags'].split('|').each do |tag|
-        tag = Tag.where(name: tag).first_or_create
-        Tagging.create(taggable: person, tag: tag)
+      if row['Tags']
+        row['Tags'].split('|').each do |tag|
+          tag = Tag.where(name: tag).first_or_create
+          Tagging.create(taggable: person, tag: tag)
+        end
+      end
+      # Add notes
+      if row['Notes']
+        Comment.create(
+          content: row['Notes'],
+          commentable: person,
+          user_id: User.find_by(email_address: 'rachael.roueche@adhocteam.us')&.id
+        )
+      end
+      # Add screening date as a notes
+      if row['Screening Date']
+        Comment.create(
+          content: "Screening date: #{row['Screening Date']}",
+          commentable: person,
+          user_id: User.find_by(email_address: 'rachael.roueche@adhocteam.us')&.id
+        )
       end
       # Process remaining headers as answers to existing questions
-      extra_headers.each do |header|
-        if (question = Question.find_by(text: header))
-          Answer.create(person: person, question: question, value: row[header])
-        end
+      questions.each do |question|
+        Answer.create(person: person, question: question, value: row[question.text]) unless row[question.text].blank?
       end
     end
     flash[:notice] = 'CSV imported successfully'
