@@ -144,7 +144,7 @@ h1 {
 // Form
 
 .form {
-  background: $color-secondary;
+  background: $color-primary;
   padding: 3em 0;
   color: #fff;
   margin: 2em 0 0;
@@ -157,7 +157,7 @@ h1 {
     left: 47%;
     bottom: 100%;
     border: 16px solid;
-    border-color: transparent $color-secondary $color-secondary transparent;
+    border-color: transparent $color-primary $color-primary transparent;
   }
 }
 
