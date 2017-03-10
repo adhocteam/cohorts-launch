@@ -12,7 +12,7 @@ $(document).ready(function () {
     $heroBg.css("background-image", "url(" + customImg + ")");
   } else {
     $.getJSON("https://freegeoip.net/json/", function (data) {
-      var mapImg = staticMap + data.latitude + "," + data.long;
+      var mapImg = staticMap + data.latitude + "," + data.longitude;
       $heroBg.css("background-image", "url(" + mapImg + ")");
     });
   }
