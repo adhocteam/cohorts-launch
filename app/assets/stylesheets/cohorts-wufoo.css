@@ -70,7 +70,7 @@ input#saveForm:hover {
 /* Form */
 .wufoo select.select {
   height: 2.85em;
-  color: #fff !important;
+  color: #000 !important;
   background: #fff !important;
 }
 
