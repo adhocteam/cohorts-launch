@@ -170,10 +170,10 @@ class PeopleController < ApplicationController
       #   @person.verified = error_message
       #   @person.save
       # end
-      #
+      # rubocop:disable Style/CommentIndentation
       # @twilio_message.account_sid = ENV['TWILIO_ACCOUNT_SID']
-      # # @twilio_message.error_nessage
       # @twilio_message.save
+      # rubocop:enable Style/CommentIndentation
 
     # end
     else
