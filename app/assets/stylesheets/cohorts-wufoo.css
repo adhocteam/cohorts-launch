@@ -79,7 +79,7 @@ input#saveForm:hover {
   background: #fff !important;
   padding: .75em;
   width: 100%;
-  color: #fff !important;
+  color: #000 !important;
 }
 
 .wufoo textarea.field.textarea {
