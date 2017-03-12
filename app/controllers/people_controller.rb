@@ -146,33 +146,34 @@ class PeopleController < ApplicationController
         tag = Tag.where(name: params['Field28']).first_or_create
         Tagging.create(tag: tag, taggable: @person)
       end
-      begin
-        @client = Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN'])
-        @twilio_message = TwilioMessage.new
-        @twilio_message.from = ENV['TWILIO_SIGNUP_VERIFICATION_NUMBER']
-        @twilio_message.to = @person.normalized_phone_number
-        @twilio_message.body = "Thank you for signing up for the Cohorts! Please text us 'Hello' or 12345 to complete your signup. If you did not sign up, text 'Remove Me' to be removed."
-
-        @twilio_message.signup_verify = 'Yes'
-        @twilio_message.save
-        @message = @client.messages.create(
-          from: ENV['TWILIO_SIGNUP_VERIFICATION_NUMBER'],
-          to: @person.normalized_phone_number,
-          body: @twilio_message.body
-          # status_callback: request.base_url + "/twilio_messages/#{@twilio_message.id}/updatestatus"
-        )
-        @twilio_message.message_sid = @message.sid
-      rescue Twilio::REST::RequestError => e
-        error_message = e.message
-        @twilio_message.error_message = error_message
-        Rails.logger.warn("[Twilio] had a problem. Full error: #{error_message}")
-        @person.verified = error_message
-        @person.save
-      end
-
-      @twilio_message.account_sid = ENV['TWILIO_ACCOUNT_SID']
-      # @twilio_message.error_nessage
-      @twilio_message.save
+      # Send confirmation text with Twilio
+      # begin
+      #   @client = Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN'])
+      #   @twilio_message = TwilioMessage.new
+      #   @twilio_message.from = ENV['TWILIO_SIGNUP_VERIFICATION_NUMBER']
+      #   @twilio_message.to = @person.normalized_phone_number
+      #   @twilio_message.body = "Thank you for signing up for the Cohorts! Please text us 'Hello' or 12345 to complete your signup. If you did not sign up, text 'Remove Me' to be removed."
+      #
+      #   @twilio_message.signup_verify = 'Yes'
+      #   @twilio_message.save
+      #   @message = @client.messages.create(
+      #     from: ENV['TWILIO_SIGNUP_VERIFICATION_NUMBER'],
+      #     to: @person.normalized_phone_number,
+      #     body: @twilio_message.body
+      #     # status_callback: request.base_url + "/twilio_messages/#{@twilio_message.id}/updatestatus"
+      #   )
+      #   @twilio_message.message_sid = @message.sid
+      # rescue Twilio::REST::RequestError => e
+      #   error_message = e.message
+      #   @twilio_message.error_message = error_message
+      #   Rails.logger.warn("[Twilio] had a problem. Full error: #{error_message}")
+      #   @person.verified = error_message
+      #   @person.save
+      # end
+      #
+      # @twilio_message.account_sid = ENV['TWILIO_ACCOUNT_SID']
+      # # @twilio_message.error_nessage
+      # @twilio_message.save
 
     # end
     else
