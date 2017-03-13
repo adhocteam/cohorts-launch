@@ -16,7 +16,7 @@
         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
         })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
         var ga_options = {'siteSpeedSampleRate': 100}
-        ga('create', '#{ENV['GOOGLE_ANALYTICS_ID']}',ga_options);
+        ga('create', '#{ENV['GOOGLE_ANALYTICS_APP_ID']}',ga_options);
         ga('send', 'pageview');
   %body
     - if current_user
