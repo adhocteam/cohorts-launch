@@ -14,6 +14,7 @@ Cohorts is a tool to recruit, manage, and communicate with a large pool of peopl
 Setup
 -----
 Cohorts is a Ruby on Rails app. The regular rules apply:
+
 1. Locally or in a VM, install dependencies:
     * **MySQL** - `sudo apt-get mysql-server` / `brew install mysql`
     * **Ruby 2.3.1** - Install using [rbenv](https://github.com/rbenv/rbenv) or [rvm](https://rvm.io/rvm/install)
@@ -21,7 +22,7 @@ Cohorts is a Ruby on Rails app. The regular rules apply:
 2. Clone this repo
 3. In the project directory, run `bundle install`
 4. Setup the database by running `bundle exec rake db:setup` - make sure you have `MYSQL_PWD` defined as an environment variable
-5. Run the app with `rails s`!
+5. Run the app with `rails s`
 
 Services and Environment Variables
 --------
@@ -157,6 +158,7 @@ Contributors
 * Dan O'Neil (doneil@cct.org)
 * Bill Cromie (bill@robinhood.org)
 * Josh Kalov (jkalov@cct.org)
+
 ##### Ad Hoc:
 * Dan O'Neil (danx@adhocteam.us)
 * Nick Clyde (nick@adhocteam.us)
